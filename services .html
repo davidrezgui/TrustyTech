@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Services d'Assurance | Plateforme Complète d'Assurance en Algérie</title>
+    <meta name="description" content="Plateforme complète pour comparer et choisir vos assurances auto, santé, habitation, voyage, vie et multirisque en Algérie. Meilleurs tarifs garantis.">
+    <meta name="keywords" content="assurance algérie, assurance auto, assurance santé, assurance habitation, assurance voyage, comparateur assurance">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Annuaire Assurance Algérie">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Services d'Assurance | Plateforme Complète">
+    <meta property="og:description" content="Comparez et choisissez la meilleure assurance pour vos besoins">
+    <meta property="og:type" content="website">
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="common.css">
+    
+    <style>
+        /* ========================================
+           أنماط خاصة بصفحة services فقط
+        ======================================== */
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f0fa 100%);
+            min-height: 100vh;
+        }
+        
+        /* نظام الترجمة المحلي للصفحة */
+        .lang-fr .fr, .lang-ar .ar {
+            display: block;
+        }
+        .lang-fr .ar, .lang-ar .fr {
+            display: none;
+        }
+        .lang-ar {
+            direction: rtl;
+            text-align: right;
+        }
+        .lang-fr {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        /* تنسيق البطاقات */
+        .service-item {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .service-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* تنسيق شهادات العملاء */
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* عدادات الإحصائيات */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #d4af37;
+        }
+        
+        /* تنسيق الفيديو */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.75rem;
+        }
+        
+        /* زر اللغة في الصفحة (مخفي لأن الهيدر يحتوي عليه) */
+        .page-lang-switch {
+            display: none;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        #searchInput:focus {
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .counter {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- مكان الهيدر -->
+    <div id="header-placeholder"></div>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <!-- قسم الترحيب/الهيرو -->
+        <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white py-16 mx-4 mt-4 rounded-2xl shadow-xl" data-aos="fade-down">
+            <div class="container mx-auto px-4 text-center">
+                <i class="fas fa-shield-alt text-5xl mb-4 text-yellow-400"></i>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="fr">Plateforme d'Assurance en Algérie</span>
+                    <span class="ar">منصة التأمين في الجزائر</span>
+                </h1>
+                <p class="text-xl opacity-90 max-w-2xl mx-auto">
+                    <span class="fr">Comparez, choisissez et économisez sur vos assurances</span>
+                    <span class="ar">قارن، اختر ووفر على تأميناتك</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- البحث والتواصل -->
+        <div class="bg-white shadow-md p-6 rounded-xl mx-4 mt-6 mb-8 flex flex-col md:flex-row justify-between items-center gap-4" data-aos="fade-down">
+            <div class="relative w-full md:w-1/2">
+                <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm" 
+                       id="searchInput" type="text" 
+                       placeholder="Rechercher un service...">
+            </div>
+            <div class="flex gap-2">
+                <a class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition inline-flex items-center gap-2" href="mailto:davidrezgui34@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    <span class="fr">Contact Email</span>
+                    <span class="ar">البريد الإلكتروني</span>
+                </a>
+                <a class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition inline-flex items-center gap-2" href="https://wa.me/213668460780" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="fr">WhatsApp</span>
+                    <span class="ar">واتساب</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- إحصائيات -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 py-12 mx-4 rounded-xl mb-8" data-aos="fade-up">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <i class="fas fa-building text-4xl text-blue-600 mb-2"></i>
+                        <h3 class="counter" data-target="1250">0</h3>
+                        <p class="fr text-gray-600">Agences partenaires</p>
+                        <p class="ar text-gray-600">وكالة شريكة</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-users text-4xl text-blue-600 mb-2"></i>
+                        <h3 class="counter" data-target="15000">0</h3>
+                        <p class="fr text-gray-600">Clients satisfaits</p>
+                        <p class="ar text-gray-600">عميل راضي</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-map-marker-alt text-4xl text-blue-600 mb-2"></i>
+                        <h3 class="counter" data-target="58">0</h3>
+                        <p class="fr text-gray-600">Wilayas couvertes</p>
+                        <p class="ar text-gray-600">ولاية مغطاة</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-star text-4xl text-blue-600 mb-2"></i>
+                        <h3 class="counter" data-target="4.8">0</h3>
+                        <p class="fr text-gray-600">Note moyenne</p>
+                        <p class="ar text-gray-600">تقييم متوسط</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الخدمات -->
+        <section class="py-12 mx-4">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center text-blue-700 mb-4" data-aos="fade-up">
+                    <span class="fr">Nos Services</span>
+                    <span class="ar">خدماتنا</span>
+                </h2>
+                <p class="text-lg text-center mb-10 text-gray-700" data-aos="fade-up" data-aos-delay="100">
+                    <span class="fr">Découvrez nos offres d'assurance adaptées à vos besoins quotidiens.</span>
+                    <span class="ar">اكتشف عروض التأمين لدينا المصممة خصيصاً لاحتياجاتك اليومية.</span>
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="servicesContainer"></div>
+            </div>
+        </section>
+
+        <!-- فيديو -->
+        <section class="py-12 bg-white mx-4 rounded-xl shadow-sm" data-aos="zoom-in">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-blue-700 mb-6">
+                    <span class="fr">Présentation de Notre Plateforme</span>
+                    <span class="ar">تقديم منصتنا</span>
+                </h2>
+                <p class="mb-6 text-gray-700">
+                    <span class="fr">Découvrez notre vision, nos objectifs et les services que nous mettons à votre disposition.</span>
+                    <span class="ar">اكتشف رؤيتنا وأهدافنا والخدمات التي نضعها تحت تصرفكم.</span>
+                </p>
+                <div class="video-container shadow-md">
+                    <iframe allowfullscreen src="https://www.youtube.com/embed/EyPXNX0Yy-8?si=_I4i-ogDtQbFsgd9"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- آراء العملاء -->
+        <section class="py-12 mx-4" data-aos="fade-up">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-blue-700 mb-10">
+                    <span class="fr">⭐ Ce que disent nos clients</span>
+                    <span class="ar">⭐ ماذا يقول عملاؤنا</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-md testimonial-card">
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="fr text-gray-600">"Service excellent, j'ai trouvé la meilleure assurance auto en quelques minutes."</p>
+                        <p class="ar text-gray-600">"خدمة ممتازة، وجدت أفضل تأمين على السيارات في دقائق."</p>
+                        <h4 class="font-bold mt-3 text-blue-600">- Karim B.</h4>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md testimonial-card">
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="fr text-gray-600">"Plateforme fiable et équipe réactive. Je recommande vivement !"</p>
+                        <p class="ar text-gray-600">"منصة موثوقة وفريق متجاوب. أنصح بها بشدة!"</p>
+                        <h4 class="font-bold mt-3 text-blue-600">- Sarah M.</h4>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md testimonial-card">
+                        <div class="flex text-yellow-400 mb-3">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="fr text-gray-600">"Un gain de temps considérable pour comparer les offres santé."</p>
+                        <p class="ar text-gray-600">"توفير كبير للوقت لمقارنة عروض التأمين الصحي."</p>
+                        <h4 class="font-bold mt-3 text-blue-600">- Ahmed L.</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-12 bg-gray-50 border-t border-gray-200 mx-4 mb-10 rounded-xl" data-aos="fade-up">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-3xl font-bold text-blue-700 mb-8 text-center">
+                    <span class="fr">❓ Foire Aux Questions</span>
+                    <span class="ar">❓ الأسئلة الشائعة</span>
+                </h2>
+                <div class="space-y-4" id="faqContainer"></div>
+            </div>
+        </section>
+
+        <!-- دعوة للتواصل (CTA) -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 mx-4 mb-8 rounded-2xl p-8 text-center text-white" data-aos="fade-up">
+            <i class="fas fa-headset text-4xl mb-3"></i>
+            <h3 class="text-2xl font-bold mb-3">
+                <span class="fr">Besoin d'aide pour choisir ?</span>
+                <span class="ar">بحاجة إلى مساعدة في الاختيار؟</span>
+            </h3>
+            <p class="mb-4 opacity-90">
+                <span class="fr">Nos experts sont à votre disposition pour vous conseiller gratuitement</span>
+                <span class="ar">خبراؤنا تحت تصرفكم لتقديم الاستشارة المجانية</span>
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="tel:0774479525" class="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition inline-flex items-center gap-2">
+                    <i class="fas fa-phone-alt"></i>
+                    <span class="fr">Appeler maintenant</span>
+                    <span class="ar">اتصل الآن</span>
+                </a>
+                <a href="https://wa.me/213774479525" class="bg-green-500 text-white px-6 py-2 rounded-full font-semibold hover:bg-green-600 transition inline-flex items-center gap-2">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="fr">WhatsApp</span>
+                    <span class="ar">واتساب</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- مكان الفوتر -->
+    <div id="footer-placeholder"></div>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="common.js"></script>
+    <script>
+        // ============================================
+        // بيانات الخدمات
+        // ============================================
+        const services = [
+            { titleFr: "Assurance Automobile", titleAr: "تأمين السيارات", icon: "fa-car", descriptionFr: "Comparez les offres et choisissez l'assurance auto qui correspond à votre budget.", descriptionAr: "قارن العروض واختر تأمين السيارة الذي يناسب ميزانيتك.", link: "automobile.html" },
+            { titleFr: "Assurance Santé", titleAr: "تأمين الصحة", icon: "fa-heartbeat", descriptionFr: "Solutions de couverture médicale fiables pour vous et vos proches.", descriptionAr: "حلول تغطية طبية موثوقة لك ولأحبائك.", link: "sante.html" },
+            { titleFr: "Assurance Habitation", titleAr: "تأمين السكن", icon: "fa-home", descriptionFr: "Protégez votre logement contre les risques quotidiens.", descriptionAr: "احم منزلك من المخاطر اليومية.", link: "habitation.html" },
+            { titleFr: "Assurance Voyage", titleAr: "تأمين السفر", icon: "fa-plane", descriptionFr: "Voyagez l'esprit tranquille avec une couverture complète.", descriptionAr: "سافر براحة بال مع تغطية شاملة.", link: "voyage.html" },
+            { titleFr: "Assurance Vie", titleAr: "تأمين الحياة", icon: "fa-shield-alt", descriptionFr: "Sécurisez l'avenir de vos proches.", descriptionAr: "تأمين مستقبل أحبائك.", link: "#" },
+            { titleFr: "Assurance Multirisque", titleAr: "تأمين متعدد المخاطر", icon: "fa-layer-group", descriptionFr: "Solution complète pour entreprises et particuliers.", descriptionAr: "حل شامل للشركات والأفراد.", link: "#" }
+        ];
+
+        // ============================================
+        // بيانات الأسئلة الشائعة (FAQ)
+        // ============================================
+        const faqs = [
+            { qFr: "Quels types d'assurances proposez-vous ?", qAr: "ما هي أنواع التأمين التي تقدمونها؟", aFr: "Nous proposons une gamme complète : assurance auto, santé, habitation, voyage, vie et multirisque.", aAr: "نقدم مجموعة كاملة: تأمين السيارات، الصحة، السكن، السفر، الحياة، والتأمين متعدد المخاطر." },
+            { qFr: "Comment puis-je comparer les offres ?", qAr: "كيف يمكنني مقارنة العروض؟", aFr: "Il suffit de parcourir nos services et cliquer sur 'Voir plus'.", aAr: "ما عليك سوى تصفح خدماتنا والنقر على 'معرفة المزيد'." },
+            { qFr: "Offrez-vous un support client ?", qAr: "هل تقدمون دعمًا للعملاء؟", aFr: "Oui, contactez-nous par email ou WhatsApp.", aAr: "نعم، اتصل بنا عبر البريد الإلكتروني أو واتساب." },
+            { qFr: "Les devis sont-ils gratuits ?", qAr: "هل عروض الأسعار مجانية؟", aFr: "Oui, tous nos devis sont gratuits et sans engagement.", aAr: "نعم، جميع عروض الأسعار مجانية وبدون التزام." }
+        ];
+
+        // ============================================
+        // بناء بطاقات الخدمات
+        // ============================================
+        function buildServices() {
+            const container = document.getElementById("servicesContainer");
+            if(!container) return;
+            
+            container.innerHTML = '';
+            services.forEach((s, i) => {
+                const card = document.createElement("div");
+                card.className = "bg-white p-6 rounded-xl shadow hover:shadow-xl hover:scale-[1.03] transition duration-300 ease-in-out transform service-item";
+                card.setAttribute("data-aos", "fade-up");
+                card.setAttribute("data-aos-delay", i * 100);
+                card.innerHTML = `
+                    <div class="flex justify-center mb-4"><i class="fas ${s.icon} text-5xl text-blue-600"></i></div>
+                    <h3 class="text-xl font-semibold text-blue-700 mb-2 text-center"><span class="fr">${s.titleFr}</span><span class="ar">${s.titleAr}</span></h3>
+                    <p class="text-gray-600 mb-4 text-center"><span class="fr">${s.descriptionFr}</span><span class="ar">${s.descriptionAr}</span></p>
+                    <div class="text-center"><a href="${s.link}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition inline-flex items-center gap-2"><span class="fr">Voir plus</span><span class="ar">معرفة المزيد</span><i class="fas fa-arrow-left"></i></a></div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // ============================================
+        // بناء الأسئلة الشائعة
+        // ============================================
+        function buildFaq() {
+            const faqContainer = document.getElementById("faqContainer");
+            if(!faqContainer) return;
+            
+            faqContainer.innerHTML = '';
+            faqs.forEach((faq, idx) => {
+                const item = document.createElement("div");
+                item.className = "border border-gray-200 rounded-lg shadow-sm bg-white faq-item";
+                item.innerHTML = `
+                    <button class="w-full flex justify-between items-center px-6 py-4 text-left font-medium text-gray-800 focus:outline-none toggle-faq" data-idx="${idx}">
+                        <span><span class="fr">${faq.qFr}</span><span class="ar">${faq.qAr}</span></span>
+                        <i class="fas fa-chevron-down transform transition-transform"></i>
+                    </button>
+                    <div class="px-6 pb-4 text-gray-600 hidden faq-answer" data-idx="${idx}">
+                        <p class="fr">${faq.aFr}</p>
+                        <p class="ar">${faq.aAr}</p>
+                    </div>
+                `;
+                faqContainer.appendChild(item);
+            });
+            
+            // إضافة حدث النقر لكل زر FAQ
+            document.querySelectorAll(".toggle-faq").forEach(button => {
+                button.addEventListener("click", () => {
+                    const idx = button.getAttribute("data-idx");
+                    const answer = document.querySelector(`.faq-answer[data-idx="${idx}"]`);
+                    const icon = button.querySelector("i");
+                    answer.classList.toggle("hidden");
+                    icon.classList.toggle("rotate-180");
+                });
+            });
+        }
+
+        // ============================================
+        // عدادات الإحصائيات
+        // ============================================
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const statsSection = document.querySelector('.bg-gradient-to-r.from-blue-50');
+            let counted = false;
+            
+            const startCounters = () => {
+                if (counted) return;
+                counted = true;
+                counters.forEach(counter => {
+                    const target = parseFloat(counter.dataset.target);
+                    let count = 0;
+                    const interval = setInterval(() => {
+                        count += target / 50;
+                        if (count >= target) {
+                            counter.innerText = target;
+                            clearInterval(interval);
+                        } else {
+                            counter.innerText = count.toFixed(1);
+                        }
+                    }, 30);
+                });
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) startCounters();
+            }, { threshold: 0.3 });
+            
+            if (statsSection) observer.observe(statsSection);
+        }
+
+        // ============================================
+        // البحث
+        // ============================================
+        function initSearch() {
+            const searchInput = document.getElementById("searchInput");
+            if(!searchInput) return;
+            
+            searchInput.addEventListener("input", (e) => {
+                const val = e.target.value.toLowerCase();
+                document.querySelectorAll(".service-item").forEach(el => {
+                    const text = el.innerText.toLowerCase();
+                    el.style.display = text.includes(val) ? "block" : "none";
+                });
+            });
+        }
+
+        // ============================================
+        // تحميل الهيدر والفوتر
+        // ============================================
+        function loadHeaderFooter() {
+            Promise.all([
+                fetch('header.html').then(r => r.text()),
+                fetch('footer.html').then(r => r.text())
+            ]).then(([header, footer]) => {
+                document.getElementById('header-placeholder').innerHTML = header;
+                document.getElementById('footer-placeholder').innerHTML = footer;
+                
+                // إعادة تهيئة العناصر بعد تحميل الهيدر والفوتر
+                if(typeof initLanguage === 'function') initLanguage();
+                if(typeof initMobileMenu === 'function') initMobileMenu();
+                if(typeof initScrollTop === 'function') initScrollTop();
+                if(typeof initSmoothScroll === 'function') initSmoothScroll();
+            }).catch(err => console.log('خطأ في تحميل الهيدر/الفوتر:', err));
+        }
+
+        // ============================================
+        // تشغيل كل شيء
+        // ============================================
+        function initPage() {
+            buildServices();
+            buildFaq();
+            initCounters();
+            initSearch();
+            AOS.init();
+            loadHeaderFooter();
+        }
+        
+        // تشغيل الصفحة
+        initPage();
+    </script>
+</body>
+</html>

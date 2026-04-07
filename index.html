@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title id="page-title">دليل وكالات التأمين في الجزائر | Annuaire des Assurances</title>
+    <meta name="description" content="دليل شامل لوكالات التأمين في الجزائر - ابحث عن أفضل وكالات التأمين حسب الولاية ونوع الخدمة">
+    <meta name="keywords" content="تأمين, الجزائر, وكالات, تأمين سيارات, تأمين صحي, تأمين سكن">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    
+    <!-- الخطوط والأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- الأنماط المشتركة -->
+    <link rel="stylesheet" href="common.css">
+    
+    <style>
+        /* ========================================
+           أنماط خاصة بالصفحة الرئيسية فقط
+        ======================================== */
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .animate.active { opacity: 1; transform: translateY(0); }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 50%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%231B8E9E" fill-opacity="0.2" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+        .hero-content { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        .hero p { font-size: 1.2rem; margin-bottom: 35px; opacity: 0.95; }
+        .hero-img { margin-top: 40px; max-width: 80%; margin-left: auto; margin-right: auto; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transition: var(--transition); }
+        .hero-img:hover { transform: scale(1.02); }
+        .hero-img img { width: 100%; border-radius: 20px; }
+        
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            text-align: center;
+            padding: 35px 25px;
+            border: 1px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { transform: translateY(-10px); box-shadow: var(--box-shadow-hover); }
+        .service-icon {
+            background: var(--gradient-primary);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: var(--transition);
+        }
+        .service-card:hover .service-icon { transform: scale(1.1) rotate(5deg); }
+        .service-icon i { font-size: 2.2rem; color: var(--white); }
+        .service-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.4rem; }
+        .service-link { text-decoration: none; color: inherit; display: block; }
+        
+        .stats-dashboard {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: var(--box-shadow-hover);
+        }
+        .charts-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 30px; }
+        .chart-box { background: var(--light); border-radius: 15px; padding: 20px; text-align: center; }
+        .chart-box h4 { color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; }
+        .chart-box canvas { max-height: 300px; width: 100%; }
+        
+        .booking-section {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 40px;
+            box-shadow: var(--box-shadow);
+        }
+        .booking-title { text-align: center; color: var(--primary); margin-bottom: 30px; font-size: 1.8rem; }
+        .booking-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; }
+        .booking-info {
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            padding: 25px;
+            color: var(--white);
+        }
+        .booking-info h4 { font-size: 1.3rem; margin-bottom: 15px; color: var(--accent); }
+        .booking-info ul { list-style: none; margin-top: 20px; }
+        .booking-info li { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .booking-info li i { color: var(--accent); }
+        .booking-form { background: var(--white); border-radius: 15px; padding: 25px; box-shadow: var(--box-shadow); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .booking-form .form-group { margin-bottom: 15px; }
+        .booking-form .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+        }
+        .booking-form .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(27, 142, 158, 0.2);
+        }
+        .btn-book {
+            background: var(--gradient-primary);
+            color: var(--white);
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn-book:hover { transform: translateY(-3px); box-shadow: var(--box-shadow-hover); }
+        
+        .map-section { background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%); }
+        .map-container { border-radius: 20px; overflow: hidden; box-shadow: var(--box-shadow-hover); height: 400px; margin-top: 30px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; }
+        .map-info { text-align: center; margin-bottom: 20px; }
+        .map-info h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 10px; }
+        
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-text h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+        .about-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+        .about-img { border-radius: 20px; overflow: hidden; box-shadow: var(--box-shadow-hover); }
+        .about-img img { width: 100%; border-radius: 20px; }
+        
+        .accordion-item {
+            background: var(--white);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        .accordion-header {
+            padding: 20px 25px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-header:hover { color: var(--secondary); background: rgba(27, 142, 158, 0.05); }
+        .accordion-header i { transition: transform 0.3s; }
+        .accordion-item.active .accordion-header i { transform: rotate(180deg); }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            padding: 0 25px;
+        }
+        .accordion-item.active .accordion-content { max-height: 500px; padding: 0 25px 20px; }
+        
+        .companies-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            color: var(--white);
+        }
+        .companies-header i { font-size: 3rem; margin-bottom: 15px; color: var(--accent); }
+        .companies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .company-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        .company-card:hover { transform: translateY(-10px); box-shadow: var(--box-shadow-hover); }
+        .company-img {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+        }
+        .company-img img { max-height: 100px; max-width: 85%; object-fit: contain; }
+        .company-content { padding: 25px; }
+        .company-content h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; text-align: center; }
+        .btn-read {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        .btn-read:hover { color: var(--accent); gap: 12px; }
+        
+        .stats-section {
+            background: var(--gradient-primary);
+            padding: 80px 0;
+            position: relative;
+        }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; position: relative; z-index: 2; }
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .stat-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.15); }
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .stat-icon i { font-size: 2rem; color: var(--primary-dark); }
+        .stat-card h3 { font-size: 2.5rem; color: var(--accent); font-weight: 800; margin-bottom: 10px; }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .team-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+        .team-card:hover { transform: translateY(-10px); box-shadow: var(--box-shadow-hover); }
+        .team-img {
+            height: 200px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .team-img i { font-size: 4.5rem; color: var(--white); opacity: 0.8; }
+        .team-content { padding: 20px; }
+        .team-content h3 { color: var(--primary); margin-bottom: 5px; font-size: 1.2rem; }
+        
+        .contact-section { background: linear-gradient(135deg, var(--white) 0%, var(--light) 100%); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .contact-info-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: 15px;
+        }
+        .info-item i {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        .form-container {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(27, 142, 158, 0.2);
+        }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn-whatsapp:hover { background: #1da851; transform: translateY(-3px); }
+        
+        @media (max-width: 992px) {
+            .about-grid, .contact-grid, .booking-grid { grid-template-columns: 1fr; gap: 40px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 60px 0; }
+            .charts-container { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero-img { max-width: 100%; }
+            .services-grid, .companies-grid { grid-template-columns: 1fr; }
+            .section-title h2 { font-size: 1.8rem; }
+            .map-container { height: 300px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 576px) {
+            .container { width: 95%; }
+            .section { padding: 50px 0; }
+            .hero { padding: 50px 0; }
+            .hero h1 { font-size: 1.6rem; }
+            .section-title h2 { font-size: 1.5rem; }
+            .booking-section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- مكان الهيدر -->
+    <div id="header-placeholder"></div>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 data-translate="hero-title">📋 دليل وكالات التأمين في الجزائر</h1>
+                    <p data-translate="hero-desc">تجدون جميع وكالات التأمين في الجزائر مصنفة حسب الولايات ونوع الخدمة - تأمين السيارات، الصحة، السكن، السفر والمزيد</p>
+                    <div class="hero-img">
+                        <img src="https://www.cash-assurances.dz/cloud/luna/SLIDER-2024/MRH-assurance-cash-2.png" alt="دليل التأمين الجزائر" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="services">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="services-title">خدمات التأمين المتكاملة</h2>
+                    <p data-translate="services-desc">نوفر لك مجموعة شاملة من عقود التأمين لحماية كل ما يهمك - اضغط على البطاقة لزيارة الصفحة المخصصة</p>
+                </div>
+                <div class="services-grid">
+                    <a href="automobile.html" class="service-link">
+                        <div class="service-card animate"><div class="service-icon"><i class="fas fa-car"></i></div><h3 data-translate="service1-title">تأمين السيارات</h3><p data-translate="service1-desc">تأمين مسؤولية مدنية، شامل، ضد الغير، وحماية شخصية للسائق بأسعار تنافسية</p></div>
+                    </a>
+                    <a href="sante.html" class="service-link">
+                        <div class="service-card animate"><div class="service-icon"><i class="fas fa-heartbeat"></i></div><h3 data-translate="service2-title">تأمين الصحة</h3><p data-translate="service2-desc">تغطيات طبية شاملة للأفراد والعائلات، مع شبكة واسعة من المستشفيات والعيادات</p></div>
+                    </a>
+                    <a href="habitation.html" class="service-link">
+                        <div class="service-card animate"><div class="service-icon"><i class="fas fa-home"></i></div><h3 data-translate="service3-title">تأمين السكن</h3><p data-translate="service3-desc">حماية منزلك ومحتوياته من المخاطر (حرائق، سرقة، كوارث طبيعية)</p></div>
+                    </a>
+                    <a href="voyage.html" class="service-link">
+                        <div class="service-card animate"><div class="service-icon"><i class="fas fa-plane"></i></div><h3 data-translate="service4-title">تأمين السفر</h3><p data-translate="service4-desc">تغطية طبية وإلغاء الرحلات وفقدان الأمتعة أثناء سفرك داخل الوطن وخارجه</p></div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="stats-dashboard">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="dashboard-title">📊 لوحة الإحصائيات المتقدمة</h2>
+                    <p data-translate="dashboard-desc">تحليلات دقيقة لسوق التأمين في الجزائر</p>
+                </div>
+                <div class="stats-dashboard">
+                    <div class="charts-container">
+                        <div class="chart-box">
+                            <h4 data-translate="chart1-title">📈 أكثر أنواع التأمين طلباً</h4>
+                            <canvas id="insuranceChart"></canvas>
+                        </div>
+                        <div class="chart-box">
+                            <h4 data-translate="chart2-title">📍 أكثر الولايات طلباً للتأمين</h4>
+                            <canvas id="wilayaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="booking">
+            <div class="container">
+                <div class="booking-section">
+                    <h2 class="booking-title" data-translate="booking-title">📅 حجز موعد استشارة مجانية</h2>
+                    <div class="booking-grid">
+                        <div class="booking-info">
+                            <h4 data-translate="booking-info-title">💡 لماذا تحجز معنا؟</h4>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> <span data-translate="booking-info1">استشارة مجانية مع خبراء التأمين</span></li>
+                                <li><i class="fas fa-check-circle"></i> <span data-translate="booking-info2">مقارنة أفضل عروض التأمين</span></li>
+                                <li><i class="fas fa-check-circle"></i> <span data-translate="booking-info3">خدمة ما بعد البيع</span></li>
+                                <li><i class="fas fa-check-circle"></i> <span data-translate="booking-info4">تغطية لجميع الولايات</span></li>
+                            </ul>
+                            <div style="margin-top: 25px;">
+                                <i class="fas fa-phone-alt" style="color: var(--accent);"></i> 0774479525<br>
+                                <i class="fas fa-envelope" style="color: var(--accent); margin-top: 10px;"></i> contact@annuaire-assurance.dz
+                            </div>
+                        </div>
+                        <div class="booking-form">
+                            <form id="bookingForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="bookingName" data-translate-placeholder="booking-name" placeholder="الاسم الكامل" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tel" class="form-control" id="bookingPhone" data-translate-placeholder="booking-phone" placeholder="رقم الهاتف" required>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="bookingEmail" data-translate-placeholder="booking-email" placeholder="البريد الإلكتروني">
+                                    </div>
+                                    <div class="form-group">
+                                        <select class="form-control" id="bookingWilaya" required>
+                                            <option value="" data-translate="wilaya-default">اختر الولاية</option>
+                                            <option value="الجزائر">الجزائر</option><option value="وهران">وهران</option><option value="قسنطينة">قسنطينة</option>
+                                            <option value="عنابة">عنابة</option><option value="برج بوعريريج">برج بوعريريج</option><option value="سطيف">سطيف</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <select class="form-control" id="bookingInsuranceType" required>
+                                            <option value="" data-translate="insurance-type-default">نوع التأمين</option>
+                                            <option value="سيارات" data-translate="insurance-car">تأمين السيارات</option>
+                                            <option value="صحة" data-translate="insurance-health">تأمين الصحة</option>
+                                            <option value="سكن" data-translate="insurance-home">تأمين السكن</option>
+                                            <option value="سفر" data-translate="insurance-travel">تأمين السفر</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="date" class="form-control" id="bookingDate" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="bookingTime" required>
+                                        <option value="" data-translate="time-default">اختر الوقت المناسب</option>
+                                        <option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option>
+                                        <option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn-book" onclick="bookAppointment()" data-translate="book-btn">📅 احجز موعدك الآن</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section map-section" id="map">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="map-title">📍 موقعنا على الخريطة</h2>
+                    <p data-translate="map-subtitle">برج بوعريريج - الجزائر</p>
+                </div>
+                <div class="map-info">
+                    <h3 data-translate="map-center-title">مركز دليل التأمين</h3>
+                    <p data-translate="map-address"><i class="fas fa-map-marker-alt" style="color: var(--secondary);"></i> برج بوعريريج، حي الأمان، الجزائر</p>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12901.123456789!2d4.761111!3d36.073333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128e5b8b8b8b8b8b%3A0x8b8b8b8b8b8b8b8b!2sBordj%20Bou%20Arr%C3%A9ridj!5e0!3m2!1sfr!2sdz!4v1700000000000!5m2!1sfr!2sdz" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="about-title">من نحن</h2>
+                    <p data-translate="about-desc">تعرف على مهمتنا وخدماتنا</p>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2 data-translate="about-heading">مرحباً بكم في دليل وكالات التأمين في الجزائر</h2>
+                        <p data-translate="about-p1">مهمتنا هي تسهيل الوصول إلى خدمات التأمين في جميع أنحاء الجزائر. تم إنشاء هذا الموقع لمساعدة المواطنين في العثور بسرعة وسهولة على وكالات تأمين موثوقة، مصنفة حسب الولاية ونوع التغطية.</p>
+                        <p data-translate="about-p2">نحن نؤمن بأن المعلومات يجب أن تكون في متناول الجميع. ولهذا السبب نعمل باستمرار على تحديث قاعدة البيانات لدينا وتحسين تجربة المستخدم.</p>
+                        <div class="accordion">
+                            <div class="accordion-item"><div class="accordion-header"><span data-translate="acc1-title">🚗 تأمين السيارات</span><i class="fas fa-chevron-down"></i></div><div class="accordion-content"><p data-translate="acc1-content">يحمي سيارتك ومسؤوليتك تجاه الغير. إلزامي قانونياً لجميع السائقين في الجزائر.</p></div></div>
+                            <div class="accordion-item"><div class="accordion-header"><span data-translate="acc2-title">🏥 تأمين الصحة</span><i class="fas fa-chevron-down"></i></div><div class="accordion-content"><p data-translate="acc2-content">صحتك أولويتنا. يغطي تكاليف الاستشارات الطبية، الاستشفاء، والأدوية.</p></div></div>
+                            <div class="accordion-item"><div class="accordion-header"><span data-translate="acc3-title">✈️ تأمين السفر</span><i class="fas fa-chevron-down"></i></div><div class="accordion-content"><p data-translate="acc3-content">سافر براحة بال! يغطي الحوادث الطبية، إلغاء الرحلات، وفقدان الأمتعة.</p></div></div>
+                            <div class="accordion-item"><div class="accordion-header"><span data-translate="acc4-title">🏠 تأمين السكن</span><i class="fas fa-chevron-down"></i></div><div class="accordion-content"><p data-translate="acc4-content">يحمي منزلك من الحرائق، الفيضانات، والسرقة.</p></div></div>
+                        </div>
+                    </div>
+                    <div class="about-img"><img src="https://www.allianceassurances.com.dz/assets/images/girl-fr.png" alt="دليل التأمين الجزائر" loading="lazy"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="companies">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="companies-title">شركات التأمين في الجزائر</h2>
+                    <p data-translate="companies-desc">قائمة بأهم وكالات وشركات التأمين في الجزائر</p>
+                </div>
+                <div class="companies-header">
+                    <i class="fas fa-building"></i>
+                    <h3 data-translate="companies-header-title">أكبر شركات التأمين في الجزائر</h3>
+                    <p data-translate="companies-header-desc">تعرف على أبرز شركات التأمين الوطنية الرائدة في السوق الجزائري</p>
+                </div>
+                <div class="companies-grid">
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/alliance.png" alt="Alliance Assurances" loading="lazy"></div>
+                        <div class="company-content"><h3>ALLIANCE ASSURANCES</h3><p data-translate="company1-desc">شركة تأمين جزائرية خاصة، مرخصة في يوليو 2005، تمارس جميع عمليات التأمين وإعادة التأمين.</p><a href="https://www.allianceassurances.com.dz/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/saa.png" alt="SAA Assurances" loading="lazy"></div>
+                        <div class="company-content"><h3>SAA ASSURANCES</h3><p data-translate="company2-desc">حاصلة على شهادة ISO-9001 إصدار 2015، تلتزم بالتحسين المستمر لعملياتها وخدماتها.</p><a href="https://www.saa.dz/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/caat.png" alt="CAAT Assurances" loading="lazy"></div>
+                        <div class="company-content"><h3>CAAT ASSURANCE</h3><p data-translate="company3-desc">مؤسسة عمومية اقتصادية مرخصة لممارسة جميع عمليات التأمين ضد الأضرار.</p><a href="https://www.caat.dz/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/caarama.png" alt="CAARAMA Assurance" loading="lazy"></div>
+                        <div class="company-content"><h3>CAARAMA ASSURANCE</h3><p data-translate="company4-desc">متخصصة في تأمينات الأشخاص، تأسست في يوليو 2011 برأسمال مليار دينار جزائري.</p><a href="https://www.caarama.dz/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/macirvie.png" alt="Macirvie Assurance" loading="lazy"></div>
+                        <div class="company-content"><h3>MACIRVIE ASSURANCE</h3><p data-translate="company5-desc">أول شركة خاصة متخصصة في تأمينات الأشخاص، تأسست في 11 أغسطس 2011.</p><a href="https://www.macirvie.com/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                    <div class="company-card animate">
+                        <div class="company-img"><img src="https://eccp.poste.dz/img/home/amana.png" alt="Amana Assurance" loading="lazy"></div>
+                        <div class="company-content"><h3>AMANA ASSURANCE</h3><p data-translate="company6-desc">شركة جزائرية للتأمين والاحتياط متخصصة في الصحة، تأمين السفر، التأمين الصحي، التأمين المدرسي.</p><a href="https://www.amana.dz/" class="btn-read" target="_blank"><span data-translate="read-more">اقرأ المزيد</span> <i class="fas fa-arrow-left"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section" id="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-building"></i></div><h3 class="counter" data-target="1250">0</h3><p data-translate="stat1">وكالة تأمين</p></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-map-marker-alt"></i></div><h3 class="counter" data-target="58">0</h3><p data-translate="stat2">ولاية مغطاة</p></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><h3 class="counter" data-target="150">0</h3><p data-translate="stat3">خبير معتمد</p></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><h3 class="counter" data-target="7000">0</h3><p data-translate="stat4">عميل شهرياً</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="team">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="team-title">خبراؤنا في التأمين</h2>
+                    <p data-translate="team-desc">فريق من المستشارين المتخصصين لخدمتكم</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-user-tie"></i></div><div class="team-content"><h3>داود عبد الرحمان</h3><span data-translate="team1">خبير في تأمين السيارات</span></div></div>
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-user-md"></i></div><div class="team-content"><h3>بن عدا معمّر</h3><span data-translate="team2">مستشارة في تأمين الصحة</span></div></div>
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-chart-line"></i></div><div class="team-content"><h3>أيمن غويلية</h3><span data-translate="team3">وسيط تأمين مستقل</span></div></div>
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-handshake"></i></div><div class="team-content"><h3>رزقي داود</h3><span data-translate="team4">وسيط تأمين مستقل</span></div></div>
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-home"></i></div><div class="team-content"><h3>أسامة ساحلي</h3><span data-translate="team5">خبير في تأمين السكن</span></div></div>
+                    <div class="team-card animate"><div class="team-img"><i class="fas fa-gavel"></i></div><div class="team-content"><h3>خالد مغاني</h3><span data-translate="team6">محامي متخصص في التأمين</span></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section" id="contact">
+            <div class="container">
+                <div class="section-title">
+                    <h2 data-translate="contact-title">اتصل بنا</h2>
+                    <p data-translate="contact-desc">هل تحتاج استشارة؟ خبراؤنا هنا لمساعدتك</p>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info-card">
+                        <h3 style="color: var(--primary); margin-bottom: 25px;" data-translate="contact-info-title">معلومات التواصل</h3>
+                        <div class="info-item"><i class="fas fa-map-marker-alt"></i><div><strong data-translate="address-label">العنوان</strong><br><span data-translate="address-value">برج بوعريريج، حي الأمان، الجزائر</span></div></div>
+                        <div class="info-item"><i class="fas fa-phone-alt"></i><div><strong data-translate="phone-label">الهاتف</strong><br>0774479525</div></div>
+                        <div class="info-item"><i class="fas fa-envelope"></i><div><strong data-translate="email-label">البريد الإلكتروني</strong><br>contact@annuaire-assurance.dz</div></div>
+                        <div class="info-item"><i class="fas fa-clock"></i><div><strong data-translate="hours-label">ساعات العمل</strong><br><span data-translate="hours-value">السبت - الخميس: 09:00 - 17:00</span></div></div>
+                    </div>
+                    <div class="form-container">
+                        <h3 style="color: var(--primary); margin-bottom: 25px; text-align: center;" data-translate="form-title">أرسل استفسارك</h3>
+                        <form id="contact-form">
+                            <div class="form-group"><input type="text" class="form-control" id="name" data-translate-placeholder="name-placeholder" placeholder="الاسم الكامل" required></div>
+                            <div class="form-group"><input type="tel" class="form-control" id="phone" data-translate-placeholder="phone-placeholder" placeholder="رقم الهاتف" required></div>
+                            <div class="form-group">
+                                <select class="form-control" id="insurance-type">
+                                    <option value="" data-translate="insurance-default">نوع التأمين المطلوب</option>
+                                    <option value="سيارات" data-translate="insurance-car">تأمين السيارات</option>
+                                    <option value="صحة" data-translate="insurance-health">تأمين الصحة</option>
+                                    <option value="سكن" data-translate="insurance-home">تأمين السكن</option>
+                                    <option value="سفر" data-translate="insurance-travel">تأمين السفر</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><textarea class="form-control" id="message" data-translate-placeholder="message-placeholder" placeholder="رسالتك..."></textarea></div>
+                            <button type="button" class="btn-whatsapp" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i> <span data-translate="whatsapp-btn">إرسال عبر واتساب</span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- مكان الفوتر -->
+    <div id="footer-placeholder"></div>
+
+    <script src="common.js"></script>
+    <script>
+        // الرسوم البيانية
+        let insuranceChart, wilayaChart;
+        
+        function initCharts() {
+            const ctx1 = document.getElementById('insuranceChart')?.getContext('2d');
+            const ctx2 = document.getElementById('wilayaChart')?.getContext('2d');
+            
+            if(ctx1) {
+                if(insuranceChart) insuranceChart.destroy();
+                insuranceChart = new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: currentLang === 'ar' ? ['سيارات', 'صحة', 'سكن', 'سفر'] : ['Auto', 'Santé', 'Habitation', 'Voyage'],
+                        datasets: [{
+                            label: currentLang === 'ar' ? 'نسبة الطلب (%)' : 'Taux de demande (%)',
+                            data: [38, 27, 23, 12],
+                            backgroundColor: ['#0B3B5E', '#1B8E9E', '#D4AF37', '#2C3E50'],
+                            borderRadius: 10
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+                });
+            }
+            
+            if(ctx2) {
+                if(wilayaChart) wilayaChart.destroy();
+                wilayaChart = new Chart(ctx2, {
+                    type: 'pie',
+                    data: {
+                        labels: currentLang === 'ar' ? ['الجزائر', 'وهران', 'قسنطينة', 'عنابة', 'برج بوعريريج'] : ['Alger', 'Oran', 'Constantine', 'Annaba', 'Bordj'],
+                        datasets: [{ data: [35, 18, 15, 12, 8], backgroundColor: ['#0B3B5E', '#1B8E9E', '#D4AF37', '#2C3E50', '#6c757d'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+                });
+            }
+        }
+        
+        // تأثيرات الظهور
+        const animateElements = document.querySelectorAll('.animate');
+        const checkAnimations = () => {
+            animateElements.forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+            });
+        };
+        
+        // الأكورديون
+        function initAccordion() {
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                if(header) header.addEventListener('click', () => item.classList.toggle('active'));
+            });
+        }
+        
+        // عدادات الأرقام
+        function initCounters() {
+            const counters = document.querySelectorAll('.counter');
+            const statsSection = document.querySelector('.stats-section');
+            let counted = false;
+            
+            const startCounting = () => {
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.target);
+                    let count = 0;
+                    const speed = 200;
+                    const increment = Math.ceil(target / speed);
+                    const updateCount = () => {
+                        if(count < target) {
+                            count += increment;
+                            counter.innerText = count > target ? target : count;
+                            requestAnimationFrame(updateCount);
+                        } else counter.innerText = target;
+                    };
+                    updateCount();
+                });
+            };
+            
+            const checkCounters = () => {
+                if(statsSection && statsSection.getBoundingClientRect().top < window.innerHeight - 100 && !counted) {
+                    counted = true;
+                    startCounting();
+                }
+            };
+            
+            window.addEventListener('scroll', checkCounters);
+            checkCounters();
+        }
+        
+        // حجز الموعد
+        function bookAppointment() {
+            const name = document.getElementById('bookingName')?.value.trim() || '';
+            const phone = document.getElementById('bookingPhone')?.value.trim() || '';
+            const email = document.getElementById('bookingEmail')?.value.trim() || '';
+            const wilaya = document.getElementById('bookingWilaya')?.value || '';
+            const insuranceType = document.getElementById('bookingInsuranceType')?.value || '';
+            const date = document.getElementById('bookingDate')?.value || '';
+            const time = document.getElementById('bookingTime')?.value || '';
+            
+            if(!name || !phone || !wilaya || !insuranceType || !date || !time) {
+                alert(currentLang === 'ar' ? '⚠️ الرجاء ملء جميع الحقول المطلوبة' : '⚠️ Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            
+            const msg = `📅 *حجز موعد جديد*%0A👤 الاسم: ${encodeURIComponent(name)}%0A📱 الهاتف: ${encodeURIComponent(phone)}%0A📍 الولاية: ${encodeURIComponent(wilaya)}%0A📋 نوع التأمين: ${encodeURIComponent(insuranceType)}%0A📅 التاريخ: ${encodeURIComponent(date)}%0A⏰ الوقت: ${encodeURIComponent(time)}`;
+            window.open(`https://wa.me/213774479525?text=${msg}`, '_blank');
+            alert(currentLang === 'ar' ? '✓ تم إرسال طلب الحجز، سنتواصل معك قريباً' : '✓ Demande envoyée, nous vous contacterons');
+            document.getElementById('bookingForm')?.reset();
+        }
+        
+        // إرسال واتساب
+        function sendToWhatsApp() {
+            const name = document.getElementById('name')?.value.trim() || '';
+            const phone = document.getElementById('phone')?.value.trim() || '';
+            const insuranceType = document.getElementById('insurance-type')?.value || '';
+            const message = document.getElementById('message')?.value.trim() || '';
+            
+            if(!name || !phone) {
+                alert(currentLang === 'ar' ? '⚠️ الرجاء ملء الاسم ورقم الهاتف' : '⚠️ Veuillez remplir le nom et le téléphone');
+                return;
+            }
+            
+            const msg = `📞 *استفسار جديد*%0A👤 الاسم: ${encodeURIComponent(name)}%0A📱 الهاتف: ${encodeURIComponent(phone)}%0A📋 نوع التأمين: ${encodeURIComponent(insuranceType || 'غير محدد')}%0A💬 الرسالة: ${encodeURIComponent(message || 'لا يوجد')}`;
+            window.open(`https://wa.me/213774479525?text=${msg}`, '_blank');
+        }
+        
+        // تحميل الهيدر والفوتر
+        function loadHeaderFooter() {
+            Promise.all([
+                fetch('header.html').then(r => r.text()),
+                fetch('footer.html').then(r => r.text())
+            ]).then(([header, footer]) => {
+                document.getElementById('header-placeholder').innerHTML = header;
+                document.getElementById('footer-placeholder').innerHTML = footer;
+                
+                // إعادة تهيئة العناصر بعد تحميل الهيدر والفوتر
+                initLanguage();
+                initMobileMenu();
+                initScrollTop();
+                initSmoothScroll();
+                initAccordion();
+                initCharts();
+            }).catch(err => console.log('خطأ في تحميل الهيدر/الفوتر:', err));
+        }
+        
+        // تشغيل كل شيء
+        loadHeaderFooter();
+        window.addEventListener('scroll', checkAnimations);
+        checkAnimations();
+        initCounters();
+        
+        // جعل الدوال عامة
+        window.bookAppointment = bookAppointment;
+        window.sendToWhatsApp = sendToWhatsApp;
+    </script>
+</body>
+</html>
