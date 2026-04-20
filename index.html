@@ -3,24 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>استمارة التسجيل | LEADERS VISION EDUCATION</title>
-    <meta name="description" content="سجل الآن في مدرسة LEADERS VISION التعليمية - دروس الدعم وتعليم اللغات الأجنبية">
+    <title>LEADERS VISION EDUCATION - مدرستك للتميز الأكاديمي</title>
+    <meta name="description" content="مدرسة LEADERS VISION التعليمية - التميز في دروس الدعم وتعليم اللغات الأجنبية في بيئة تعليمية محفزة وإبداعية">
     <link rel="icon" type="image/png" href="/favicon.png">
     
     <!-- تحسين تحميل الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"></noscript>
     
-    <!-- مكتبة QR Code -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     
-    <!-- مكتبات الطباعة و PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+    <!-- Open Graph Tags لتحسين المشاركة على وسائل التواصل -->
+    <meta property="og:title" content="LEADERS VISION EDUCATION - مدرستك للتميز الأكاديمي">
+    <meta property="og:description" content="مدرسة LEADERS VISION التعليمية - التميز في دروس الدعم وتعليم اللغات الأجنبية في بيئة تعليمية محفزة وإبداعية">
+    <meta property="og:image" content="https://aspirelearnz.website/uploads/gallery/media/1752938180-1670202096687bb6c44dda7!Sans%20titre%20(Logo)_20250719_161537_0000.png?1752952570">
+    <meta property="og:url" content="https://leadersvision.biz">
+    <meta property="og:type" content="website">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "LEADERS VISION EDUCATION",
+      "description": "مدرسة LEADERS VISION التعليمية - التميز في دروس الدعم وتعليم اللغات الأجنبية في بيئة تعليمية محفزة وإبداعية",
+      "url": "https://leadersvision.biz",
+      "telephone": "+213774479525",
+      "email": "Contact@leadersvision.biz",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Algeria"
+      },
+      "foundingDate": "2025",
+      "founder": {
+        "@type": "Person",
+        "name": "مؤسس LEADERS VISION"
+      },
+      "areaServed": "Algeria",
+      "sameAs": [
+        "https://www.facebook.com/share/1JruRDQYbc/",
+        "https://www.instagram.com/leaders_vision_education?igsh=NmN2bHEwbWk2OXYx",
+        "https://www.tiktok.com/@leaders_vision_academy?_t=ZS-8zMLVPHoSGO&_r=1"
+      ]
+    }
+    </script>
+    
     <style>
+        /* ===== متغيرات التصميم ===== */
         :root {
             --primary: #1a4b8c;
             --primary-dark: #0d3a70;
@@ -28,19 +60,17 @@
             --secondary: #f39c12;
             --secondary-light: #f8c471;
             --accent: #25D366;
-            --success: #27ae60;
-            --danger: #e74c3c;
             --light: #f8f9fa;
             --dark: #2c3e50;
             --gray: #7f8c8d;
             --light-gray: #ecf0f1;
             --white: #ffffff;
-            --border-radius: 16px;
-            --box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            --box-shadow-hover: 0 20px 50px rgba(0, 0, 0, 0.12);
-            --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            --box-shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
+        /* ===== إعدادات عامة ===== */
         * {
             margin: 0;
             padding: 0;
@@ -49,559 +79,47 @@
         
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 30px 20px;
+            background-color: var(--light);
             color: var(--dark);
             line-height: 1.7;
+            overflow-x: hidden;
             position: relative;
+            scroll-behavior: smooth;
         }
         
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        .page-wrapper {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        /* Header مع شعار المدرسة */
-        .registration-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .logo-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid var(--secondary);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .logo-img img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-        }
-        
-        .logo-text h1 {
-            font-size: 2.2rem;
-            color: var(--white);
-            font-weight: 900;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            letter-spacing: -0.5px;
-        }
-        
-        .logo-text span {
+        /* ===== تحسينات تحميل الصور ===== */
+        img {
+            max-width: 100%;
+            height: auto;
             display: block;
-            font-size: 1rem;
-            color: var(--secondary);
-            font-weight: 700;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 5px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
-        /* البطاقة الرئيسية */
-        .registration-card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 30px 40px;
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card-header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        
-        .card-header h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .card-header h2 i {
-            color: var(--secondary);
-            background: rgba(255, 255, 255, 0.15);
-            padding: 12px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-        }
-        
-        .card-header p {
-            opacity: 0.95;
-            font-size: 1.1rem;
-        }
-        
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-            position: relative;
-        }
-        
-        .progress-steps::before {
-            content: "";
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: 0;
-        }
-        
-        .step {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-        }
-        
-        .step-number {
-            width: 33px;
-            height: 33px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            transition: var(--transition);
-        }
-        
-        .step.active .step-number {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 5px rgba(243, 156, 18, 0.2);
-        }
-        
-        .step.completed .step-number {
-            background: var(--success);
-            border-color: var(--success);
-        }
-        
-        .step.completed .step-number i {
-            display: block;
-            font-size: 0.9rem;
-        }
-        
-        .step.completed .step-number span {
-            display: none;
-        }
-        
-        .step .step-number i {
-            display: none;
-        }
-        
-        .step-label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            opacity: 0.8;
-        }
-        
-        .step.active .step-label {
+        .lazy-load.loaded {
             opacity: 1;
-            font-weight: 700;
-            color: var(--secondary);
         }
         
-        /* محتوى النموذج */
-        .card-body {
-            padding: 40px;
+        .image-placeholder {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
         }
         
-        .form-step {
-            display: none;
-            animation: fadeSlideIn 0.5s ease-out;
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         
-        .form-step.active {
-            display: block;
-        }
-        
-        @keyframes fadeSlideIn {
+        /* ===== الحركات والأنيميشن ===== */
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-        
-        .form-label {
-            font-weight: 600;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .form-label i {
-            color: var(--primary);
-            width: 20px;
-            font-size: 1rem;
-        }
-        
-        .required {
-            color: var(--danger);
-            margin-right: 5px;
-        }
-        
-        .form-control {
-            padding: 14px 18px;
-            border: 2px solid var(--light-gray);
-            border-radius: 14px;
-            font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
-            transition: var(--transition);
-            background: var(--white);
-            color: var(--dark);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(26, 75, 140, 0.1);
-            outline: none;
-        }
-        
-        .form-control.error {
-            border-color: var(--danger);
-            background: rgba(231, 76, 60, 0.03);
-        }
-        
-        select.form-control {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a4b8c' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 15px center;
-            background-size: 18px;
-        }
-        
-        .radio-group {
-            display: flex;
-            gap: 25px;
-            padding: 10px 0;
-        }
-        
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        
-        .radio-option input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-        
-        .checkbox-group {
-            padding: 10px 0;
-        }
-        
-        .checkbox-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            padding: 10px 0;
-        }
-        
-        .checkbox-option input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-        
-        /* QR Code Section */
-        .qr-section {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 25px 0;
-            text-align: center;
-            border: 2px dashed var(--primary-light);
-        }
-        
-        .qr-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .qr-title i {
-            color: var(--secondary);
-        }
-        
-        .qr-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .qr-code-wrapper {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
-        
-        #qrcode {
-            display: flex;
-            justify-content: center;
-        }
-        
-        #qrcode canvas,
-        #qrcode img {
-            border-radius: 10px;
-        }
-        
-        .qr-info {
-            text-align: right;
-            max-width: 300px;
-        }
-        
-        .qr-info h4 {
-            color: var(--primary-dark);
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        
-        .qr-info ul {
-            list-style: none;
-        }
-        
-        .qr-info li {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--gray);
-        }
-        
-        .qr-info li i {
-            color: var(--success);
-            width: 20px;
-        }
-        
-        /* ملخص التسجيل */
-        .summary-box {
-            background: linear-gradient(135deg, rgba(26, 75, 140, 0.05), rgba(243, 156, 18, 0.05));
-            border-radius: 16px;
-            padding: 25px;
-            margin: 25px 0;
-            border: 1px solid rgba(26, 75, 140, 0.1);
-        }
-        
-        .summary-title {
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
-        }
-        
-        .summary-item .label {
-            font-weight: 600;
-            color: var(--gray);
-        }
-        
-        .summary-item .value {
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        /* أزرار التنقل */
-        .form-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 35px;
-            gap: 15px;
-        }
-        
-        .btn {
-            padding: 16px 35px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-family: 'Tajawal', sans-serif;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-prev {
-            background: var(--light-gray);
-            color: var(--dark);
-        }
-        
-        .btn-prev:hover {
-            background: var(--gray);
-            color: var(--white);
-            transform: translateX(5px);
-        }
-        
-        .btn-next {
-            background: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-next:hover {
-            background: var(--primary-dark);
-            transform: translateX(-5px);
-            box-shadow: 0 8px 25px rgba(26, 75, 140, 0.3);
-        }
-        
-        .btn-submit {
-            background: linear-gradient(135deg, var(--success), #1e8449);
-            color: var(--white);
-            font-size: 1.15rem;
-            padding: 18px 40px;
-        }
-        
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(39, 174, 96, 0.3);
-        }
-        
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-whatsapp {
-            background: var(--accent);
-            color: var(--white);
-        }
-        
-        .btn-whatsapp:hover {
-            background: #128C7E;
-            transform: translateY(-3px);
-        }
-        
-        /* رسائل النجاح والخطأ */
-        .alert {
-            padding: 18px 25px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: slideDown 0.4s ease;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -609,1397 +127,2624 @@
             }
         }
         
-        .alert-success {
-            background: linear-gradient(135deg, #d5f5e3, #eafaf1);
-            color: #145a32;
-            border: 1px solid #27ae60;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
         }
         
-        .alert-error {
-            background: linear-gradient(135deg, #fadbd8, #fdedec);
-            color: #78281f;
-            border: 1px solid #e74c3c;
+        .animate {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
         
-        .spinner {
+        .animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ===== هيكل الصفحة الأساسي ===== */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .section {
+            padding: 90px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .section-title h2::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 750px;
+            margin: 30px auto 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* ===== الشريط العلوي ===== */
+        .top-bar {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 0;
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .top-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .contact-info span {
+            margin-left: 25px;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .contact-info span:hover {
+            color: var(--secondary-light);
+        }
+        
+        .contact-info i {
+            margin-left: 8px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .social-links a {
+            color: var(--white);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            border-top-color: var(--white);
-            animation: spin 0.8s linear infinite;
+            background: rgba(255, 255, 255, 0.12);
+            transition: var(--transition);
+            font-size: 1.15rem;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
         }
         
-        /* نافذة المعاينة المنبثقة */
-        .print-modal {
+        /* ===== شريط التنقل ===== */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            transition: var(--transition);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            width: 60px;
+            height: 60px;
+            margin-left: 12px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .logo-img:hover {
+            transform: rotate(10deg);
+        }
+        
+        .logo-img img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            margin-left: 10px;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.7rem;
+            color: var(--primary);
+            line-height: 1.2;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            margin-bottom: 0;
+        }
+        
+        .logo-text h1 span {
+            display: block;
+            font-size: 1.15rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 8px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 30px;
+            transition: var(--transition);
+            position: relative;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            bottom: 6px;
+            left: 18px;
+            width: 0;
+            height: 3px;
+            background: var(--secondary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+        
+        .nav-links a:hover, 
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: calc(100% - 36px);
+        }
+        
+        .mobile-menu-btn {
             display: none;
-            position: fixed;
+            font-size: 1.7rem;
+            cursor: pointer;
+            color: var(--primary);
+            background: none;
+            border: none;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+        
+        .mobile-menu-btn:hover {
+            color: var(--secondary);
+        }
+        
+        /* ===== الهيرو مع خلفية SVG محسنة ===== */
+        .hero {
+            background: linear-gradient(120deg, rgba(26, 75, 140, 0.85), rgba(13, 58, 112, 0.78)), 
+                         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23f39c12' fill-opacity='0.15' d='M0,160L48,176C96,192,192,224,288,218.7C384,213,480,171,576,149.3C672,128,768,128,864,149.3C960,171,1056,213,1152,213.3C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 160px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            line-height: 1.3;
+            font-weight: 900;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 40px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.92;
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            animation: fadeIn 1.4s ease-out forwards;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
+            background: linear-gradient(45deg, var(--secondary), var(--secondary-light));
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 1;
+        }
+        
+        .btn:hover::before {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(243, 156, 18, 0.35);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.25);
+        }
+        
+        /* ===== قسم التسجيلات ===== */
+        .registrations {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            padding: 100px 0;
+        }
+        
+        .registrations-content {
+            max-width: 950px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .registrations h2 {
+            font-size: 2.6rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+        }
+        
+        .registrations h2::after {
+            content: "";
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .registrations p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 35px 25px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+            z-index: 0;
+            transition: var(--transition);
+        }
+        
+        .feature-card:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:nth-child(5)::before {
+            background-image: url('https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:nth-child(6)::before {
+            background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+        }
+        
+        .feature-card:hover::before {
+            opacity: 0.3;
+            transform: scale(1.05);
+        }
+        
+        .feature-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-card i {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover i {
+            transform: scale(1.1);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+        
+        .feature-card p {
+            font-size: 1.05rem;
+            margin-bottom: 0;
+        }
+        
+        /* ===== قسم عن المدرسة ===== */
+        .about-school {
+            background-color: var(--white);
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .about-text {
+            position: relative;
+            padding: 40px;
+            background: linear-gradient(145deg, var(--light), var(--white));
+            border-radius: 20px;
+            box-shadow: var(--box-shadow);
+            z-index: 2;
+        }
+        
+        .about-text::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 50px;
+            height: 50px;
+            border-top: 4px solid var(--secondary);
+            border-right: 4px solid var(--secondary);
+            border-radius: 0 20px 0 0;
+        }
+        
+        .about-text::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            width: 50px;
+            height: 50px;
+            border-bottom: 4px solid var(--secondary);
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 0 0 20px;
+        }
+        
+        .about-text h2 {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .about-text h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), var(--secondary-light));
+            border-radius: 2px;
+        }
+        
+        .about-text p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px 15px;
+            background: rgba(26, 75, 140, 0.05);
+            border-radius: 12px;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .stat-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(243, 156, 18, 0.1);
+            transition: height 0.4s ease;
+            z-index: -1;
+        }
+        
+        .stat-item:hover::before {
+            height: 100%;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-item h3 {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+            font-weight: 800;
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover h3 {
+            color: var(--secondary);
+        }
+        
+        .stat-item p {
+            margin: 0;
+            font-size: 1.05rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        /* ===== الكاروسل المحسن ===== */
+        .about-images {
+            position: relative;
+            height: 500px;
+        }
+        
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        
+        .carousel-slide.active {
+            opacity: 1;
+        }
+        
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .carousel-dot.active {
+            background: var(--white);
+            transform: scale(1.3);
+        }
+        
+        .floating-element {
+            position: absolute;
+            z-index: 3;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .floating-1 {
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
         }
         
-        .print-modal.active {
+        .floating-2 {
+            bottom: 80px;
+            right: 50px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(26, 75, 140, 0.3);
+        }
+        
+        /* ===== قسم الخدمات مع تحسين البوم الصور ===== */
+        .services {
+            background: var(--white);
+            position: relative;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        
+        .service-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 2px solid var(--light-gray);
+            position: relative;
+            transform: translateY(0);
             display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
-        .print-modal-content {
-            background: white;
-            border-radius: 24px;
-            max-width: 800px;
+        .service-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--box-shadow-hover);
+            border-color: var(--secondary-light);
+        }
+        
+        .service-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .service-img img {
             width: 100%;
-            max-height: 90vh;
-            overflow: auto;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.4s ease;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
         }
         
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
         }
         
-        .print-modal-header {
-            padding: 20px 30px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
+        .service-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.6rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+        
+        .service-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-content h3 {
+            color: var(--primary);
+            margin-bottom: 18px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 10px;
+        }
+        
+        .service-content p {
+            color: var(--gray);
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            flex-grow: 1;
+        }
+        
+        .service-content a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+            font-size: 1.05rem;
+            margin-top: auto;
+        }
+        
+        .service-content a i {
+            margin-left: 10px;
+            transition: transform 0.4s;
+        }
+        
+        .service-content a:hover {
+            color: var(--primary);
+        }
+        
+        .service-content a:hover i {
+            transform: translateX(8px);
+        }
+        
+        /* ===== قسم الأنشطة ===== */
+        .activities {
+            background: var(--light);
+            position: relative;
+            padding: 100px 0;
+        }
+        
+        .activities-slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 25px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+            height: 550px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        .slide-content {
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            color: var(--white);
+            padding: 45px;
+            width: 100%;
+            transform: translateY(25px);
+            opacity: 0;
+            transition: all 0.8s ease 0.4s;
+        }
+        
+        .slide.active .slide-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .slide-content h3 {
+            font-size: 2.3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        
+        .slide-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            line-height: 1.8;
+        }
+        
+        .slider-nav {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .slider-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.35);
+            margin: 0 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .slider-dot.active {
+            background-color: var(--white);
+            transform: scale(1.4);
+        }
+        
+        .slider-dot::after {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .slider-dot:hover::after {
+            opacity: 1;
+        }
+        
+        .slide-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 4.5s linear;
+            z-index: 5;
+        }
+        
+        .slide.active .slide-progress {
+            width: 100%;
+        }
+        
+        /* ===== قسم المنصة الإلكترونية ===== */
+        .platform {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: var(--white);
+            padding: 100px 0;
+        }
+        
+        .platform-content {
+            max-width: 950px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .platform h2 {
+            font-size: 2.6rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            font-weight: 800;
+        }
+        
+        .platform h2::after {
+            content: "";
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90px;
+            height: 5px;
+            background: var(--secondary);
+            border-radius: 3px;
+        }
+        
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
+        }
+        
+        .platform-feature {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px 30px;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .platform-feature:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .platform-feature i {
+            font-size: 3.2rem;
+            color: var(--secondary);
+            margin-bottom: 25px;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.2);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .platform-feature:hover i {
+            transform: scale(1.15);
+            background: var(--secondary);
+            color: var(--white);
+        }
+        
+        .platform-feature h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .platform-feature p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* ===== قسم الأسئلة الشائعة ===== */
+        .faq-section {
+            background-color: var(--light);
+            padding: 100px 0;
+        }
+        
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: var(--white);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .faq-item:hover {
+            box-shadow: var(--box-shadow-hover);
+        }
+        
+        .faq-question {
+            padding: 25px 30px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 24px 24px 0 0;
+            transition: var(--transition);
         }
         
-        .print-modal-header h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .faq-question:hover {
+            color: var(--secondary);
+        }
+        
+        .faq-question i {
+            transition: transform 0.4s ease;
+        }
+        
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 30px 30px;
+        }
+        
+        /* ===== نموذج التسجيل ===== */
+        .registration-form-section {
+            background: linear-gradient(to bottom, #e6f2ff, #ffffff);
+            padding: 100px 0;
+        }
+        
+        .registration-form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .registration-form-container h2 {
+            font-size: 2.3rem;
+            color: var(--primary);
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            gap: 15px;
+            font-weight: 800;
         }
         
-        .print-modal-close {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .registration-form-container h2 i {
+            color: var(--secondary);
+            font-size: 2.5rem;
+        }
+        
+        #registration-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .form-group {
+            position: relative;
+            text-align: right;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            background-color: var(--light);
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.2);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a4b8c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 18px;
+            padding-right: 45px;
+        }
+        
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .form-actions {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .action-btn {
+            padding: 16px 25px;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 1.3rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.05rem;
+            border: none;
+        }
+        
+        .whatsapp-btn {
+            background: var(--accent);
+            color: var(--white);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        .email-btn {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 6px 15px rgba(26, 75, 140, 0.3);
+        }
+        
+        .email-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(26, 75, 140, 0.4);
+        }
+        
+        .confirmation-message {
+            background: rgba(37, 211, 102, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: center;
+            color: var(--accent);
+            font-weight: 600;
+            display: none;
+        }
+        
+        .confirmation-message i {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        /* ===== قسم خريطة المدرسة ===== */
+        .map-section {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+        
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            height: 450px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        
+        /* ===== الفوتر ===== */
+        .footer {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            color: rgba(255, 255, 255, 0.85);
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover;
+            opacity: 0.08;
+            z-index: 1;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-widget {
+            padding: 0 15px;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .footer-logo-img {
+            width: 55px;
+            height: 55px;
+            margin-left: 18px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--secondary);
+        }
+        
+        .footer-logo-img img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+        
+        .footer-logo-text h3 {
+            font-size: 1.7rem;
+            color: var(--white);
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+        
+        .footer-logo-text h3 span {
+            color: var(--secondary);
+        }
+        
+        .footer-widget p {
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .footer-social a {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.12);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            font-size: 1.2rem;
         }
         
-        .print-modal-close:hover {
-            background: var(--danger);
-            transform: rotate(90deg);
+        .footer-social a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
         }
         
-        .print-modal-body {
-            padding: 30px;
-            background: #fafbfc;
-        }
-        
-        .print-modal-footer {
-            padding: 20px 30px;
-            background: white;
-            border-top: 1px solid var(--light-gray);
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            border-radius: 0 0 24px 24px;
-        }
-        
-        /* تصميم الاستمارة المطبوعة */
-        .printable-form {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        .print-header {
-            background: linear-gradient(135deg, #1a4b8c, #0d3a70);
-            color: white;
-            padding: 30px;
-            text-align: center;
+        .footer-widget h4 {
+            color: var(--white);
+            margin-bottom: 25px;
             position: relative;
-            overflow: hidden;
+            padding-bottom: 15px;
+            font-size: 1.35rem;
+            font-weight: 800;
         }
         
-        .print-header::before {
+        .footer-widget h4::after {
             content: "";
             position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
         }
         
-        .print-header h2 {
-            font-size: 2rem;
-            font-weight: 900;
-            margin-bottom: 8px;
-            position: relative;
+        .footer-links {
+            list-style: none;
         }
         
-        .print-header .registration-number {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            background: rgba(255,255,255,0.15);
-            display: inline-block;
-            padding: 6px 25px;
-            border-radius: 30px;
-            margin-top: 10px;
+        .footer-links li {
+            margin-bottom: 15px;
         }
         
-        .print-body {
-            padding: 35px;
-        }
-        
-        .print-section {
-            margin-bottom: 30px;
-            border-bottom: 2px dashed var(--light-gray);
-            padding-bottom: 25px;
-        }
-        
-        .print-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .print-section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 20px;
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 12px;
+            font-size: 1.05rem;
         }
         
-        .print-section-title i {
+        .footer-links a:hover {
             color: var(--secondary);
-            background: rgba(243, 156, 18, 0.1);
-            padding: 8px;
-            border-radius: 12px;
+            transform: translateX(8px);
         }
         
-        .print-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px 30px;
+        .footer-links a i {
+            margin-left: 10px;
+            color: var(--secondary);
+            font-size: 1rem;
         }
         
-        .print-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 1px dotted #ddd;
-            padding-bottom: 10px;
-        }
-        
-        .print-item .print-label {
-            font-weight: 600;
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-        
-        .print-item .print-value {
-            font-weight: 700;
-            color: var(--dark);
-            text-align: left;
-        }
-        
-        .print-footer {
-            background: #f8f9fa;
-            padding: 25px 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 2px solid var(--primary-light);
-        }
-        
-        .print-qr-small {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .stamp-area {
+        .copyright {
             text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 0.95rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0.8;
         }
         
-        .stamp {
-            width: 120px;
-            height: 120px;
-            border: 3px dashed var(--primary);
+        .scroll-top {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
+            background: var(--secondary);
+            color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary);
-            font-weight: 700;
-            opacity: 0.5;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(30px);
         }
         
-        .action-buttons-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
+        .scroll-top.active {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        .btn-print, .btn-pdf {
-            flex: 1;
-        }
-        
-        .btn-print {
+        .scroll-top:hover {
             background: var(--primary);
-            color: white;
+            transform: translateY(-8px);
         }
         
-        .btn-pdf {
-            background: var(--danger);
-            color: white;
+        /* ===== تحسينات إمكانية الوصول ===== */
+        a:focus, button:focus, input:focus, select:focus, textarea:focus {
+            outline: 3px solid var(--secondary);
+            outline-offset: 2px;
         }
         
-        .btn-print:hover, .btn-pdf:hover {
-            transform: translateY(-3px);
-        }
-        
-        /* تحسينات الطباعة */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            
-            .printable-form, .printable-form * {
-                visibility: visible;
-            }
-            
-            .printable-form {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                box-shadow: none;
-            }
-            
-            .print-modal-close,
-            .print-modal-footer,
-            .action-buttons-group {
-                display: none !important;
-            }
-            
-            .print-header {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-        }
-        
-        /* Footer */
-        .registration-footer {
-            text-align: center;
-            margin-top: 30px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .registration-footer a {
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--secondary);
             color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
+            padding: 8px;
+            z-index: 10000;
+            transition: top 0.3s;
         }
         
-        .registration-footer a:hover {
-            text-decoration: underline;
+        .skip-to-content:focus {
+            top: 0;
         }
         
-        /* التجاوب مع الموبايل */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px 10px;
+        /* ===== تحسينات للهاتف المحمول ===== */
+        @media (max-width: 1200px) {
+            .hero h2 {
+                font-size: 2.5rem;
             }
             
-            .card-header {
-                padding: 25px 20px;
+            .section-title h2 {
+                font-size: 2.2rem;
             }
             
-            .card-header h2 {
-                font-size: 1.6rem;
-            }
-            
-            .card-body {
-                padding: 25px 20px;
-            }
-            
-            .form-grid {
+            .about-content {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 40px;
             }
             
-            .form-group.full-width {
-                grid-column: span 1;
+            .about-images {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero {
+                padding: 140px 0 80px;
             }
             
-            .progress-steps {
-                margin-top: 20px;
+            .hero h2 {
+                font-size: 2.3rem;
             }
             
-            .step-label {
-                font-size: 0.75rem;
+            .hero p {
+                font-size: 1.15rem;
             }
             
-            .form-navigation {
+            .section {
+                padding: 80px 0;
+            }
+            
+            .section-title {
+                margin-bottom: 60px;
+            }
+            
+            .activities-slider {
+                height: 480px;
+            }
+            
+            .about-images {
+                height: 350px;
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 95px;
+                right: -100%;
                 flex-direction: column;
+                background-color: var(--white);
+                width: 85%;
+                height: calc(100vh - 95px);
+                box-shadow: -8px 0 20px rgba(0, 0, 0, 0.12);
+                transition: right 0.45s ease;
+                padding: 35px 25px;
+                z-index: 1000;
+                backdrop-filter: blur(10px);
             }
             
-            .btn {
-                width: 100%;
+            .nav-links.active {
+                right: 0;
             }
             
-            .qr-container {
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                margin: 5px 0;
+            }
+            
+            .nav-links a::after {
+                display: none;
+            }
+            
+            .nav-links a:hover, 
+            .nav-links a.active {
+                background: rgba(26, 75, 140, 0.08);
+            }
+            
+            .cta-buttons {
                 flex-direction: column;
+                gap: 15px;
             }
             
-            .qr-info {
+            .hero {
+                padding: 120px 0 70px;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+            
+            .activities-slider {
+                height: 420px;
+            }
+            
+            .slide-content {
+                padding: 35px;
+            }
+            
+            .slide-content h3 {
+                font-size: 1.8rem;
+            }
+            
+            .slide-content p {
+                font-size: 1.05rem;
+            }
+            
+            .features-grid,
+            .services-grid,
+            .platform-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                margin-bottom: 20px;
+            }
+            
+            .floating-element {
+                display: none;
+            }
+            
+            .faq-question {
+                padding: 20px;
+                font-size: 1.15rem;
+            }
+            
+            .faq-answer {
+                padding: 0 20px;
+                font-size: 1rem;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .top-bar {
+                padding: 8px 0;
+            }
+            
+            .top-info {
+                flex-direction: column;
+                gap: 8px;
+                justify-content: center;
                 text-align: center;
             }
             
-            .summary-grid {
-                grid-template-columns: 1fr;
+            .contact-info {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 5px;
             }
             
-            .logo-text h1 {
-                font-size: 1.6rem;
+            .contact-info span {
+                margin: 0 10px;
+                justify-content: center;
+                font-size: 0.9rem;
             }
             
-            .print-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .card-header h2 {
-                font-size: 1.3rem;
+            .social-links {
+                width: 100%;
+                justify-content: center;
+                margin-top: 5px;
             }
             
-            .radio-group {
+            .hero {
+                padding: 100px 0 60px;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.05rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.9rem;
+            }
+            
+            .section-title p {
+                font-size: 1rem;
+            }
+            
+            .activities-slider {
+                height: 350px;
+            }
+            
+            .slide-content {
+                padding: 25px;
+            }
+            
+            .slide-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .slide-content p {
+                font-size: 0.95rem;
+            }
+            
+            .slider-nav {
+                bottom: 15px;
+                padding: 8px 15px;
+            }
+            
+            .registration-form-container {
+                padding: 25px;
+            }
+            
+            .registration-form-container h2 {
+                font-size: 1.8rem;
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .scroll-top {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+                bottom: 25px;
+                right: 25px;
+            }
+            
+            .about-images {
+                height: 300px;
+            }
+            
+            .map-container {
+                height: 250px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <!-- Header -->
-        <div class="registration-header">
-            <div class="logo-container">
-                <div class="logo-img">
-                    <img src="https://aspirelearnz.website/uploads/gallery/media/1752938180-1670202096687bb6c44dda7!Sans%20titre%20(Logo)_20250719_161537_0000.png?1752952570" alt="LEADERS VISION">
+    <!-- رابط تخطي المحتوى لإمكانية الوصول -->
+    <a href="#main-content" class="skip-to-content">تخطى إلى المحتوى الرئيسي</a>
+    
+    <!-- الشريط العلوي -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-info">
+                <div class="contact-info">
+                    <span><i class="fas fa-phone" aria-hidden="true"></i> 0774479525</span>
+                    <span><i class="fas fa-envelope" aria-hidden="true"></i> Contact@leadersvision.biz</span>
                 </div>
-                <div class="logo-text">
-                    <h1>LEADERS VISION EDUCATION</h1>
-                    <span>استمارة التسجيل الرسمية 2025-2026</span>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1JruRDQYbc/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/leaders_vision_education?igsh=NmN2bHEwbWk2OXYx" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@leaders_vision_academy?_t=ZS-8zMLVPHoSGO&_r=1" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
-
-        <!-- البطاقة الرئيسية -->
-        <div class="registration-card">
-            <div class="card-header">
-                <h2>
-                    <i class="fas fa-user-graduate"></i>
-                    سجل معنا الآن
-                </h2>
-                <p>املأ البيانات التالية للانضمام إلى عائلة LEADERS VISION التعليمية</p>
+    </div>
+    
+    <!-- شريط التنقل -->
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <div class="logo-container">
+                        <div class="logo-img">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1752938180-1670202096687bb6c44dda7!Sans%20titre%20(Logo)_20250719_161537_0000.png?1752952570" alt="شعار LEADERS VISION" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                        <div class="logo-text">
+                            <h1>LEADERS<br><span>VISION EDUCATION+</span></h1>
+                        </div>
+                    </div>
+                </div>
                 
-                <!-- خطوات التقدم -->
-                <div class="progress-steps">
-                    <div class="step active" data-step="1">
-                        <div class="step-number"><span>1</span><i class="fas fa-check"></i></div>
-                        <div class="step-label">البيانات الشخصية</div>
+                <button class="mobile-menu-btn" aria-label="فتح القائمة">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <nav aria-label="القائمة الرئيسية">
+                    <ul class="nav-links">
+                        <li><a href="#" class="active">الرئيسية</a></li>
+                        <li><a href="#about">عن المدرسة</a></li>
+                        <li><a href="#services">خدماتنا</a></li>
+                        <li><a href="#activities">الأنشطة</a></li>
+                        <li><a href="#faq">الأسئلة الشائعة</a></li>
+                        <li><a href="#registration-form-section">سجل الآن</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- القسم البطولي مع خلفية SVG -->
+    <section class="hero" id="main-content">
+        <div class="container">
+            <div class="hero-content">
+                <h2>مرحبا بكم في مدرسة LEADERS VISION التعليمية</h2>
+                <p>التميز في دروس الدعم وتعليم اللغات الأجنبية في بيئة تعليمية محفزة وإبداعية</p>
+                
+                <div class="cta-buttons">
+                    <a href="#registration-form-section" class="btn btn-primary">سجل الآن</a>
+                    <a href="#about" class="btn btn-outline">اكتشف المزيد</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم التسجيلات -->
+    <section class="registrations">
+        <div class="container">
+            <div class="registrations-content">
+                <h2>انطلقت التسجيلات الرسمية لدروس الدعم المدرسي</h2>
+                <p>هل تبحث عن دعم دراسي فعال ومميز لأبنائك؟ هل ترغب في نتائج ملموسة وتحسين المستوى الدراسي في جو محفز وآمن؟ لدينا الحل!</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card animate">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>أساتذة أكفاء</h3>
+                        <p>ذوو خبرة طويلة في مجال التعليم</p>
                     </div>
-                    <div class="step" data-step="2">
-                        <div class="step-number"><span>2</span><i class="fas fa-check"></i></div>
-                        <div class="step-label">البيانات الدراسية</div>
+                    
+                    <div class="feature-card animate">
+                        <i class="fas fa-users"></i>
+                        <h3>مجموعات محدودة</h3>
+                        <p>ضمان الفعالية والمتابعة الفردية</p>
                     </div>
-                    <div class="step" data-step="3">
-                        <div class="step-number"><span>3</span><i class="fas fa-check"></i></div>
-                        <div class="step-label">التأكيد والدفع</div>
+                    
+                    <div class="feature-card animate">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>متابعة دورية</h3>
+                        <p>تقارير دورية لأولياء الأمور</p>
                     </div>
+                    
+                    <div class="feature-card animate">
+                        <i class="fas fa-laptop"></i>
+                        <h3>وسائل حديثة</h3>
+                        <p>أساليب تعليم متطورة وبيئة محفزة</p>
+                    </div>
+                    
+                    <div class="feature-card animate">
+                        <i class="fas fa-trophy"></i>
+                        <h3>نتائج متميزة</h3>
+                        <p>أكثر من 95% من طلابنا يحققون نتائج ممتازة</p>
+                    </div>
+                    
+                    <div class="feature-card animate">
+                        <i class="fas fa-brain"></i>
+                        <h3>تنمية المهارات</h3>
+                        <p>برامج متخصصة ل تنمية التفكير النقدي والإبداعي</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم عن المدرسة -->
+    <section class="section about-school" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>عن مدرستنا</h2>
+                <p>رحلة التميز التعليمي التي بدأت منذ عام 2025</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>قصة نجاح LEADERS VISION</h2>
+                    <p>تأسست LEADERS VISION EDUCATION عام 2025 بمهمة واحدة واضحة: تقديم تعليم متميز يواكب متطلبات العصر ويلبي احتياجات الطلاب بمختلف مستوياتهم. بدأنا برؤية طموحة لخلق بيئة تعليمية محفزة تجمع بين الأصالة والحداثة.</p>
+                    <p>استطعنا بناء سمعة مميزة في مجال التعليم الإضافي وتدريس اللغات، حيث تخرج من مؤسستنا عشرات الطلاب والطالبات، حققوا نتائج متميزة في مسيرتهم التعليمية والمهنية.</p>
+                    <p>نؤمن في LEADERS VISION أن التعليم ليس مجرد نقل للمعلومات، بل هو عملية شاملة لتنمية الشخصية وصقل المهارات وبناء الثقة. لذلك نركز على الجانب التطبيقي والعملي في جميع برامجنا التعليمية.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <h3>2025</h3>
+                            <p>سنة التأسيس</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>20+</h3>
+                            <p>طالب تخرجوا</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>90%</h3>
+                            <p>رضا أولياء الأمور</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>15</h3>
+                            <p>أستاذ محترف</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-images">
+                    <div class="carousel-container">
+                        <div class="carousel-slide active">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1756823348-38299060068b6ff34d750d!Blue%20and%20Yellow%20Modern%20Registrar%20for%20Elementary%20Schools%20Facebook%20Post_20250901_103228_0000.png?1756823367" alt="فصولنا الدراسية" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1756823860-133738571368b701349e42d!FB_IMG_1756823474903.jpg?1756823861" alt="طلابنا المتميزون" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1756823988-79921220068b701b428ec7!Blue%20and%20Yellow%20Modern%20Registrar%20for%20Elementary%20Schools%20Facebook%20Post_20250826_152446_0000.png?1756823989" alt="معلمون محترفون" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1756823988-51685718368b701b46c1a3!Orange%20Illustrated%20Back%20To%20School%20Instagram%20Post_20250826_152819_0000.png?1756823989" alt="بيئة تعليمية متطورة" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-nav">
+                        <div class="carousel-dot active"></div>
+                        <div class="carousel-dot"></div>
+                        <div class="carousel-dot"></div>
+                        <div class="carousel-dot"></div>
+                    </div>
+                    
+                    <div class="floating-element floating-1">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    
+                    <div class="floating-element floating-2">
+                        التميز منذ 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم الخدمات المحسّنة مع تحسين البوم الصور -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدماتنا التعليمية</h2>
+                <p>نقدم مجموعة متنوعة من البرامج التعليمية المصممة لتنمية مهارات الطلاب وتحقيق التميز الأكاديمي</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://aspirelearnz.website/uploads/gallery/media/1756651566-155248838468b4602e6ea93!IMG-20250829-WA0013.jpg?1756735879" alt="الطور الابتدائي" class="lazy-load" onload="this.classList.add('loaded')">
+                        <div class="service-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>الطور الابتدائي</h3>
+                        <p>تقوية في المواد الأساسية بأسلوب مبسط وممتع، مع التركيز على بناء أساسيات قوية في القراءة والحساب.</p>
+                        <a href="#registration-form-section">سجل الآن <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="دروس الدعم للمرحلة المتوسطة" class="lazy-load" onload="this.classList.add('loaded')">
+                        <div class="service-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>الطور المتوسط</h3>
+                        <p>مراجعات دقيقة وتدريب على الفروض والاختبارات، مع التركيز على تطوير مهارات التحليل والتفكير النقدي.</p>
+                        <a href="#registration-form-section">سجل الآن <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="دروس الدعم للمرحلة الثانوية" class="lazy-load" onload="this.classList.add('loaded')">
+                        <div class="service-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>الطور الثانوي</h3>
+                        <p>تحضيرات جادة للبكالوريا، وتدريس معمق بأحدث الطرق، مع التركيز على حل المشكلات معقدة والتفكير الإبداعي.</p>
+                        <a href="#registration-form-section">سجل الآن <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="دروس الدعم للمرحلة الجامعية" class="lazy-load" onload="this.classList.add('loaded')">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                    <div class="service-content">
+                        <h3>الطور الجامعي</h3>
+                        <p>دروس دعم متخصصة لطلاب الجامعات في المواد الأساسية، مع التركيز على التخصصات العلمية والأدبية.</p>
+                        <a href="#registration-form-section">سجل الآن <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم الأنشطة -->
+    <section class="section activities" id="activities">
+        <div class="container">
+            <div class="section-title">
+                <h2>أنشطتنا التعليمية</h2>
+                <p>اكتشف أجواءنا التعليمية المميزة والأنشطة التفاعلية التي نقدمها لطلابنا</p>
+            </div>
+            
+            <div class="activities-slider">
+                <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="slide-progress"></div>
+                    <div class="slide-content">
+                        <h3>نوادي اللغة التفاعلية</h3>
+                        <p>جلسات حوارية وأنشطة عملية لتعزيز الطلاقة اللغوية والثقة بالنفس، مع فرص للتواصل المباشر مع متحدثين أصليين.</p>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="slide-progress"></div>
+                    <div class="slide-content">
+                        <h3>المسابقات العلمية</h3>
+                        <p>منافسات تعليمية محفزة لتطوير المهارات العلمية والتفكير الإبداعي، مع جوائز قيمة للمتميزين.</p>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="slide-progress"></div>
+                    <div class="slide-content">
+                        <h3>رحلات تعليمية</h3>
+                        <p>زيارات ميدانية لمتاحف ومعارض لتعزيز التعلم التجريبي، وتطبيق المعرفة النظرية في سياقات واقعية.</p>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');">
+                    <div class="slide-progress"></div>
+                    <div class="slide-content">
+                        <h3>ورش العمل المتخصصة</h3>
+                        <p>جلسات تدريبية مكثفة في مجالات متعددة مثل الكتابة الإبداعية، الخطابة، والتفكير النقدي.</p>
+                    </div>
+                </div>
+                
+                <div class="slider-nav">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم المنصة الإلكترونية -->
+    <section class="section platform">
+        <div class="container">
+            <div class="platform-content">
+                <h2>منصتنا الإلكترونية الجديدة</h2>
+                <p>نوفر منصة رقمية حديثة تتيح التواصل المباشر مع الأساتذة لطرح الأسئلة والاستفسارات بشكل آمن وسريع</p>
+                
+                <div class="platform-features">
+                    <div class="platform-feature animate">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>متابعة التقدم</h3>
+                        <p>لأولياء الأمور متابعة تقدم أبنائهم ونتائجهم أولاً بأول من خلال لوحة التحكم الخاصة بهم</p>
+                    </div>
+                    
+                    <div class="platform-feature animate">
+                        <i class="fas fa-book"></i>
+                        <h3>استلام الدروس</h3>
+                        <p>للتلاميذ استلام الدروس والواجبات مباشرة عبر حساباتهم الخاصة في أي وقت ومن أي مكان</p>
+                    </div>
+                    
+                    <div class="platform-feature animate">
+                        <i class="fas fa-comments"></i>
+                        <h3>التواصل المباشر</h3>
+                        <p>التواصل المباشر مع الأساتذة لطرح الأسئلة والاستفسارات بشكل آمن وسريع</p>
+                    </div>
+                    
+                    <div class="platform-feature animate">
+                        <i class="fas fa-school"></i>
+                        <h3>بيئة تعليمية متكاملة</h3>
+                        <p>منصة شاملة توفر جميع الأدوات التعليمية والموارد اللازمة للطلاب لتحقيق النجاح الأكاديمي</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم الأسئلة الشائعة -->
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>الأسئلة الشائعة</h2>
+                <p>إجابات على أكثر الأسئلة التي تهم أولياء الأمور والطلاب</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ما هي طرق الدفع المتاحة للتسجيل؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نوفر عدة طرق دفع لتسهيل عملية التسجيل، بما في ذلك الدفع النقدي، التحويل البنكي، والدفع عبر البطاقات الإلكترونية. كما نقدم خيارات تقسيط للراغبين في ذلك.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>هل تقدمون تجربة مجانية قبل التسجيل?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، نقدم حصة تجريبية مجانية لجميع المستويات الجديدة، حيث يمكن للطالب تجربة أسلوب التدريس والتفاعل مع الأستاذ قبل اتخاذ قرار التسجيل.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>كيف تتم متابعة تقدم الطالب academically؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نقوم بتقييم منتظم لأداء الطالب من خلال اختبارات دورية، متابعة الواجبات، وتقارير شهرية ترسل لأولياء الأمور. بالإضافة إلى جلسات تقييم فردية مع أولياء الأمور لمناقشة مستوى الطالب ووضع خطط التحسين.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ما هو عدد الطلاب في كل مجموعة؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نحرص على أن تكون المجموعات صغيرة ل ضمان جودة التعليم، حيث لا يتجاوز عدد الطلاب في المجموعة الواحدة 12 طالبًا، مما يضمن حصول كل طالب على الاهتمام الكافي من الأستاذ.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>هل تقدمون دروسًا خصوصية فردية؟</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>نعم، نوفر دروسًا خصوصية فردية للطلاب الذين يحتاجون إلى تركيز إضافي أو لديهم صعوبات تعلم محددة. يمكن تحديد مواعيد الدروس الخاصة وفقًا لاحتياجات الطالب وبرنامجه.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- نموذج التسجيل -->
+    <section class="registration-form-section" id="registration-form-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>سجل اهتمامك الآن</h2>
+                <p>املأ النموذج التالي وسنتواصل معك لتأكيد التسجيل</p>
+            </div>
+            
+            <div class="registration-form-container">
+                <h2>
+                    <i class="fas fa-edit"></i>
+                    سجّل اهتمامك الآن وسنتواصل معك!
+                </h2>
+                
+                <form id="registration-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="الاسم الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="age" placeholder="العمر" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="البريد الإلكتروني" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" id="phone" placeholder="رقم الهاتف" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select class="form-control" id="course" required>
+                            <option value="">اختر الدورة/المستوى التعليمي</option>
+                            <option value="الطور الابتدائي">الطور الابتدائي</option>
+                            <option value="الطور المتوسط">الطور المتوسط</option>
+                            <option value="الطور الثانوي">الطور الثانوي</option>
+                            <option value="الطور الجامعي">الطور الجامعي</option>
+                            <option value="دروس اللغة الإنجليزية">دروس اللغة الإنجليزية</option>
+                            <option value="دروس اللغة الفرنسية">دروس اللغة الفرنسية</option>
+                            <option value="برامج صيفية">برامج صيفية</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea class="form-control" id="message" placeholder="أي ملاحظات إضافية أو استفسارات؟"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="action-btn whatsapp-btn" type="button" onclick="sendToWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> واتساب مباشر
+                        </button>
+                        <button class="action-btn email-btn" type="button" onclick="sendToEmail()">
+                            <i class="fas fa-envelope"></i> إرسال عبر البريد
+                        </button>
+                    </div>
+                    
+                    <div class="confirmation-message" id="confirmation">
+                        <i class="fas fa-check-circle"></i>
+                        ✅ شكراً لك! تم إرسال البيانات بنجاح وسنتواصل معك قريباً.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم خريطة المدرسة -->
+    <section class="section map-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>موقع المدرسة</h2>
+                <p>يمكنك زيارة مدرستنا في العنوان التالي</p>
+            </div>
+            
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps?q=36.093334,4.729242&amp;output=embed" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+    
+    <!-- الفوتر -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <div class="footer-logo">
+                        <div class="footer-logo-img">
+                            <img src="https://aspirelearnz.website/uploads/gallery/media/1752938180-1670202096687bb6c44dda7!Sans%20titre%20(Logo)_20250719_161537_0000.png?1752952570" alt="شعار LEADERS VISION" class="lazy-load" onload="this.classList.add('loaded')">
+                        </div>
+                        <div class="footer-logo-text">
+                            <h3>LEADERS <span>VISION</span></h3>
+                        </div>
+                    </div>
+                    <p>مدرسة تعليمية رائدة متخصصة في تقديم دروس الدعم وتعليم اللغات الأجنبية، نسعى لتمكين الطلاب وتحقيق التميز الأكاديمي من خلال برامج تعليمية مبتكرة.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/share/1JruRDQYbc/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/leaders_vision_education?igsh=NmN2bHEwbWk2OXYx"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@leaders_vision_academy?_t=ZS-8zMLVPHoSGO&_r=1"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-widget">
+                    <h4>روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-left"></i> عن المدرسة</a></li>
+                        <li><a href="#services"><i class="fas fa-chevron-left"></i> خدماتنا</a></li>
+                        <li><a href="#activities"><i class="fas fa-chevron-left"></i> الأنشطة</a></li>
+                        <li><a href="#faq"><i class="fas fa-chevron-left"></i> الأسئلة الشائعة</a></li>
+                        <li><a href="#registration-form-section"><i class="fas fa-chevron-left"></i> سجل الآن</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h4>خدماتنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="#services"><i class="fas fa-chevron-left"></i> دروس الدعم الأكاديمي</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-left"></i> تعليم اللغات الأجنبية</a></li>
+                        <li><a href="#activities"><i class="fas fa-chevron-left"></i> ورش العمل التخصصية</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-left"></i> البرامج صيفية</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-left"></i> الاستشارات التعليمية</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-widget">
+                    <h4>معلومات التواصل</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:0774479525"><i class="fas fa-phone"></i> 0774479525</a></li>
+                        <li><a href="mailto:Contact@leadersvision.biz"><i class="fas fa-envelope"></i> Contact@leadersvision.biz</a></li>
+                        <li><a href="https://www.google.com/maps?q=36.093334,4.729242" target="_blank"><i class="fas fa-map-marker-alt"></i> عنوان المدرسة</a></li>
+                        <li><a href="#"><i class="fas fa-clock"></i> الأحد - الخميس: 8:00 - 18:00</a></li>
+                    </ul>
                 </div>
             </div>
             
-            <div class="card-body">
-                <!-- رسائل التنبيه -->
-                <div id="alertContainer"></div>
-                
-                <form id="registrationForm">
-                    <!-- الخطوة 1: البيانات الشخصية -->
-                    <div class="form-step active" data-step="1">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-user"></i>
-                                    الاسم الكامل للطالب
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="studentName" name="studentName" placeholder="أدخل الاسم الثلاثي" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-calendar"></i>
-                                    تاريخ الميلاد
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="date" class="form-control" id="birthDate" name="birthDate" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-venus-mars"></i>
-                                    الجنس
-                                    <span class="required">*</span>
-                                </label>
-                                <div class="radio-group">
-                                    <label class="radio-option">
-                                        <input type="radio" name="gender" value="ذكر" required>
-                                        <span>ذكر</span>
-                                    </label>
-                                    <label class="radio-option">
-                                        <input type="radio" name="gender" value="أنثى" required>
-                                        <span>أنثى</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    مكان الميلاد
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="birthPlace" name="birthPlace" placeholder="المدينة / الولاية" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-address-card"></i>
-                                    العنوان الحالي
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="العنوان الكامل" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-phone"></i>
-                                    رقم هاتف الطالب
-                                </label>
-                                <input type="tel" class="form-control" id="studentPhone" name="studentPhone" placeholder="مثال: 0555123456">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-user-tie"></i>
-                                    اسم ولي الأمر
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="text" class="form-control" id="guardianName" name="guardianName" placeholder="الاسم الكامل" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-phone-alt"></i>
-                                    هاتف ولي الأمر
-                                    <span class="required">*</span>
-                                </label>
-                                <input type="tel" class="form-control" id="guardianPhone" name="guardianPhone" placeholder="مثال: 0770123456" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-envelope"></i>
-                                    البريد الإلكتروني
-                                </label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-briefcase"></i>
-                                    مهنة ولي الأمر
-                                </label>
-                                <input type="text" class="form-control" id="guardianJob" name="guardianJob" placeholder="الوظيفة">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- الخطوة 2: البيانات الدراسية -->
-                    <div class="form-step" data-step="2">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    المستوى الدراسي
-                                    <span class="required">*</span>
-                                </label>
-                                <select class="form-control" id="educationLevel" name="educationLevel" required>
-                                    <option value="">اختر المستوى</option>
-                                    <option value="الطور الابتدائي - سنة أولى">الطور الابتدائي - سنة أولى</option>
-                                    <option value="الطور الابتدائي - سنة ثانية">الطور الابتدائي - سنة ثانية</option>
-                                    <option value="الطور الابتدائي - سنة ثالثة">الطور الابتدائي - سنة ثالثة</option>
-                                    <option value="الطور الابتدائي - سنة رابعة">الطور الابتدائي - سنة رابعة</option>
-                                    <option value="الطور الابتدائي - سنة خامسة">الطور الابتدائي - سنة خامسة</option>
-                                    <option value="الطور المتوسط - سنة أولى">الطور المتوسط - سنة أولى</option>
-                                    <option value="الطور المتوسط - سنة ثانية">الطور المتوسط - سنة ثانية</option>
-                                    <option value="الطور المتوسط - سنة ثالثة">الطور المتوسط - سنة ثالثة</option>
-                                    <option value="الطور المتوسط - سنة رابعة">الطور المتوسط - سنة رابعة</option>
-                                    <option value="الطور الثانوي - سنة أولى جذع مشترك">الطور الثانوي - سنة أولى جذع مشترك</option>
-                                    <option value="الطور الثانوي - سنة ثانية">الطور الثانوي - سنة ثانية</option>
-                                    <option value="الطور الثانوي - سنة ثالثة بكالوريا">الطور الثانوي - سنة ثالثة بكالوريا</option>
-                                    <option value="الطور الجامعي">الطور الجامعي</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-school"></i>
-                                    المؤسسة التعليمية الحالية
-                                </label>
-                                <input type="text" class="form-control" id="currentSchool" name="currentSchool" placeholder="اسم المدرسة / الثانوية">
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label class="form-label">
-                                    <i class="fas fa-book-open"></i>
-                                    المواد المطلوب دعم فيها
-                                    <span class="required">*</span>
-                                </label>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 10px;">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="الرياضيات">
-                                        <span>📐 الرياضيات</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="الفيزياء">
-                                        <span>⚡ الفيزياء</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="العلوم">
-                                        <span>🧪 العلوم الطبيعية</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="اللغة العربية">
-                                        <span>📖 اللغة العربية</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="اللغة الفرنسية">
-                                        <span>🇫🇷 اللغة الفرنسية</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="اللغة الإنجليزية">
-                                        <span>🇬🇧 اللغة الإنجليزية</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="التاريخ والجغرافيا">
-                                        <span>🌍 تاريخ وجغرافيا</span>
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="subjects" value="الفلسفة">
-                                        <span>💭 الفلسفة</span>
-                                    </label>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-clock"></i>
-                                    الفترة المفضلة للدراسة
-                                </label>
-                                <select class="form-control" id="preferredTime" name="preferredTime">
-                                    <option value="">اختر الفترة</option>
-                                    <option value="الفترة الصباحية (8:00 - 12:00)">الفترة الصباحية (8:00 - 12:00)</option>
-                                    <option value="الفترة المسائية (14:00 - 18:00)">الفترة المسائية (14:00 - 18:00)</option>
-                                    <option value="نهاية الأسبوع (الجمعة - السبت)">نهاية الأسبوع (الجمعة - السبت)</option>
-                                    <option value="حسب البرنامج المتاح">حسب البرنامج المتاح</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label class="form-label">
-                                    <i class="fas fa-sticky-note"></i>
-                                    ملاحظات إضافية
-                                </label>
-                                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="أي معلومات إضافية تود إضافتها..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- الخطوة 3: التأكيد والدفع -->
-                    <div class="form-step" data-step="3">
-                        <!-- QR Code Section -->
-                        <div class="qr-section">
-                            <div class="qr-title">
-                                <i class="fas fa-qrcode"></i>
-                                امسح رمز QR للدفع الإلكتروني
-                            </div>
-                            <div class="qr-container">
-                                <div class="qr-code-wrapper">
-                                    <div id="qrcode"></div>
-                                </div>
-                                <div class="qr-info">
-                                    <h4><i class="fas fa-info-circle"></i> معلومات الدفع</h4>
-                                    <ul>
-                                        <li><i class="fas fa-check-circle"></i> امسح الكود باستخدام تطبيق البنك</li>
-                                        <li><i class="fas fa-check-circle"></i> أو استخدم تطبيق BaridiMob</li>
-                                        <li><i class="fas fa-check-circle"></i> المبلغ: 2000 دج (رسوم التسجيل)</li>
-                                        <li><i class="fas fa-check-circle"></i> CCP: 00123456789</li>
-                                        <li><i class="fas fa-check-circle"></i> المفتاح: 12</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- ملخص التسجيل -->
-                        <div class="summary-box">
-                            <div class="summary-title">
-                                <i class="fas fa-clipboard-list"></i>
-                                ملخص بيانات التسجيل
-                            </div>
-                            <div class="summary-grid" id="summaryContainer">
-                                <!-- سيتم ملؤها ديناميكياً -->
-                            </div>
-                        </div>
-                        
-                        <!-- الموافقة على الشروط -->
-                        <div class="checkbox-group">
-                            <label class="checkbox-option">
-                                <input type="checkbox" id="termsAgree" name="termsAgree" required>
-                                <span>
-                                    أوافق على 
-                                    <a href="#" style="color: var(--primary);">الشروط والأحكام</a>
-                                    وسياسة الخصوصية لمدرسة LEADERS VISION
-                                    <span class="required">*</span>
-                                </span>
-                            </label>
-                            <label class="checkbox-option">
-                                <input type="checkbox" id="paymentConfirm" name="paymentConfirm">
-                                <span>أؤكد أنني قمت بعملية الدفع (سيُطلب إثبات الدفع لاحقاً)</span>
-                            </label>
-                        </div>
-                        
-                        <!-- QR Code لصفحة التسجيل نفسها -->
-                        <div style="margin-top: 25px; padding: 20px; background: rgba(0,0,0,0.02); border-radius: 16px; text-align: center;">
-                            <p style="margin-bottom: 15px; color: var(--gray);">
-                                <i class="fas fa-share-alt"></i>
-                                شارك رابط التسجيل مع أصدقائك
-                            </p>
-                            <div style="display: flex; justify-content: center;">
-                                <div id="shareQrcode"></div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- أزرار التنقل -->
-                    <div class="form-navigation">
-                        <button type="button" class="btn btn-prev" id="prevBtn" style="display: none;">
-                            <i class="fas fa-chevron-right"></i>
-                            السابق
-                        </button>
-                        <button type="button" class="btn btn-next" id="nextBtn">
-                            التالي
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button type="submit" class="btn btn-submit" id="submitBtn" style="display: none;">
-                            <i class="fas fa-check-circle"></i>
-                            تأكيد التسجيل
-                            <span class="spinner" style="display: none;"></span>
-                        </button>
-                    </div>
-                </form>
-                
-                <!-- أزرار التواصل البديلة -->
-                <div style="text-align: center; margin-top: 25px;">
-                    <p style="color: var(--gray); margin-bottom: 15px;">أو يمكنك التسجيل مباشرة عبر:</p>
-                    <div style="display: flex; gap: 15px; justify-content: center;">
-                        <a href="https://wa.me/213774479525" target="_blank" class="btn btn-whatsapp" style="padding: 12px 25px; text-decoration: none;">
-                            <i class="fab fa-whatsapp"></i>
-                            واتساب
-                        </a>
-                        <a href="tel:0774479525" class="btn" style="background: var(--primary); color: white; text-decoration: none; padding: 12px 25px;">
-                            <i class="fas fa-phone"></i>
-                            اتصال هاتفي
-                        </a>
-                    </div>
-                </div>
+            <div class="copyright">
+                <p>© 2025 LEADERS VISION EDUCATION. جميع الحقوق محفوظة</p>
             </div>
         </div>
-        
-        <div class="registration-footer">
-            <p>© 2025 LEADERS VISION EDUCATION. جميع الحقوق محفوظة | 
-                <a href="/">العودة للرئيسية</a>
-            </p>
-        </div>
-    </div>
+    </footer>
 
-    <!-- نافذة المعاينة المنبثقة -->
-    <div class="print-modal" id="printModal">
-        <div class="print-modal-content">
-            <div class="print-modal-header">
-                <h3>
-                    <i class="fas fa-file-alt"></i>
-                    استمارة التسجيل
-                </h3>
-                <button class="print-modal-close" onclick="closePrintModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="print-modal-body">
-                <!-- محتوى الاستمارة المطبوعة -->
-                <div class="printable-form" id="printableForm">
-                    <div class="print-header">
-                        <h2>LEADERS VISION EDUCATION</h2>
-                        <p style="font-size: 1.1rem; margin-bottom: 5px;">استمارة تسجيل رسمية - السنة الدراسية 2025-2026</p>
-                        <div class="registration-number" id="printRegNumber"></div>
-                    </div>
-                    
-                    <div class="print-body">
-                        <!-- البيانات الشخصية -->
-                        <div class="print-section">
-                            <div class="print-section-title">
-                                <i class="fas fa-user-circle"></i>
-                                البيانات الشخصية
-                            </div>
-                            <div class="print-grid" id="printPersonalData"></div>
-                        </div>
-                        
-                        <!-- بيانات ولي الأمر -->
-                        <div class="print-section">
-                            <div class="print-section-title">
-                                <i class="fas fa-users"></i>
-                                بيانات ولي الأمر
-                            </div>
-                            <div class="print-grid" id="printGuardianData"></div>
-                        </div>
-                        
-                        <!-- البيانات الدراسية -->
-                        <div class="print-section">
-                            <div class="print-section-title">
-                                <i class="fas fa-graduation-cap"></i>
-                                البيانات الدراسية
-                            </div>
-                            <div class="print-grid" id="printAcademicData"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="print-footer">
-                        <div class="print-qr-small">
-                            <div id="printQrcode"></div>
-                            <div style="font-size: 0.85rem; color: var(--gray);">
-                                <i class="fas fa-qrcode"></i> امسح للتحقق
-                            </div>
-                        </div>
-                        <div class="stamp-area">
-                            <div class="stamp">
-                                <i class="fas fa-check-circle" style="font-size: 2rem;"></i>
-                            </div>
-                            <p style="margin-top: 8px; font-weight: 600; color: var(--primary);">ختم المدرسة</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- أزرار الطباعة والتحميل -->
-                <div class="action-buttons-group">
-                    <button class="btn btn-print" onclick="printRegistrationForm()">
-                        <i class="fas fa-print"></i>
-                        طباعة الاستمارة
-                    </button>
-                    <button class="btn btn-pdf" onclick="downloadAsPDF()">
-                        <i class="fas fa-file-pdf"></i>
-                        تحميل PDF
-                    </button>
-                </div>
-            </div>
-        </div>
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
     <script>
-        (function() {
-            "use strict";
+        // ===== تهيئة التطبيق عند تحميل الصفحة =====
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMobileMenu();
+            setupScrollAnimations();
+            setupScrollToTop();
+            initializeActivitySlider();
+            setupSmoothScrolling();
+            initializeCarousel();
+            initializeFAQ();
             
-            // ===== متغيرات عامة =====
-            const form = document.getElementById('registrationForm');
-            const steps = document.querySelectorAll('.form-step');
-            const progressSteps = document.querySelectorAll('.step');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
-            const alertContainer = document.getElementById('alertContainer');
+            // تحسين أداء تحميل الصور
+            lazyLoadImages();
+        });
+
+        // ===== وظيفة القائمة المتحركة للهواتف =====
+        function initializeMobileMenu() {
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            const menuIcon = menuBtn.querySelector('i');
             
-            let currentStep = 1;
-            const totalSteps = 3;
-            
-            // رابط Google Apps Script (استبدله بالرابط الخاص بك)
-            const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
-            
-            // ===== تهيئة QR Codes =====
-            function initQRCodes() {
-                // QR Code للدفع
-                const paymentData = {
-                    name: "LEADERS VISION EDUCATION",
-                    account: "00123456789",
-                    key: "12",
-                    amount: "2000",
-                    currency: "DZD"
-                };
+            menuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuIcon.classList.toggle('fa-bars');
+                menuIcon.classList.toggle('fa-times');
                 
-                const qrText = `NAME:${paymentData.name}|ACC:${paymentData.account}|KEY:${paymentData.key}|AMT:${paymentData.amount}${paymentData.currency}`;
-                
-                try {
-                    QRCode.toCanvas(document.createElement('canvas'), qrText, {
-                        width: 200,
-                        margin: 2,
-                        color: {
-                            dark: '#1a4b8c',
-                            light: '#ffffff'
-                        }
-                    }, function(error, canvas) {
-                        if (error) {
-                            console.error('QR Error:', error);
-                            return;
-                        }
-                        document.getElementById('qrcode').appendChild(canvas);
-                    });
-                    
-                    // QR Code لمشاركة الصفحة
-                    QRCode.toCanvas(document.createElement('canvas'), window.location.href, {
-                        width: 120,
-                        margin: 1,
-                        color: {
-                            dark: '#f39c12',
-                            light: '#ffffff'
-                        }
-                    }, function(error, canvas) {
-                        if (error) {
-                            console.error('Share QR Error:', error);
-                            return;
-                        }
-                        document.getElementById('shareQrcode').appendChild(canvas);
-                    });
-                } catch (e) {
-                    console.error('QR Code generation failed:', e);
-                }
-            }
-            
-            // ===== تحديث شريط التقدم =====
-            function updateProgressSteps(step) {
-                progressSteps.forEach((progressStep, index) => {
-                    const stepNum = index + 1;
-                    
-                    progressStep.classList.remove('active', 'completed');
-                    
-                    if (stepNum === step) {
-                        progressStep.classList.add('active');
-                    } else if (stepNum < step) {
-                        progressStep.classList.add('completed');
-                    }
-                });
-            }
-            
-            // ===== عرض الخطوة الحالية =====
-            function showStep(step) {
-                steps.forEach((stepEl, index) => {
-                    stepEl.classList.remove('active');
-                    if (index + 1 === step) {
-                        stepEl.classList.add('active');
-                    }
-                });
-                
-                updateProgressSteps(step);
-                
-                // تحديث أزرار التنقل
-                if (step === 1) {
-                    prevBtn.style.display = 'none';
+                // إضافة تأثير ضبابي للخلفية عند فتح القائمة
+                if(navLinks.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                    // إضافة حدث لإغلاق القائمة عند النقر خارجها
+                    document.addEventListener('click', closeMenuOnClickOutside);
                 } else {
-                    prevBtn.style.display = 'flex';
+                    document.body.style.overflow = '';
+                    document.removeEventListener('click', closeMenuOnClickOutside);
                 }
+            });
+            
+            // إغلاق القائمة عند النقر على رابط
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            function closeMenuOnClickOutside(e) {
+                if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+                    closeMobileMenu();
+                }
+            }
+            
+            function closeMobileMenu() {
+                navLinks.classList.remove('active');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+                document.removeEventListener('click', closeMenuOnClickOutside);
+            }
+        }
+
+        // ===== أنيميشن العناصر عند التمرير =====
+        function setupScrollAnimations() {
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.animate');
+                const screenPosition = window.innerHeight / 1.2;
                 
-                if (step === totalSteps) {
-                    nextBtn.style.display = 'none';
-                    submitBtn.style.display = 'flex';
+                elements.forEach(el => {
+                    const elementPosition = el.getBoundingClientRect().top;
                     
-                    // تحديث الملخص
-                    updateSummary();
-                    
-                    // إضافة زر الطباعة
-                    setTimeout(addPrintButton, 100);
+                    if (elementPosition < screenPosition) {
+                        el.classList.add('active');
+                    }
+                });
+            };
+            
+            window.addEventListener('load', animateOnScroll);
+            window.addEventListener('scroll', animateOnScroll);
+        }
+
+        // ===== زر العودة إلى الأعلى =====
+        function setupScrollToTop() {
+            const scrollTopBtn = document.querySelector('.scroll-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 500) {
+                    scrollTopBtn.classList.add('active');
                 } else {
-                    nextBtn.style.display = 'flex';
-                    submitBtn.style.display = 'none';
+                    scrollTopBtn.classList.remove('active');
                 }
-                
-                currentStep = step;
-            }
+            });
             
-            // ===== التحقق من صحة بيانات الخطوة الحالية =====
-            function validateStep(step) {
-                const currentStepEl = document.querySelector(`.form-step[data-step="${step}"]`);
-                const requiredFields = currentStepEl.querySelectorAll('[required]');
-                let isValid = true;
-                
-                requiredFields.forEach(field => {
-                    const formGroup = field.closest('.form-group');
-                    
-                    if (field.type === 'radio') {
-                        const radioGroup = currentStepEl.querySelectorAll(`[name="${field.name}"]`);
-                        const radioChecked = Array.from(radioGroup).some(r => r.checked);
-                        if (!radioChecked) {
-                            isValid = false;
-                            if (formGroup) formGroup.querySelector('.radio-group')?.classList.add('error');
-                        }
-                    } else if (field.type === 'checkbox') {
-                        if (!field.checked) {
-                            isValid = false;
-                            field.classList.add('error');
-                        }
-                    } else {
-                        if (!field.value.trim()) {
-                            isValid = false;
-                            field.classList.add('error');
-                        } else {
-                            field.classList.remove('error');
-                        }
-                    }
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
+            });
+        }
+
+        // ===== شريط الأنشطة المتحرك =====
+        function initializeActivitySlider() {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            let currentSlide = 0;
+            let slideInterval;
+            
+            function showSlide(n) {
+                // إخفاء جميع الشرائح
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
                 
-                // تحقق إضافي للبريد الإلكتروني
-                const emailField = document.getElementById('email');
-                if (emailField && emailField.value.trim()) {
-                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailPattern.test(emailField.value.trim())) {
-                        isValid = false;
-                        emailField.classList.add('error');
-                        showAlert('الرجاء إدخال بريد إلكتروني صحيح', 'error');
-                    }
-                }
+                // إظهار الشريحة المحددة
+                slides[n].classList.add('active');
+                dots[n].classList.add('active');
+                currentSlide = n;
                 
-                // تحقق من رقم الهاتف
-                const phoneField = document.getElementById('guardianPhone');
-                if (phoneField && phoneField.value.trim()) {
-                    const phonePattern = /^0[5-7][0-9]{8}$/;
-                    if (!phonePattern.test(phoneField.value.trim())) {
-                        isValid = false;
-                        phoneField.classList.add('error');
-                        showAlert('رقم الهاتف يجب أن يبدأ بـ 05/06/07 ويتكون من 10 أرقام', 'error');
-                    }
-                }
-                
-                if (!isValid) {
-                    showAlert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح', 'error');
-                }
-                
-                return isValid;
+                // إعادة تشغيل مؤشر التقدم
+                resetProgressBar(slides[n]);
             }
             
-            // ===== عرض رسائل التنبيه =====
-            function showAlert(message, type = 'success') {
-                const alertEl = document.createElement('div');
-                alertEl.className = `alert alert-${type}`;
-                alertEl.innerHTML = `
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                    <span>${message}</span>
-                `;
-                
-                alertContainer.innerHTML = '';
-                alertContainer.appendChild(alertEl);
-                
-                // إخفاء التنبيه بعد 5 ثواني
-                setTimeout(() => {
-                    alertEl.remove();
-                }, 5000);
+            function resetProgressBar(slide) {
+                const progressBar = slide.querySelector('.slide-progress');
+                progressBar.style.width = '0%';
+                void progressBar.offsetWidth; // إعادة التدفق
+                progressBar.style.transition = 'width 4.5s linear';
+                progressBar.style.width = '100%';
             }
             
-            // ===== تحديث ملخص التسجيل =====
-            function updateSummary() {
-                const summaryContainer = document.getElementById('summaryContainer');
-                const formData = new FormData(form);
-                
-                const summaryData = [
-                    { label: 'الاسم الكامل', value: formData.get('studentName') || '-' },
-                    { label: 'تاريخ الميلاد', value: formData.get('birthDate') || '-' },
-                    { label: 'الجنس', value: formData.get('gender') || '-' },
-                    { label: 'ولي الأمر', value: formData.get('guardianName') || '-' },
-                    { label: 'هاتف ولي الأمر', value: formData.get('guardianPhone') || '-' },
-                    { label: 'المستوى الدراسي', value: formData.get('educationLevel') || '-' },
-                    { label: 'المواد', value: formData.getAll('subjects').join('، ') || '-' }
-                ];
-                
-                let html = '';
-                summaryData.forEach(item => {
-                    html += `
-                        <div class="summary-item">
-                            <span class="label">${item.label}:</span>
-                            <span class="value">${item.value}</span>
-                        </div>
-                    `;
+            function nextSlide() {
+                let next = currentSlide + 1;
+                if (next >= slides.length) next = 0;
+                showSlide(next);
+            }
+            
+            // بدء التبديل التلقائي
+            function startSlideShow() {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            // النقر على النقاط لتغيير الشريحة
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(slideInterval);
+                    showSlide(index);
+                    startSlideShow();
                 });
+            });
+            
+            // بدء عرض الشرائح
+            showSlide(0);
+            startSlideShow();
+        }
+
+        // ===== الكاروسل =====
+        function initializeCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+            let currentIndex = 0;
+            let carouselInterval;
+            
+            function showSlide(index) {
+                // إخفاء جميع الشرائح
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
                 
-                summaryContainer.innerHTML = html;
+                // إظهار الشريحة المحددة
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentIndex = index;
             }
             
-            // ===== إرسال البيانات إلى Google Sheets =====
-            async function submitForm() {
-                const formData = new FormData(form);
-                const data = {};
-                
-                // تحويل FormData إلى كائن
-                formData.forEach((value, key) => {
-                    if (key === 'subjects') {
-                        if (!data[key]) data[key] = [];
-                        data[key].push(value);
-                    } else {
-                        data[key] = value;
-                    }
+            function nextSlide() {
+                let nextIndex = (currentIndex + 1) % slides.length;
+                showSlide(nextIndex);
+            }
+            
+            // بدء التبديل التلقائي
+            function startCarousel() {
+                carouselInterval = setInterval(nextSlide, 4000);
+            }
+            
+            // النقر على النقاط لتغيير الشريحة
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    clearInterval(carouselInterval);
+                    showSlide(index);
+                    startCarousel();
                 });
-                
-                // إضافة وقت التسجيل
-                data.timestamp = new Date().toLocaleString('ar-DZ');
-                
-                // تعطيل الزر وإظهار التحميل
-                submitBtn.disabled = true;
-                const spinner = submitBtn.querySelector('.spinner');
-                const btnText = submitBtn.querySelector('span:not(.spinner)');
-                spinner.style.display = 'inline-block';
-                
-                try {
-                    // إرسال إلى Google Sheets
-                    const response = await fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams(data).toString()
-                    });
-                    
-                    showAlert('🎉 تم التسجيل بنجاح! سنتواصل معك قريباً لتأكيد التسجيل', 'success');
-                    
-                    // عرض خيار الطباعة تلقائياً
-                    setTimeout(() => {
-                        if (confirm('هل تريد طباعة استمارة التسجيل أو حفظها كـ PDF؟')) {
-                            openPrintModal();
-                        }
-                    }, 1000);
-                    
-                    // إعادة تعيين النموذج بعد 3 ثواني
-                    setTimeout(() => {
-                        form.reset();
-                        showStep(1);
-                    }, 3000);
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    showAlert('❌ حدث خطأ في الإرسال. الرجاء المحاولة مرة أخرى أو التواصل عبر الواتساب', 'error');
-                } finally {
-                    submitBtn.disabled = false;
-                    spinner.style.display = 'none';
-                }
-            }
+            });
             
-            // ===== وظائف الطباعة و PDF =====
-            
-            // توليد رقم تسجيل فريد
-            function generateRegistrationNumber() {
-                const date = new Date();
-                const year = date.getFullYear().toString().slice(-2);
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const random = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-                return `REG-${year}${month}-${random}`;
-            }
-            
-            // فتح نافذة المعاينة
-            function openPrintModal() {
-                if (!validateStep(3)) {
-                    showAlert('الرجاء إكمال جميع البيانات المطلوبة أولاً', 'error');
-                    return;
-                }
-                
-                fillPrintableForm();
-                document.getElementById('printModal').classList.add('active');
-                generatePrintQR();
-            }
-            
-            // إغلاق النافذة
-            function closePrintModal() {
-                document.getElementById('printModal').classList.remove('active');
-            }
-            
-            // ملء الاستمارة المطبوعة بالبيانات
-            function fillPrintableForm() {
-                const formData = new FormData(form);
-                
-                const regNumber = generateRegistrationNumber();
-                document.getElementById('printRegNumber').innerHTML = `
-                    <i class="fas fa-hashtag"></i> رقم التسجيل: ${regNumber}
-                `;
-                
-                const personalData = [
-                    { label: 'الاسم الكامل', value: formData.get('studentName') || '-' },
-                    { label: 'تاريخ الميلاد', value: formData.get('birthDate') || '-' },
-                    { label: 'الجنس', value: formData.get('gender') || '-' },
-                    { label: 'مكان الميلاد', value: formData.get('birthPlace') || '-' },
-                    { label: 'العنوان', value: formData.get('address') || '-' },
-                    { label: 'هاتف الطالب', value: formData.get('studentPhone') || '-' }
-                ];
-                
-                document.getElementById('printPersonalData').innerHTML = personalData.map(item => `
-                    <div class="print-item">
-                        <span class="print-label">${item.label}:</span>
-                        <span class="print-value">${item.value}</span>
-                    </div>
-                `).join('');
-                
-                const guardianData = [
-                    { label: 'اسم ولي الأمر', value: formData.get('guardianName') || '-' },
-                    { label: 'رقم الهاتف', value: formData.get('guardianPhone') || '-' },
-                    { label: 'البريد الإلكتروني', value: formData.get('email') || '-' },
-                    { label: 'المهنة', value: formData.get('guardianJob') || '-' }
-                ];
-                
-                document.getElementById('printGuardianData').innerHTML = guardianData.map(item => `
-                    <div class="print-item">
-                        <span class="print-label">${item.label}:</span>
-                        <span class="print-value">${item.value}</span>
-                    </div>
-                `).join('');
-                
-                const subjects = formData.getAll('subjects').join('، ') || '-';
-                const academicData = [
-                    { label: 'المستوى الدراسي', value: formData.get('educationLevel') || '-' },
-                    { label: 'المؤسسة الحالية', value: formData.get('currentSchool') || '-' },
-                    { label: 'المواد المطلوبة', value: subjects },
-                    { label: 'الفترة المفضلة', value: formData.get('preferredTime') || '-' }
-                ];
-                
-                document.getElementById('printAcademicData').innerHTML = academicData.map(item => `
-                    <div class="print-item">
-                        <span class="print-label">${item.label}:</span>
-                        <span class="print-value">${item.value}</span>
-                    </div>
-                `).join('');
-            }
-            
-            // توليد QR Code للطباعة
-            function generatePrintQR() {
-                const container = document.getElementById('printQrcode');
-                container.innerHTML = '';
-                
-                const formData = new FormData(form);
-                const verificationData = {
-                    name: formData.get('studentName'),
-                    reg: generateRegistrationNumber().split('-')[2],
-                    date: new Date().toLocaleDateString('ar-DZ')
-                };
-                
-                const qrText = `${verificationData.name}|${verificationData.reg}|${verificationData.date}`;
-                
-                QRCode.toCanvas(document.createElement('canvas'), qrText, {
-                    width: 80,
-                    margin: 1,
-                    color: {
-                        dark: '#1a4b8c',
-                        light: '#ffffff'
-                    }
-                }, function(error, canvas) {
-                    if (!error) {
-                        container.appendChild(canvas);
-                    }
-                });
-            }
-            
-            // طباعة الاستمارة
-            function printRegistrationForm() {
-                window.print();
-            }
-            
-            // تحميل كـ PDF
-            async function downloadAsPDF() {
-                const element = document.getElementById('printableForm');
-                const btn = event.target;
-                const originalText = btn.innerHTML;
-                
-                btn.innerHTML = '<span class="spinner"></span> جاري إنشاء PDF...';
-                btn.disabled = true;
-                
-                try {
-                    const canvas = await html2canvas(element, {
-                        scale: 2,
-                        backgroundColor: '#ffffff',
-                        logging: false,
-                        allowTaint: true,
-                        useCORS: true
-                    });
-                    
-                    const imgData = canvas.toDataURL('image/png');
-                    
-                    const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF({
-                        orientation: 'portrait',
-                        unit: 'mm',
-                        format: 'a4'
-                    });
-                    
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
-                    const pdfHeight = pdf.internal.pageSize.getHeight();
-                    
-                    const imgWidth = pdfWidth - 20;
-                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                    
-                    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-                    
-                    if (imgHeight > pdfHeight - 20) {
-                        let heightLeft = imgHeight;
-                        let position = 10;
-                        
-                        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                        heightLeft -= pdfHeight;
-                        
-                        while (heightLeft >= 0) {
-                            position = heightLeft - imgHeight;
-                            pdf.addPage();
-                            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
-                            heightLeft -= pdfHeight;
-                        }
-                    }
-                    
-                    const studentName = document.getElementById('studentName').value || 'طالب';
-                    const fileName = `LEADERS_VISION_Registration_${studentName.replace(/\s+/g, '_')}.pdf`;
-                    pdf.save(fileName);
-                    
-                    showAlert('✅ تم تحميل ملف PDF بنجاح!', 'success');
-                    
-                } catch (error) {
-                    console.error('PDF Error:', error);
-                    showAlert('❌ حدث خطأ في إنشاء PDF. الرجاء المحاولة مرة أخرى.', 'error');
-                } finally {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            }
-            
-            // إضافة زر معاينة وطباعة
-            function addPrintButton() {
-                const qrSection = document.querySelector('.qr-section');
-                
-                if (qrSection && !document.getElementById('previewPrintBtn')) {
-                    const buttonHTML = `
-                        <div style="margin-top: 20px; text-align: center;">
-                            <button type="button" id="previewPrintBtn" class="btn" 
-                                    style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;"
-                                    onclick="openPrintModal()">
-                                <i class="fas fa-print"></i>
-                                معاينة وطباعة الاستمارة
-                            </button>
-                        </div>
-                    `;
-                    
-                    qrSection.insertAdjacentHTML('afterend', buttonHTML);
-                }
-            }
-            
-            // ===== معالجات الأحداث =====
-            function initEventListeners() {
-                nextBtn.addEventListener('click', () => {
-                    if (validateStep(currentStep)) {
-                        if (currentStep < totalSteps) {
-                            showStep(currentStep + 1);
-                        }
-                    }
-                });
-                
-                prevBtn.addEventListener('click', () => {
-                    if (currentStep > 1) {
-                        showStep(currentStep - 1);
-                    }
-                });
-                
-                form.addEventListener('submit', (e) => {
+            // بدء عرض الشرائح
+            showSlide(0);
+            startCarousel();
+        }
+
+        // ===== التمرير السلس للروابط =====
+        function setupSmoothScrolling() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    if (validateStep(currentStep)) {
-                        const termsAgree = document.getElementById('termsAgree');
-                        if (!termsAgree.checked) {
-                            showAlert('يجب الموافقة على الشروط والأحكام', 'error');
-                            return;
-                        }
-                        
-                        submitForm();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
                 });
-                
-                document.querySelectorAll('.form-control').forEach(field => {
-                    field.addEventListener('input', () => {
-                        field.classList.remove('error');
+            });
+        }
+
+        // ===== التحميل الكسول للصور =====
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('.lazy-load');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.classList.add('loaded');
+                            imageObserver.unobserve(img);
+                        }
                     });
                 });
                 
-                document.querySelectorAll('input, select, textarea').forEach(field => {
-                    field.addEventListener('change', () => {
-                        if (currentStep === totalSteps) {
-                            updateSummary();
-                        }
-                    });
-                });
+                images.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback for browsers that don't support IntersectionObserver
+                images.forEach(img => img.classList.add('loaded'));
             }
+        }
+
+        // ===== قسم الأسئلة الشائعة =====
+        function initializeFAQ() {
+            const faqItems = document.querySelectorAll('.faq-item');
             
-            // ===== تهيئة الصفحة =====
-            function init() {
-                initQRCodes();
-                initEventListeners();
-                showStep(1);
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
                 
-                // إغلاق النافذة عند النقر خارجها
-                document.getElementById('printModal').addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closePrintModal();
-                    }
+                question.addEventListener('click', () => {
+                    item.classList.toggle('active');
                 });
+            });
+        }
+
+        // ===== وظائف نموذج التسجيل =====
+        function getFormData() {
+            return {
+                name: document.getElementById("name").value.trim(),
+                age: document.getElementById("age").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                course: document.getElementById("course").value,
+                message: document.getElementById("message").value.trim()
+            };
+        }
+
+        function validateFormData(data) {
+            if (!data.name || !data.age || !data.phone || !data.course) {
+                alert("الرجاء ملء جميع الحقول المطلوبة");
+                return false;
             }
             
-            init();
+            if (data.phone.length < 10) {
+                alert("رقم الهاتف يجب أن يكون صحيحًا");
+                return false;
+            }
             
-            // تعريض الدوال للاستخدام العام
-            window.openPrintModal = openPrintModal;
-            window.closePrintModal = closePrintModal;
-            window.printRegistrationForm = printRegistrationForm;
-            window.downloadAsPDF = downloadAsPDF;
-        })();
+            return true;
+        }
+
+        function showConfirmation() {
+            const confirmation = document.getElementById("confirmation");
+            confirmation.style.display = "block";
+            
+            setTimeout(() => {
+                confirmation.style.display = "none";
+            }, 5000);
+        }
+
+        function sendToWhatsApp() {
+            const formData = getFormData();
+            
+            if (!validateFormData(formData)) return;
+            
+            const { name, age, phone, course, message } = formData;
+            
+            const msg = `مرحبًا!\n\nأنا ${name}، عمري ${age} سنة.\nأرغب في التسجيل في: ${course}.\nرقم الهاتف: ${phone}\n\nملاحظات: ${message || 'لا يوجد ملاحظات'}`;
+            const url = "https://wa.me/213774479525?text=" + encodeURIComponent(msg);
+            window.open(url, "_blank");
+            showConfirmation();
+        }
+
+        function sendToEmail() {
+            const formData = getFormData();
+            
+            if (!validateFormData(formData)) return;
+            
+            const { name, age, email, phone, course, message } = formData;
+            
+            const subject = encodeURIComponent("طلب تسجيل في LEADERS VISION EDUCATION");
+            const body = encodeURIComponent(`مرحبًا،\n\nأنا ${name}، عمري ${age} سنة، أرغب بالتسجيل في: ${course}.\n\nرقم الهاتف: ${phone}\nالبريد الإلكتروني: ${email}\n\nملاحظات: ${message || 'لا يوجد ملاحظات'}`);
+            const mailtoLink = `mailto:contact@leadersvision.biz?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+            showConfirmation();
+        }
     </script>
 </body>
 </html>
