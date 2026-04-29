@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Tableau de Bord</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --green-50: #E8F5E9; --green-100: #C8E6C9; --green-200: #A5D6A7;
+            --green-400: #66BB6A; --green-500: #4CAF50; --green-600: #43A047;
+            --green-700: #388E3C; --green-800: #2E7D32; --green-900: #1B5E20;
+            --orange-400: #FFA726; --orange-500: #FF9800; --orange-600: #FB8C00;
+            --red-500: #F44336; --red-600: #E53935; --red-700: #D32F2F;
+            --blue-500: #2196F3; --blue-600: #1E88E5; --blue-700: #1976D2;
+            --purple-500: #9C27B0; --purple-600: #8E24AA;
+            --teal-500: #009688; --teal-600: #00897B;
+            --white: #FFFFFF; --gray-50: #FAFAFA; --gray-100: #F5F5F5;
+            --gray-200: #EEEEEE; --gray-300: #E0E0E0; --gray-400: #BDBDBD;
+            --gray-500: #9E9E9E; --gray-600: #757575; --gray-700: #616161;
+            --gray-800: #424242; --gray-900: #212121;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
+            --radius-xs: 8px; --radius-sm: 12px; --radius: 18px;
+            --radius-lg: 26px; --radius-xl: 36px;
+            --transition-fast: 0.2s cubic-bezier(0.4,0,0.2,1);
+            --transition: 0.4s cubic-bezier(0.25,0.8,0.25,1.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            color: var(--gray-900);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ============ شريط جانبي ============ */
+        .sidebar {
+            position: fixed;
+            top: 0; right: 0;
+            width: 260px; height: 100vh;
+            background: linear-gradient(180deg, #0d1f0d 0%, #0a1a0a 100%);
+            z-index: 1000;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: 4px 0 40px rgba(0,0,0,0.3);
+            border-left: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            padding: 0 8px;
+        }
+
+        .sidebar-logo-icon {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--green-500), var(--green-700));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(46,125,50,0.5);
+        }
+
+        .sidebar-logo-text {
+            font-size: 16px; font-weight: 800; color: white;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            width: 100%;
+            text-align: right;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255,255,255,0.08);
+            color: white;
+        }
+
+        .sidebar-link.active {
+            background: rgba(76,175,80,0.25);
+            color: white;
+            box-shadow: 0 0 0 1px rgba(76,175,80,0.3);
+        }
+
+        .sidebar-link .icon { font-size: 18px; }
+
+        .sidebar-footer {
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+        }
+
+        .user-avatar {
+            width: 38px; height: 38px;
+            background: var(--teal-500);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 800; font-size: 15px;
+        }
+
+        .user-info { flex: 1; }
+        .user-name { font-size: 13px; font-weight: 700; color: white; }
+        .user-role { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+        /* ============ المحتوى الرئيسي ============ */
+        .main-content {
+            margin-right: 260px;
+            padding: 24px 28px;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        /* ============ شريط علوي ============ */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .page-title {
+            font-size: 24px; font-weight: 900; color: var(--gray-800);
+        }
+
+        .lang-switch {
+            display: flex;
+            background: var(--white);
+            border-radius: 25px;
+            padding: 3px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 22px;
+            cursor: pointer;
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            transition: var(--transition-fast);
+            background: transparent;
+            color: var(--gray-600);
+        }
+
+        .lang-btn.active {
+            background: var(--green-600);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ============ بطاقات الإحصائيات ============ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .stat-icon-dash {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .icon-reports { background: #FFEBEE; }
+        .icon-recycled { background: #E8F5E9; }
+        .icon-trucks { background: #E3F2FD; }
+        .icon-points { background: #FFF8E1; }
+
+        .stat-value-dash {
+            font-size: 30px; font-weight: 900; color: var(--gray-800);
+            font-family: 'Poppins', 'Cairo', sans-serif; direction: ltr;
+        }
+
+        .stat-label-dash {
+            font-size: 13px; color: var(--gray-500); font-weight: 600; margin-top: 4px;
+        }
+
+        /* ============ الأقسام ============ */
+        .section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 22px 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px;
+            flex-wrap: wrap; gap: 8px;
+        }
+
+        .section-title-dash {
+            font-size: 18px; font-weight: 800; color: var(--gray-800);
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .badge-count {
+            background: var(--green-100); color: var(--green-800);
+            padding: 4px 12px; border-radius: 15px;
+            font-size: 12px; font-weight: 700;
+        }
+
+        /* ============ جدول البلاغات ============ */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            text-align: right;
+            padding: 12px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        td {
+            padding: 14px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        tr:hover td { background: var(--gray-50); }
+
+        .status-pill {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .status-new { background: #FFF3E0; color: var(--orange-600); }
+        .status-assigned { background: #E3F2FD; color: var(--blue-600); }
+        .status-done { background: #E8F5E9; color: var(--green-600); }
+
+        .btn-action-sm {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: var(--blue-500);
+            color: white;
+        }
+
+        .btn-action-sm:hover { background: var(--blue-700); transform: scale(1.05); }
+        .btn-action-sm.done { background: var(--green-500); }
+        .btn-action-sm.done:hover { background: var(--green-700); }
+
+        /* ============ الخريطة ============ */
+        .map-placeholder-dash {
+            width: 100%; height: 300px;
+            background: linear-gradient(135deg, #E3F2FD, #F5F5F5, #E8F5E9);
+            border-radius: var(--radius);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            border: 3px dashed var(--gray-300);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .map-placeholder-dash:hover {
+            border-color: var(--green-400);
+            background: linear-gradient(135deg, #BBDEFB, #EEEEEE, #C8E6C9);
+        }
+
+        .map-placeholder-dash .map-emoji-dash {
+            font-size: 50px;
+            animation: mapPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes mapPulse {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .map-points-list {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+        }
+
+        .map-point-tag {
+            background: var(--gray-100); padding: 6px 12px;
+            border-radius: 15px; font-size: 11px; font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        /* ============ فارغ ============ */
+        .empty-state {
+            text-align: center; padding: 40px 20px;
+        }
+
+        .empty-emoji { font-size: 60px; margin-bottom: 10px; }
+        .empty-text { font-size: 15px; color: var(--gray-500); font-weight: 600; }
+
+        /* ============ تجاوب ============ */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(100%);
+                width: 280px;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: flex !important;
+            }
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            width: 42px; height: 42px;
+            border-radius: 12px;
+            border: 2px solid var(--gray-300);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 20px;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+            position: fixed;
+            top: 16px; right: 16px;
+            z-index: 1100;
+            box-shadow: var(--shadow);
+        }
+
+        .overlay-sidebar {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .overlay-sidebar.show { display: block; }
+
+        /* ============ تبويبات ============ */
+        .tabs {
+            display: flex; gap: 4px;
+            background: var(--gray-100);
+            border-radius: 25px;
+            padding: 4px;
+            margin-bottom: 16px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 22px;
+            cursor: pointer;
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            transition: var(--transition-fast);
+            background: transparent;
+            color: var(--gray-600);
+        }
+
+        .tab-btn.active {
+            background: var(--white);
+            color: var(--green-700);
+            box-shadow: var(--shadow-sm);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر القائمة للموبايل -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">☰</button>
+
+    <!-- overlay للشريط الجانبي -->
+    <div class="overlay-sidebar" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- الشريط الجانبي -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <div class="sidebar-logo-icon">🌍</div>
+            <span class="sidebar-logo-text" data-ar="لوحة التحكم" data-fr="Tableau de Bord">لوحة التحكم</span>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <button class="sidebar-link active" onclick="switchTab('overview')">
+                <span class="icon">📊</span>
+                <span data-ar="نظرة عامة" data-fr="Aperçu">نظرة عامة</span>
+            </button>
+            <button class="sidebar-link" onclick="switchTab('reports')">
+                <span class="icon">📋</span>
+                <span data-ar="البلاغات" data-fr="Signalements">البلاغات</span>
+            </button>
+            <button class="sidebar-link" onclick="switchTab('sorting')">
+                <span class="icon">🗂️</span>
+                <span data-ar="طلبات الفرز" data-fr="Demandes de tri">طلبات الفرز</span>
+            </button>
+            <button class="sidebar-link" onclick="switchTab('map')">
+                <span class="icon">🗺️</span>
+                <span data-ar="الخريطة" data-fr="Carte">الخريطة</span>
+            </button>
+            <button class="sidebar-link" onclick="switchTab('trucks')">
+                <span class="icon">🚛</span>
+                <span data-ar="الشاحنات" data-fr="Camions">الشاحنات</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar">م</div>
+                <div class="user-info">
+                    <div class="user-name" data-ar="مشرف الهيئة" data-fr="Superviseur">مشرف الهيئة</div>
+                    <div class="user-role" data-ar="مسؤول النظام" data-fr="Admin système">مسؤول النظام</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content" id="mainContent">
+        
+        <!-- شريط علوي -->
+        <div class="top-bar">
+            <h1 class="page-title" data-ar="📊 لوحة التحكم" data-fr="📊 Tableau de Bord">📊 لوحة التحكم</h1>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('ar')" id="btnAr">🇩🇿 العربية</button>
+                <button class="lang-btn" onclick="setLang('fr')" id="btnFr">🇫🇷 Français</button>
+            </div>
+        </div>
+
+        <!-- بطاقات الإحصائيات -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon-dash icon-reports">📋</div>
+                <div class="stat-value-dash" id="statReports">0</div>
+                <div class="stat-label-dash" data-ar="إجمالي البلاغات" data-fr="Total signalements">إجمالي البلاغات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-dash icon-recycled">♻️</div>
+                <div class="stat-value-dash" id="statRecycled">0</div>
+                <div class="stat-label-dash" data-ar="كغ معاد تدويره" data-fr="Kg recyclés">كغ معاد تدويره</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-dash icon-trucks">🚛</div>
+                <div class="stat-value-dash" id="statTrucks">0</div>
+                <div class="stat-label-dash" data-ar="شاحنات نشطة" data-fr="Camions actifs">شاحنات نشطة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon-dash icon-points">⭐</div>
+                <div class="stat-value-dash" id="statPoints">0</div>
+                <div class="stat-label-dash" data-ar="نقطة ممنوحة" data-fr="Points attribués">نقطة ممنوحة</div>
+            </div>
+        </div>
+
+        <!-- تبويبات -->
+        <div class="tabs" id="tabsBar">
+            <button class="tab-btn active" onclick="switchTab('overview')" data-ar="نظرة عامة" data-fr="Aperçu">نظرة عامة</button>
+            <button class="tab-btn" onclick="switchTab('reports')" data-ar="البلاغات" data-fr="Signalements">البلاغات</button>
+            <button class="tab-btn" onclick="switchTab('sorting')" data-ar="طلبات الفرز" data-fr="Tri">طلبات الفرز</button>
+        </div>
+
+        <!-- محتوى التبويب -->
+        <div id="tabContent">
+            <!-- يُملأ تلقائياً -->
+        </div>
+    </div>
+
+    <script>
+        // ============ اللغة ============
+        let lang = sessionStorage.getItem('lang') || 'ar';
+
+        function setLang(l) {
+            lang = l;
+            sessionStorage.setItem('lang', l);
+            document.documentElement.dir = l==='ar'?'rtl':'ltr';
+            document.documentElement.lang = l;
+            document.getElementById('btnAr').classList.toggle('active', l==='ar');
+            document.getElementById('btnFr').classList.toggle('active', l==='fr');
+            document.querySelectorAll(`[data-${l}]`).forEach(el => {
+                const t = el.getAttribute(`data-${l}`);
+                if(t!==null && t!=='') el.textContent = t;
+            });
+            refreshAll();
+        }
+
+        // ============ الشريط الجانبي ============
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('show');
+            document.getElementById('mobileMenuBtn').textContent = 
+                document.getElementById('sidebar').classList.contains('open') ? '✕' : '☰';
+        }
+
+        // ============ التبويبات ============
+        let currentTab = 'overview';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            
+            // تفعيل الزر المناسب
+            const tabIndex = { overview:0, reports:1, sorting:2 }[tab] || 0;
+            if(tabBtns[tabIndex]) tabBtns[tabIndex].classList.add('active');
+            
+            const sidebarIndex = { overview:0, reports:1, sorting:2, map:3, trucks:4 }[tab] || 0;
+            if(sidebarLinks[sidebarIndex]) sidebarLinks[sidebarIndex].classList.add('active');
+            
+            renderTabContent();
+        }
+
+        // ============ قراءة البيانات ============
+        function getReports() {
+            return JSON.parse(localStorage.getItem('reports') || '[]');
+        }
+
+        function getSortingRequests() {
+            return JSON.parse(localStorage.getItem('sortingRequests') || '[]');
+        }
+
+        function getUserPoints() {
+            return parseInt(localStorage.getItem('userPoints') || '0');
+        }
+
+        // ============ تحديث الإحصائيات ============
+        function updateStats() {
+            const reports = getReports();
+            const sorting = getSortingRequests();
+            const totalPoints = getUserPoints();
+            const totalWeight = sorting.reduce((sum, r) => sum + (r.weight || 0), 0);
+            const activeTrucks = 3; // قيمة افتراضية حالياً
+
+            document.getElementById('statReports').textContent = reports.length.toLocaleString('en-US');
+            document.getElementById('statRecycled').textContent = totalWeight.toLocaleString('en-US');
+            document.getElementById('statTrucks').textContent = activeTrucks;
+            document.getElementById('statPoints').textContent = totalPoints.toLocaleString('en-US');
+        }
+
+        // ============ عرض المحتوى ============
+        function renderTabContent() {
+            const container = document.getElementById('tabContent');
+            const reports = getReports();
+            const sorting = getSortingRequests();
+
+            switch(currentTab) {
+                case 'overview':
+                    container.innerHTML = renderOverview(reports, sorting);
+                    break;
+                case 'reports':
+                    container.innerHTML = renderReportsTable(reports);
+                    break;
+                case 'sorting':
+                    container.innerHTML = renderSortingTable(sorting);
+                    break;
+                case 'map':
+                    container.innerHTML = renderMapView(reports);
+                    break;
+                case 'trucks':
+                    container.innerHTML = renderTrucksView();
+                    break;
+            }
+        }
+
+        function renderOverview(reports, sorting) {
+            const recentReports = reports.slice(-5).reverse();
+            return `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">📋 <span data-ar="آخر البلاغات" data-fr="Derniers signalements">${lang==='ar'?'آخر البلاغات':'Derniers signalements'}</span></span>
+                        <span class="badge-count">${reports.length}</span>
+                    </div>
+                    ${recentReports.length === 0 ? `
+                        <div class="empty-state">
+                            <div class="empty-emoji">📭</div>
+                            <div class="empty-text" data-ar="لا توجد بلاغات بعد" data-fr="Aucun signalement pour le moment">${lang==='ar'?'لا توجد بلاغات بعد':'Aucun signalement pour le moment'}</div>
+                        </div>
+                    ` : `
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th data-ar="النوع" data-fr="Type">${lang==='ar'?'النوع':'Type'}</th>
+                                        <th data-ar="الإحداثيات" data-fr="Coordonnées">${lang==='ar'?'الإحداثيات':'Coordonnées'}</th>
+                                        <th data-ar="الوقت" data-fr="Heure">${lang==='ar'?'الوقت':'Heure'}</th>
+                                        <th data-ar="الحالة" data-fr="Statut">${lang==='ar'?'الحالة':'Statut'}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${recentReports.map(r => `
+                                        <tr>
+                                            <td>${getCategoryName(r.category)}</td>
+                                            <td style="direction:ltr;font-family:'Poppins',monospace;font-size:12px;">${r.lat?.toFixed(4) || '--'}, ${r.lng?.toFixed(4) || '--'}</td>
+                                            <td>${new Date(r.time).toLocaleString(lang==='ar'?'ar-EG':'fr-FR')}</td>
+                                            <td><span class="status-pill status-new">${lang==='ar'?'جديد':'Nouveau'}</span></td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `}
+                </div>
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">🗂️ <span data-ar="آخر طلبات الفرز" data-fr="Dernières demandes de tri">${lang==='ar'?'آخر طلبات الفرز':'Dernières demandes de tri'}</span></span>
+                        <span class="badge-count">${sorting.length}</span>
+                    </div>
+                    ${sorting.length === 0 ? `
+                        <div class="empty-state">
+                            <div class="empty-emoji">📭</div>
+                            <div class="empty-text" data-ar="لا توجد طلبات فرز" data-fr="Aucune demande de tri">${lang==='ar'?'لا توجد طلبات فرز':'Aucune demande de tri'}</div>
+                        </div>
+                    ` : `
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th data-ar="المادة" data-fr="Matériau">${lang==='ar'?'المادة':'Matériau'}</th>
+                                        <th data-ar="الوزن" data-fr="Poids">${lang==='ar'?'الوزن':'Poids'}</th>
+                                        <th data-ar="النقاط" data-fr="Points">${lang==='ar'?'النقاط':'Points'}</th>
+                                        <th data-ar="الوقت" data-fr="Heure">${lang==='ar'?'الوقت':'Heure'}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${sorting.slice(-5).reverse().map(r => `
+                                        <tr>
+                                            <td>${getMaterialNameTab(r.material)}</td>
+                                            <td style="direction:ltr;">${r.weight} kg</td>
+                                            <td style="direction:ltr;color:var(--green-700);font-weight:700;">+${r.points}</td>
+                                            <td>${new Date(r.time).toLocaleString(lang==='ar'?'ar-EG':'fr-FR')}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+
+        function renderReportsTable(reports) {
+            if(reports.length === 0) {
+                return `<div class="section"><div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">${lang==='ar'?'لا توجد بلاغات':'Aucun signalement'}</div></div></div>`;
+            }
+            return `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">📋 <span data-ar="جميع البلاغات" data-fr="Tous les signalements">${lang==='ar'?'جميع البلاغات':'Tous les signalements'}</span></span>
+                        <span class="badge-count">${reports.length}</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th data-ar="الصورة" data-fr="Photo">${lang==='ar'?'الصورة':'Photo'}</th>
+                                    <th data-ar="النوع" data-fr="Type">${lang==='ar'?'النوع':'Type'}</th>
+                                    <th data-ar="الإحداثيات" data-fr="Coordonnées">${lang==='ar'?'الإحداثيات':'Coordonnées'}</th>
+                                    <th data-ar="الوقت" data-fr="Heure">${lang==='ar'?'الوقت':'Heure'}</th>
+                                    <th data-ar="إجراء" data-fr="Action">${lang==='ar'?'إجراء':'Action'}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${reports.map((r, i) => `
+                                    <tr>
+                                        <td>${i + 1}</td>
+                                        <td>${r.photo ? '📸' : '—'}</td>
+                                        <td>${getCategoryName(r.category)}</td>
+                                        <td style="direction:ltr;font-family:'Poppins',monospace;font-size:12px;">${r.lat?.toFixed(4)||'--'}, ${r.lng?.toFixed(4)||'--'}</td>
+                                        <td>${new Date(r.time).toLocaleString(lang==='ar'?'ar-EG':'fr-FR')}</td>
+                                        <td>
+                                            <button class="btn-action-sm" onclick="alert('${lang==='ar'?'جاري توجيه شاحنة...':'Envoi camion...'}')">
+                                                🚛 ${lang==='ar'?'توجيه':'Assigner'}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSortingTable(sorting) {
+            if(sorting.length === 0) {
+                return `<div class="section"><div class="empty-state"><div class="empty-emoji">📭</div><div class="empty-text">${lang==='ar'?'لا توجد طلبات فرز':'Aucune demande de tri'}</div></div></div>`;
+            }
+            const totalWeight = sorting.reduce((s,r) => s + (r.weight||0), 0);
+            const totalPoints = sorting.reduce((s,r) => s + (r.points||0), 0);
+            return `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">🗂️ <span data-ar="جميع طلبات الفرز" data-fr="Toutes les demandes">${lang==='ar'?'جميع طلبات الفرز':'Toutes les demandes'}</span></span>
+                        <span class="badge-count">${sorting.length}</span>
+                    </div>
+                    <div class="stats-grid" style="margin-bottom:16px;">
+                        <div class="stat-card">
+                            <div class="stat-value-dash">${totalWeight.toLocaleString('en-US')}</div>
+                            <div class="stat-label-dash">kg ${lang==='ar'?'مجموع الوزن':'poids total'}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value-dash">${totalPoints.toLocaleString('en-US')}</div>
+                            <div class="stat-label-dash">${lang==='ar'?'مجموع النقاط':'points totaux'}</div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>#</th><th data-ar="المادة" data-fr="Matériau">${lang==='ar'?'المادة':'Matériau'}</th><th data-ar="الوزن" data-fr="Poids">${lang==='ar'?'الوزن':'Poids'}</th><th data-ar="النقاط" data-fr="Points">${lang==='ar'?'النقاط':'Points'}</th><th data-ar="الوقت" data-fr="Heure">${lang==='ar'?'الوقت':'Heure'}</th></tr>
+                            </thead>
+                            <tbody>
+                                ${sorting.map((r,i) => `
+                                    <tr>
+                                        <td>${i+1}</td>
+                                        <td>${getMaterialNameTab(r.material)}</td>
+                                        <td style="direction:ltr;">${r.weight} kg</td>
+                                        <td style="direction:ltr;color:var(--green-700);font-weight:700;">+${r.points}</td>
+                                        <td>${new Date(r.time).toLocaleString(lang==='ar'?'ar-EG':'fr-FR')}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMapView(reports) {
+            const points = reports.filter(r => r.lat && r.lng);
+            return `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">🗺️ <span data-ar="خريطة البلاغات" data-fr="Carte des signalements">${lang==='ar'?'خريطة البلاغات':'Carte des signalements'}</span></span>
+                        <span class="badge-count">${points.length} ${lang==='ar'?'نقطة':'points'}</span>
+                    </div>
+                    <div class="map-placeholder-dash" onclick="alert('${lang==='ar'?'سيتم تفعيل Google Maps قريباً':'Google Maps sera bientôt activé'}')">
+                        <span class="map-emoji-dash">🗺️</span>
+                        <span style="font-weight:700;color:var(--gray-600);" data-ar="خرائط Google - قريباً" data-fr="Google Maps - Bientôt">${lang==='ar'?'خرائط Google - قريباً':'Google Maps - Bientôt'}</span>
+                    </div>
+                    ${points.length > 0 ? `
+                        <div class="map-points-list">
+                            ${points.map(p => `
+                                <span class="map-point-tag">📍 ${p.lat?.toFixed(4)}, ${p.lng?.toFixed(4)} — ${getCategoryName(p.category)}</span>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        function renderTrucksView() {
+            const trucks = [
+                { id:1, driver: lang==='ar'?'كريم ح.':'Karim H.', plate:'12345-16-01', status:'available', location:'36.7538, 3.0588' },
+                { id:2, driver: lang==='ar'?'نور الدين ب.':'NourEddine B.', plate:'12346-16-01', status:'busy', location:'36.7123, 3.1123' },
+                { id:3, driver: lang==='ar'?'عبد الله م.':'Abdellah M.', plate:'12347-16-01', status:'available', location:'36.7456, 3.0891' },
+            ];
+            return `
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title-dash">🚛 <span data-ar="أسطول الشاحنات" data-fr="Flotte de camions">${lang==='ar'?'أسطول الشاحنات':'Flotte de camions'}</span></span>
+                        <span class="badge-count">${trucks.length}</span>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr><th>#</th><th data-ar="السائق" data-fr="Chauffeur">${lang==='ar'?'السائق':'Chauffeur'}</th><th data-ar="اللوحة" data-fr="Plaque">${lang==='ar'?'اللوحة':'Plaque'}</th><th data-ar="الحالة" data-fr="Statut">${lang==='ar'?'الحالة':'Statut'}</th><th data-ar="الموقع" data-fr="Position">${lang==='ar'?'الموقع':'Position'}</th></tr>
+                            </thead>
+                            <tbody>
+                                ${trucks.map(t => `
+                                    <tr>
+                                        <td>${t.id}</td>
+                                        <td>${t.driver}</td>
+                                        <td style="direction:ltr;font-family:'Poppins',monospace;">${t.plate}</td>
+                                        <td><span class="status-pill ${t.status==='available'?'status-done':'status-assigned'}">${t.status==='available'?(lang==='ar'?'متاح':'Disponible'):(lang==='ar'?'مشغول':'Occupé')}</span></td>
+                                        <td style="direction:ltr;font-family:'Poppins',monospace;font-size:12px;">${t.location}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============ مساعدات ============
+        function getCategoryName(cat) {
+            const names = {
+                menagere: lang==='ar'?'منزلية':'Ménagères',
+                plastique: lang==='ar'?'بلاستيك':'Plastique',
+                carton: lang==='ar'?'كرتون':'Carton',
+                verre: lang==='ar'?'زجاج':'Verre',
+                decombres: lang==='ar'?'أنقاض':'Décombres',
+                autre: lang==='ar'?'أخرى':'Autre'
+            };
+            return names[cat] || cat || '—';
+        }
+
+        function getMaterialNameTab(mat) {
+            const names = {
+                carton: lang==='ar'?'📦 كرتون':'📦 Carton',
+                plastique: lang==='ar'?'🫙 بلاستيك':'🫙 Plastique',
+                verre: lang==='ar'?'🫗 زجاج':'🫗 Verre'
+            };
+            return names[mat] || mat || '—';
+        }
+
+        // ============ تحديث شامل ============
+        function refreshAll() {
+            updateStats();
+            renderTabContent();
+        }
+
+        // ============ بدء التشغيل ============
+        function init() {
+            setLang(lang);
+            updateStats();
+            renderTabContent();
+            
+            // تحديث كل 10 ثوانٍ
+            setInterval(refreshAll, 10000);
+        }
+
+        // ============ إغلاق الشريط عند النقر خارجه ============
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const btn = document.getElementById('mobileMenuBtn');
+            if (window.innerWidth <= 900 && 
+                !sidebar.contains(e.target) && 
+                !btn.contains(e.target) &&
+                sidebar.classList.contains('open')) {
+                toggleSidebar();
+            }
+        });
+
+        init();
+        window.setLang = setLang;
+    </script>
+</body>
+</html>
