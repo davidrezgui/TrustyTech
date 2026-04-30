@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدينتنا نظيفة | منصة وطنية للاقتصاد الأخضر</title>
     
+    <!-- PWA Meta -->
+    <meta name="theme-color" content="#0a1a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="مدينتنا نظيفة">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItmF2K3Zitin2YYg2YbZt9mF2YrZgSIsCiAgInNob3J0X25hbWUiOiAi2YXYrdmK2KfZhiIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMWEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiMwYTFhMGEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOGVtJyBmb250LXNpemU9JzkwJz7wn4yLPC90ZXh0Pjwvc3ZnPiIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -16,6 +23,8 @@
             --danger: #E53935; --info: #1E88E5;
             --white: #FFFFFF; --text-gray: #90A4AE;
             --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --radius: 24px; --radius-sm: 14px;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
         }
@@ -29,7 +38,6 @@
             position: relative; display: flex; flex-direction: column;
         }
 
-        /* خلفية */
         .particles-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; overflow: hidden;
@@ -57,13 +65,12 @@
             66% { transform: translate(-20px,20px) scale(0.9); }
         }
 
-        /* شريط علوي */
         .top-nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(10,31,10,0.85); backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 12px 20px; display: flex; align-items: center; justify-content: center;
+            padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
             box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
         .nav-brand {
@@ -77,19 +84,24 @@
             font-size: 20px; box-shadow: 0 4px 16px rgba(46,125,50,0.5);
             animation: bounce 2s ease-in-out infinite;
         }
-        @keyframes bounce {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
+        @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        /* محتوى */
+        .btn-share {
+            font-size: 12px; padding: 8px 14px; border-radius: 20px;
+            border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);
+            color: white; cursor: pointer; font-family: 'Cairo', sans-serif;
+            font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 5px;
+        }
+        .btn-share:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); }
+
         .main-container {
             position: relative; z-index: 1; flex: 1;
-            display: flex; align-items: center; justify-content: center;
-            padding: 90px 16px 30px;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 90px 16px 30px; gap: 20px;
         }
+
         .card {
-            width: 100%; max-width: 460px;
+            width: 100%; max-width: 480px;
             background: rgba(255,255,255,0.94);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border-radius: var(--radius); padding: 36px 24px 28px;
@@ -102,7 +114,6 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* شعار */
         .logo-wrapper { position: relative; display: inline-block; margin-bottom: 8px; }
         .logo-ring {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
@@ -114,10 +125,7 @@
             animation-direction: reverse; animation-duration: 25s;
             border-color: rgba(255,111,0,0.25);
         }
-        @keyframes spin {
-            from { transform: translate(-50%,-50%) rotate(0deg); }
-            to { transform: translate(-50%,-50%) rotate(360deg); }
-        }
+        @keyframes spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
         .logo-icon {
             font-size: 54px; animation: bounce 2s ease-in-out infinite;
             position: relative; z-index: 2; display: block;
@@ -134,18 +142,14 @@
             50% { box-shadow: 0 4px 28px rgba(255,111,0,0.9); }
         }
 
-        /* عنوان */
         .main-title {
             font-size: 30px; font-weight: 900;
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin-bottom: 2px;
         }
-        .main-sub {
-            font-size: 12px; color: var(--text-gray); margin-bottom: 4px; opacity: 0.8;
-        }
+        .main-sub { font-size: 12px; color: var(--text-gray); margin-bottom: 4px; opacity: 0.8; }
 
-        /* ==== شريط الثقة - الجديد ==== */
         .trust-bar {
             display: flex; align-items: center; justify-content: center;
             gap: 6px; margin-bottom: 18px; flex-wrap: wrap;
@@ -155,27 +159,18 @@
             background: rgba(46,125,50,0.08); padding: 4px 10px;
             border-radius: 15px; display: flex; align-items: center; gap: 4px;
         }
-        .trust-dot {
-            width: 5px; height: 5px; border-radius: 50%; background: var(--primary-light);
-        }
+        .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--primary-light); }
 
-        /* ==== شريط التقنيات - الجديد ==== */
         .tech-bar {
             display: flex; align-items: center; justify-content: center;
             gap: 10px; margin-bottom: 22px; flex-wrap: wrap;
         }
-        .tech-item {
-            font-size: 10px; font-weight: 600; color: var(--text-gray);
-            display: flex; align-items: center; gap: 3px;
-        }
-        .tech-dot {
-            width: 5px; height: 5px; border-radius: 50%;
-        }
+        .tech-item { font-size: 10px; font-weight: 600; color: var(--text-gray); display: flex; align-items: center; gap: 3px; }
+        .tech-dot { width: 5px; height: 5px; border-radius: 50%; }
         .td-green { background: var(--primary-light); }
         .td-orange { background: var(--accent-light); }
         .td-blue { background: var(--info); }
 
-        /* أزرار */
         .btn-grid { display: flex; flex-direction: column; gap: 10px; }
         .btn {
             display: flex; align-items: center; justify-content: center; gap: 10px;
@@ -192,35 +187,19 @@
         .btn-icon { font-size: 22px; position: relative; z-index: 1; }
         .btn-text { position: relative; z-index: 1; }
 
-        .btn-report {
-            background: linear-gradient(135deg, #EF5350, #C62828);
-            box-shadow: 0 8px 24px rgba(198,40,40,0.35);
-            animation: btnSlideIn 0.6s ease 0.4s both;
-        }
+        .btn-report { background: linear-gradient(135deg, #EF5350, #C62828); box-shadow: 0 8px 24px rgba(198,40,40,0.35); animation: btnSlideIn 0.6s ease 0.4s both; }
         .btn-report:hover { box-shadow: 0 14px 32px rgba(198,40,40,0.5); transform: translateY(-3px); }
         .btn-report:active { transform: scale(0.96); }
 
-        .btn-collect {
-            background: linear-gradient(135deg, #FFA726, #E65100);
-            box-shadow: 0 8px 24px rgba(230,81,0,0.35);
-            animation: btnSlideIn 0.6s ease 0.55s both;
-        }
+        .btn-collect { background: linear-gradient(135deg, #FFA726, #E65100); box-shadow: 0 8px 24px rgba(230,81,0,0.35); animation: btnSlideIn 0.6s ease 0.55s both; }
         .btn-collect:hover { box-shadow: 0 14px 32px rgba(230,81,0,0.5); transform: translateY(-3px); }
         .btn-collect:active { transform: scale(0.96); }
 
-        .btn-driver {
-            background: linear-gradient(135deg, #42A5F5, #0D47A1);
-            box-shadow: 0 8px 24px rgba(13,71,161,0.35);
-            animation: btnSlideIn 0.6s ease 0.7s both;
-        }
+        .btn-driver { background: linear-gradient(135deg, #42A5F5, #0D47A1); box-shadow: 0 8px 24px rgba(13,71,161,0.35); animation: btnSlideIn 0.6s ease 0.7s both; }
         .btn-driver:hover { box-shadow: 0 14px 32px rgba(13,71,161,0.5); transform: translateY(-3px); }
         .btn-driver:active { transform: scale(0.96); }
 
-        .btn-admin {
-            background: linear-gradient(135deg, #66BB6A, #1B5E20);
-            box-shadow: 0 8px 24px rgba(27,94,32,0.35);
-            animation: btnSlideIn 0.6s ease 0.85s both;
-        }
+        .btn-admin { background: linear-gradient(135deg, #66BB6A, #1B5E20); box-shadow: 0 8px 24px rgba(27,94,32,0.35); animation: btnSlideIn 0.6s ease 0.85s both; }
         .btn-admin:hover { box-shadow: 0 14px 32px rgba(27,94,32,0.5); transform: translateY(-3px); }
         .btn-admin:active { transform: scale(0.96); }
 
@@ -229,7 +208,7 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        /* إحصائيات */
+        /* ============ إحصائيات ============ */
         .stats {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
             margin-top: 22px; padding-top: 18px;
@@ -248,7 +227,38 @@
         }
         .stat-label { font-size: 9px; color: var(--text-gray); font-weight: 600; margin-top: 1px; }
 
-        /* فooter */
+        /* ============ قسم كيف نعمل ============ */
+        .how-card {
+            width: 100%; max-width: 480px;
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: var(--radius); padding: 24px 20px;
+            box-shadow: var(--shadow-lg); text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: cardAppear 1s ease 0.5s both;
+        }
+        .how-title {
+            font-size: 18px; font-weight: 900; color: var(--primary-dark); margin-bottom: 16px;
+        }
+        .how-steps {
+            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+        }
+        .how-step {
+            flex: 1; min-width: 100px; max-width: 140px; text-align: center;
+            background: rgba(46,125,50,0.04); padding: 16px 10px;
+            border-radius: var(--radius-sm); transition: var(--transition);
+        }
+        .how-step:hover { background: rgba(46,125,50,0.08); transform: translateY(-3px); }
+        .how-num {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white; font-size: 18px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px; box-shadow: 0 4px 12px rgba(46,125,50,0.3);
+        }
+        .how-step-title { font-size: 13px; font-weight: 800; color: var(--primary-dark); margin-bottom: 3px; }
+        .how-step-desc { font-size: 10px; color: var(--text-gray); line-height: 1.5; }
+
         .footer {
             position: relative; z-index: 1; text-align: center;
             padding: 10px 20px; font-size: 10px;
@@ -258,15 +268,15 @@
             gap: 8px; flex-wrap: wrap;
         }
         .footer strong { color: rgba(255,255,255,0.8); }
-        .footer-sep {
-            width: 1px; height: 12px; background: rgba(255,255,255,0.2);
-        }
+        .footer-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.2); }
 
-        @media (max-width: 380px) {
+        @media (max-width: 400px) {
             .main-title { font-size: 24px; }
             .logo-icon { font-size: 44px; }
             .btn { padding: 13px 14px; font-size: 13px; }
             .stat-value { font-size: 15px; }
+            .how-steps { flex-direction: column; align-items: center; }
+            .how-step { max-width: 100%; width: 100%; }
         }
     </style>
 </head>
@@ -282,9 +292,12 @@
             <div class="nav-brand-icon">🌍</div>
             <span>مدينتنا نظيفة</span>
         </div>
+        <button class="btn-share" onclick="sharePlatform()">📤 نشر</button>
     </header>
 
     <main class="main-container">
+        
+        <!-- البطاقة الرئيسية -->
         <div class="card" id="mainCard">
             
             <div class="logo-wrapper">
@@ -297,7 +310,6 @@
             <h1 class="main-title">مدينتنا نظيفة</h1>
             <p class="main-sub">منصة وطنية للاقتصاد الأخضر</p>
 
-            <!-- شريط الثقة - جديد -->
             <div class="trust-bar">
                 <span class="trust-item">🇩🇿 وزارة البيئة</span>
                 <span class="trust-dot"></span>
@@ -306,7 +318,6 @@
                 <span class="trust-item">♻️ اقتصاد دائري</span>
             </div>
 
-            <!-- شريط التقنيات - جديد -->
             <div class="tech-bar">
                 <span class="tech-item"><span class="tech-dot td-green"></span> تبليغ SIG</span>
                 <span class="tech-item"><span class="tech-dot td-orange"></span> ذكاء اصطناعي</span>
@@ -351,12 +362,35 @@
                 </div>
             </div>
         </div>
+
+        <!-- قسم كيف نعمل -->
+        <div class="how-card">
+            <h2 class="how-title">🧭 كيف تعمل المنصة؟</h2>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="how-num">1</div>
+                    <div class="how-step-title">بلّغ</div>
+                    <div class="how-step-desc">صور المفرغة وأرسل الموقع</div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">2</div>
+                    <div class="how-step-title">اجمع</div>
+                    <div class="how-step-desc">السائق يتلقى المهمة ويتوجه</div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">3</div>
+                    <div class="how-step-title">كافأ</div>
+                    <div class="how-step-desc">اربح نقاطاً خضراء قابلة للاستبدال</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer class="footer">
         <span>© 2026 <strong>مدينتنا نظيفة</strong></span>
         <span class="footer-sep"></span>
-        <span> 🇩🇿 version 1.0.0 </span>
+        <span>🇩🇿 version 1.0.0</span>
         <span class="footer-sep"></span>
         <span>جميع الحقوق محفوظة</span>
     </footer>
@@ -390,17 +424,51 @@
             });
         });
 
-        // عدادات
-        function tick(id, base, range, suffix) {
-            const el = document.getElementById(id);
-            setInterval(() => {
-                el.textContent = (Math.floor(Math.random()*range)+base).toLocaleString('en-US')+suffix;
-            }, 4000);
+        // إحصائيات حية
+        function getReports() { return JSON.parse(localStorage.getItem('reports')||'[]'); }
+        function getSorting() { return JSON.parse(localStorage.getItem('sortingRequests')||'[]'); }
+        function getCompleted() { return JSON.parse(localStorage.getItem('completedTasks')||'[]'); }
+        function getUserPoints() { return parseInt(localStorage.getItem('userPoints')||'0'); }
+
+        function updateLiveStats() {
+            const reports = getReports().length;
+            const sorting = getSorting();
+            const totalKg = sorting.reduce((s,r) => s + (r.weight||0), 0);
+            const co2 = Math.round(totalKg * 0.5);
+            const points = getUserPoints();
+
+            document.getElementById('v1').textContent = reports.toLocaleString('en-US');
+            document.getElementById('v2').textContent = totalKg.toLocaleString('en-US');
+            document.getElementById('v3').textContent = co2.toLocaleString('en-US');
+            document.getElementById('v4').textContent = points >= 1000 ? Math.floor(points/1000)+'K' : points.toLocaleString('en-US');
         }
-        tick('v1',1200,500,'');
-        tick('v2',800,300,'');
-        tick('v3',280,160,'');
-        tick('v4',40,15,'K');
+
+        updateLiveStats();
+        setInterval(updateLiveStats, 3000);
+
+        // زر النشر
+        function sharePlatform() {
+            const url = window.location.href;
+            const text = 'مدينتنا نظيفة - منصة وطنية للاقتصاد الأخضر ♻️';
+            
+            if(navigator.share) {
+                navigator.share({ title: 'مدينتنا نظيفة', text: text, url: url })
+                    .catch(() => {});
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    const btn = document.querySelector('.btn-share');
+                    btn.textContent = '✅ تم النسخ';
+                    setTimeout(() => btn.textContent = '📤 نشر', 2000);
+                });
+            }
+        }
+
+        // PWA - تسجيل Service Worker
+        if('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('data:application/javascript,self.addEventListener("fetch",function(e){e.respondWith(fetch(e.request).catch(function(){return caches.match(e.request)}))});');
+            });
+        }
     </script>
 </body>
 </html>
