@@ -85,9 +85,7 @@
             width: 7px; height: 7px; background: var(--primary-light);
             border-radius: 50%; animation: pulse 1.5s ease infinite;
         }
-        @keyframes pulse {
-            0%,100% { opacity: 1; } 50% { opacity: 0.3; }
-        }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         .main-container {
             position: relative; z-index: 1; flex: 1;
@@ -109,8 +107,7 @@
             width: 36px; height: 36px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center; font-size: 17px;
         }
-        .ci-tasks { background: #E3F2FD; }
-        .ci-done { background: #E8F5E9; }
+        .ci-tasks { background: #E3F2FD; } .ci-done { background: #E8F5E9; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .badge {
             font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700;
@@ -118,44 +115,29 @@
         .badge-pending { background: #FFF3E0; color: var(--accent); }
         .badge-done { background: #E8F5E9; color: var(--primary); }
 
-        /* ============ إحصائيات ============ */
-        .stats-row {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
-            margin-bottom: 12px;
-        }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
         .stat-box {
             background: rgba(255,255,255,0.92); border-radius: var(--radius-sm);
             padding: 14px 8px; text-align: center; box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.15);
-            animation: cardIn 0.5s ease both;
+            border: 1px solid rgba(255,255,255,0.15); animation: cardIn 0.5s ease both;
         }
-        .stat-value {
-            font-size: 22px; font-weight: 900; color: var(--info);
-            direction: ltr; display: inline-block;
-        }
+        .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
         .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
 
-        /* ============ قائمة المهام ============ */
         .task-list { display: flex; flex-direction: column; gap: 8px; }
         .task-item {
             background: white; border-radius: var(--radius-sm);
             padding: 16px; box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.04);
-            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.04); transition: var(--transition);
         }
         .task-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .task-item.done { opacity: 0.6; background: #f9f9f9; }
         .task-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .task-type {
-            font-size: 12px; padding: 4px 10px; border-radius: 10px; font-weight: 700;
-        }
+        .task-type { font-size: 12px; padding: 4px 10px; border-radius: 10px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; }
         .type-pickup { background: #FFF8E1; color: #E65100; }
         .task-id { font-size: 11px; color: var(--text-gray); }
-        .task-address {
-            font-size: 12px; color: var(--text-gray); margin-bottom: 10px;
-            display: flex; align-items: center; gap: 4px;
-        }
+        .task-address { font-size: 12px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
         .task-actions { display: flex; gap: 8px; }
         .btn-task {
             flex: 1; padding: 10px; border-radius: 20px; border: none;
@@ -163,18 +145,11 @@
             font-family: 'Cairo', sans-serif; transition: var(--transition);
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
-        .btn-navigate {
-            background: var(--info); color: white;
-            box-shadow: 0 4px 14px rgba(30,136,229,0.3);
-        }
+        .btn-navigate { background: var(--info); color: white; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
         .btn-navigate:hover { background: #1565C0; }
-        .btn-confirm {
-            background: var(--primary); color: white;
-            box-shadow: 0 4px 14px rgba(46,125,50,0.3);
-        }
+        .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
         .btn-confirm:hover { background: var(--primary-dark); }
 
-        /* ============ كاميرا إثبات ============ */
         .proof-zone {
             width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm);
             background: linear-gradient(145deg, #1a1a2e, #121828);
@@ -189,10 +164,7 @@
         .proof-emoji { font-size: 38px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         .proof-text { font-size: 12px; font-weight: 700; }
-        #proofPreview {
-            width:100%;height:100%;object-fit:cover;
-            display:none;position:absolute;top:0;left:0;z-index:2;
-        }
+        #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
         .proof-actions { display: flex; gap: 8px; }
         .btn-proof {
             flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08);
@@ -203,9 +175,7 @@
         .btn-proof:hover { background: #f9f9f9; }
         .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
 
-        .empty-state {
-            text-align: center; padding: 30px 20px;
-        }
+        .empty-state { text-align: center; padding: 30px 20px; }
         .empty-emoji { font-size: 50px; display: block; margin-bottom: 8px; }
         .empty-text { font-size: 14px; color: var(--text-gray); font-weight: 600; }
 
@@ -249,6 +219,36 @@
             0%,100% { box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
             50% { box-shadow: 0 4px 25px rgba(46,125,50,0.6); }
         }
+
+        /* شاشة تسجيل الدخول */
+        .login-screen {
+            position: relative; z-index: 1; flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: 78px 16px 20px;
+        }
+        .login-card {
+            background: rgba(255,255,255,0.94);
+            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: var(--radius); padding: 36px 24px; text-align: center;
+            max-width: 380px; width: 100%;
+            box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2);
+            animation: cardIn 0.5s ease;
+        }
+        .login-card input {
+            width: 100%; padding: 14px; border: 2px solid #e0e0e0;
+            border-radius: var(--radius-sm); text-align: center; font-size: 18px;
+            font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr;
+            transition: var(--transition);
+        }
+        .login-card input:focus { outline: none; border-color: var(--info); }
+        .login-btn {
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5);
+            color: white; border: none; border-radius: var(--radius-sm);
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            font-family: 'Cairo', sans-serif; transition: var(--transition);
+        }
+        .login-btn:hover { background: #1565C0; transform: translateY(-2px); }
+        .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
     </style>
 </head>
 <body>
@@ -263,9 +263,21 @@
         <div class="driver-status"><span class="dot"></span> متصل</div>
     </header>
 
-    <main class="main-container">
+    <!-- شاشة تسجيل الدخول -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-card">
+            <div style="font-size:55px;margin-bottom:10px;">🚛</div>
+            <h2 style="font-size:20px;font-weight:900;color:#2E7D32;margin-bottom:6px;">دخول السائق</h2>
+            <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">أدخل كلمة المرور للمتابعة</p>
+            <input type="password" id="driverPass" placeholder="كلمة المرور" onkeypress="if(event.key==='Enter')checkPass()">
+            <button class="login-btn" onclick="checkPass()">🚛 دخول</button>
+            <p class="login-error" id="loginError">كلمة المرور غير صحيحة</p>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-container" id="driverMain" style="display:none;">
         
-        <!-- إحصائيات -->
         <div class="stats-row">
             <div class="stat-box" style="animation-delay:0.05s">
                 <div class="stat-value" id="pendingCount">0</div>
@@ -281,7 +293,6 @@
             </div>
         </div>
 
-        <!-- المهام المعلقة -->
         <div class="card" style="animation-delay:0.2s">
             <div class="card-header">
                 <div class="card-icon ci-tasks">📋</div>
@@ -296,7 +307,6 @@
             </div>
         </div>
 
-        <!-- المهام المكتملة -->
         <div class="card" style="animation-delay:0.25s">
             <div class="card-header">
                 <div class="card-icon ci-done">✅</div>
@@ -337,12 +347,8 @@
                 <button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button>
             </div>
             
-            <button class="modal-btn pulse-anim" id="btnFinalConfirm" onclick="finalConfirm()" style="width:100%;">
-                ✅ تأكيد وإرسال الإثبات
-            </button>
-            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition);" onclick="closeConfirm()">
-                إلغاء
-            </button>
+            <button class="modal-btn pulse-anim" id="btnFinalConfirm" onclick="finalConfirm()" style="width:100%;">✅ تأكيد وإرسال الإثبات</button>
+            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition);" onclick="closeConfirm()">إلغاء</button>
         </div>
     </div>
 
@@ -370,6 +376,18 @@
             }
         })();
 
+        // ============ تسجيل الدخول ============
+        function checkPass() {
+            const pass = document.getElementById('driverPass').value;
+            if(pass === '1234') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('driverMain').style.display = 'block';
+                loadTasks();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
         // ============ حالة ============
         let currentTaskId = null;
         let proofPhoto = null;
@@ -384,23 +402,12 @@
             
             return [
                 ...reports.map(r => ({
-                    id: 'report_'+r.time,
-                    type: 'report',
-                    typeLabel: '🚨 مفرغة',
-                    typeClass: 'type-report',
-                    lat: r.lat, lng: r.lng,
-                    time: r.time,
-                    category: r.type || 'غير محدد'
+                    id: 'report_'+r.time, type: 'report', typeLabel: '🚨 مفرغة', typeClass: 'type-report',
+                    lat: r.lat, lng: r.lng, time: r.time, category: r.type || 'غير محدد'
                 })),
                 ...sorting.map(r => ({
-                    id: 'sort_'+r.time,
-                    type: 'pickup',
-                    typeLabel: '📦 جمع مواد',
-                    typeClass: 'type-pickup',
-                    lat: r.lat, lng: r.lng,
-                    time: r.time,
-                    weight: r.weight,
-                    material: r.material
+                    id: 'sort_'+r.time, type: 'pickup', typeLabel: '📦 جمع مواد', typeClass: 'type-pickup',
+                    lat: r.lat, lng: r.lng, time: r.time, weight: r.weight, material: r.material
                 }))
             ];
         }
@@ -414,13 +421,11 @@
             document.getElementById('pendingBadge').textContent = allTasks.length;
             document.getElementById('doneBadge').textContent = doneToday.length;
             
-            // حساب الوزن
             const sortingDone = JSON.parse(localStorage.getItem('sortingRequests')||'[]')
                 .filter(r => completedTasks.includes('sort_'+r.time));
             const totalKg = sortingDone.reduce((s,r) => s + (r.weight||0), 0);
             document.getElementById('totalKg').textContent = totalKg.toLocaleString('en-US');
 
-            // قائمة المهام
             const pendingContainer = document.getElementById('pendingTasks');
             if(allTasks.length === 0) {
                 pendingContainer.innerHTML = '<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة حالياً</span></div>';
@@ -431,32 +436,22 @@
                             <span class="task-type ${task.typeClass}">${task.typeLabel}</span>
                             <span class="task-id">#${task.id.substring(0,12)}</span>
                         </div>
-                        <div class="task-address">
-                            📍 ${task.lat?.toFixed(5)||'--'}, ${task.lng?.toFixed(5)||'--'}
-                        </div>
+                        <div class="task-address">📍 ${task.lat?.toFixed(5)||'--'}, ${task.lng?.toFixed(5)||'--'}</div>
                         <div class="task-actions">
-                            <button class="btn-task btn-navigate" onclick="navigateTo(${task.lat},${task.lng})">
-                                🗺️ تنقل
-                            </button>
-                            <button class="btn-task btn-confirm" onclick="openConfirm('${task.id}')">
-                                ✅ تأكيد الجمع
-                            </button>
+                            <button class="btn-task btn-navigate" onclick="navigateTo(${task.lat},${task.lng})">🗺️ تنقل</button>
+                            <button class="btn-task btn-confirm" onclick="openConfirm('${task.id}')">✅ تأكيد الجمع</button>
                         </div>
                     </div>
                 `).join('');
             }
         }
 
-        // ============ ملاحة ============
         function navigateTo(lat, lng) {
-            const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-            window.open(url, '_blank');
+            window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
         }
 
-        // ============ تأكيد ============
         function openConfirm(taskId) {
-            currentTaskId = taskId;
-            proofPhoto = null;
+            currentTaskId = taskId; proofPhoto = null;
             document.getElementById('proofPreview').style.display = 'none';
             document.getElementById('proofInner').style.display = 'block';
             document.getElementById('proofZone').classList.remove('filled');
@@ -467,23 +462,14 @@
 
         function closeConfirm() {
             document.getElementById('confirmOverlay').classList.remove('show');
-            currentTaskId = null;
-            proofPhoto = null;
+            currentTaskId = null; proofPhoto = null;
         }
 
-        function takeProofPhoto() {
-            if(proofPhoto) return;
-            document.getElementById('proofCamera').click();
-        }
-
-        function openProofGallery() {
-            if(proofPhoto) return;
-            document.getElementById('proofGallery').click();
-        }
+        function takeProofPhoto() { if(!proofPhoto) document.getElementById('proofCamera').click(); }
+        function openProofGallery() { if(!proofPhoto) document.getElementById('proofGallery').click(); }
 
         function handleProofPhoto(e) {
-            const f = e.target.files[0];
-            if(!f) return;
+            const f = e.target.files[0]; if(!f) return;
             const r = new FileReader();
             r.onload = ev => {
                 proofPhoto = ev.target.result;
@@ -509,29 +495,17 @@
         }
 
         function finalConfirm() {
-            if(!proofPhoto) {
-                alert('الرجاء التقاط صورة إثبات أولاً');
-                return;
-            }
-            
-            // حفظ المهمة كمكتملة
+            if(!proofPhoto) { alert('الرجاء التقاط صورة إثبات أولاً'); return; }
             if(!completedTasks.includes(currentTaskId)) {
                 completedTasks.push(currentTaskId);
                 localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
             }
-            
-            // حفظ الإثبات
             const proofs = JSON.parse(localStorage.getItem('taskProofs')||'{}');
             proofs[currentTaskId] = { photo: proofPhoto, time: new Date().toISOString() };
             localStorage.setItem('taskProofs', JSON.stringify(proofs));
-            
             closeConfirm();
             document.getElementById('successOverlay').classList.add('show');
         }
-
-        // ============ تحميل ============
-        loadTasks();
-        setInterval(loadTasks, 10000); // تحديث كل 10 ثوان
     </script>
 </body>
 </html>
