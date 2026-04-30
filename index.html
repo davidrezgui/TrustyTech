@@ -92,7 +92,13 @@
         .tech-item { font-size: 10px; font-weight: 600; color: var(--text-gray); display: flex; align-items: center; gap: 3px; white-space: nowrap; }
         .tech-dot { width: 5px; height: 5px; border-radius: 50%; } .td-green { background: var(--primary-light); } .td-orange { background: var(--accent-light); } .td-blue { background: var(--info); }
         .btn-grid { display: flex; flex-direction: column; gap: 9px; }
-        .btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 18px; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; transition: var(--transition); text-decoration: none; color: white; font-family: 'Cairo', sans-serif; position: relative; overflow: hidden; }
+        .btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 14px 18px; border: none; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            transition: var(--transition); text-decoration: none; color: white;
+            font-family: 'Cairo', sans-serif; position: relative; overflow: hidden;
+        }
         .btn-icon { font-size: 20px; position: relative; z-index: 1; }
         .btn-text { position: relative; z-index: 1; }
         .btn-report { background: linear-gradient(135deg, #EF5350, #C62828); box-shadow: 0 8px 24px rgba(198,40,40,0.35); animation: btnSlideIn 0.6s ease 0.4s both; }
@@ -100,15 +106,15 @@
         .btn-driver { background: linear-gradient(135deg, #42A5F5, #0D47A1); box-shadow: 0 8px 24px rgba(13,71,161,0.35); animation: btnSlideIn 0.6s ease 0.6s both; }
         .btn-profile { background: linear-gradient(135deg, #FFD700, #FFA726); box-shadow: 0 8px 24px rgba(255,167,38,0.35); animation: btnSlideIn 0.6s ease 0.7s both; }
         .btn-login { background: linear-gradient(135deg, #AB47BC, #7B1FA2); box-shadow: 0 8px 24px rgba(123,31,162,0.35); animation: btnSlideIn 0.6s ease 0.8s both; }
-        .btn-report:hover,.btn-collect:hover,.btn-driver:hover,.btn-profile:hover,.btn-login:hover { transform: translateY(-3px); }
-        .btn-report:active,.btn-collect:active,.btn-driver:active,.btn-profile:active,.btn-login:active { transform: scale(0.96); }
+
+        /* تأثير hover خفيف وأنيق */
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,0.35); }
+        .btn:active { transform: translateY(0); }
+
         @keyframes btnSlideIn { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
 
         /* فاصل */
-        .divider-section {
-            width: 100%; max-width: 480px; text-align: center;
-            margin: 4px 0; position: relative;
-        }
+        .divider-section { width: 100%; max-width: 480px; text-align: center; margin: 4px 0; position: relative; }
         .divider-line { display: flex; align-items: center; gap: 10px; }
         .divider-line::before, .divider-line::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.1); }
         .divider-label { font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 600; display: flex; align-items: center; gap: 5px; }
@@ -122,7 +128,8 @@
             animation: cardAppear 1s ease 0.9s both;
         }
         .btn-admin { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; }
-        .btn-admin:hover { background: rgba(46,125,50,0.3); }
+        .btn-admin:hover { background: rgba(46,125,50,0.4); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(46,125,50,0.3); }
+        .btn-admin:active { transform: translateY(0); }
 
         .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(46,125,50,0.12); animation: fadeIn 0.8s ease 1s both; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -142,9 +149,7 @@
         .footer strong { color: rgba(255,255,255,0.8); }
         .footer-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.2); }
 
-        @media (max-width: 480px) {
-            .main-title { font-size: 24px; } .logo-icon { font-size: 42px; } .btn { padding: 12px 14px; font-size: 13px; } .btn-icon { font-size: 18px; } .stat-value { font-size: 14px; } .card { padding: 24px 14px 18px; } .how-steps { flex-direction: column; align-items: center; } .how-step { max-width: 100%; width: 100%; display: flex; align-items: center; gap: 10px; text-align: right; } .how-num { margin: 0; flex-shrink: 0; }
-        }
+        @media (max-width: 480px) { .main-title { font-size: 24px; } .logo-icon { font-size: 42px; } .btn { padding: 12px 14px; font-size: 13px; } .btn-icon { font-size: 18px; } .stat-value { font-size: 14px; } .card { padding: 24px 14px 18px; } .how-steps { flex-direction: column; align-items: center; } .how-step { max-width: 100%; width: 100%; display: flex; align-items: center; gap: 10px; text-align: right; } .how-num { margin: 0; flex-shrink: 0; } }
         @media (max-width: 360px) { .main-title { font-size: 20px; } .btn { padding: 10px 12px; font-size: 12px; } .stat-value { font-size: 13px; } }
         @media (min-width: 768px) { .main-title { font-size: 32px; } .btn { padding: 16px 22px; font-size: 15px; } }
 
@@ -168,7 +173,6 @@
 
     <main class="main-container">
         
-        <!-- البطاقة الرئيسية -->
         <div class="card" id="mainCard">
             <div class="logo-wrapper"><div class="logo-ring"></div><div class="logo-ring logo-ring-2"></div><span class="logo-icon">♻️</span><span class="logo-badge">SIG</span></div>
             <h1 class="main-title">مدينتنا نظيفة</h1>
@@ -176,7 +180,6 @@
             <div class="trust-bar"><span class="trust-item">🇩🇿 وزارة البيئة</span><span class="trust-dot"></span><span class="trust-item">📍 ولاية برج بوعريريج</span><span class="trust-dot"></span><span class="trust-item">♻️ اقتصاد دائري</span></div>
             <div class="tech-bar"><span class="tech-item"><span class="tech-dot td-green"></span> تبليغ SIG</span><span class="tech-item"><span class="tech-dot td-orange"></span> ذكاء اصطناعي</span><span class="tech-item"><span class="tech-dot td-blue"></span> تتبع CO₂</span></div>
 
-            <!-- أزرار المواطن والتاجر -->
             <div class="btn-grid">
                 <a href="report.html" class="btn btn-report"><span class="btn-icon">📸</span><span class="btn-text">أبلغ عن مفرغة</span></a>
                 <a href="sort.html" class="btn btn-collect"><span class="btn-icon">📦</span><span class="btn-text">طلب جمع المواد</span></a>
@@ -193,10 +196,8 @@
             </div>
         </div>
 
-        <!-- فاصل -->
         <div class="divider-section"><div class="divider-line"><span class="divider-label">🔒 للمشرفين فقط</span></div></div>
 
-        <!-- لوحة الإدارة منفصلة -->
         <div class="card-admin">
             <a href="dashboard.html" class="btn btn-admin" style="width:100%;">
                 <span class="btn-icon">📊</span>
@@ -205,7 +206,6 @@
             </a>
         </div>
 
-        <!-- قسم كيف نعمل -->
         <div class="how-card">
             <h2 class="how-title">🧭 كيف تعمل المنصة؟</h2>
             <div class="how-steps">
@@ -228,7 +228,6 @@
 
     <script>
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*6+3;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*12+8)+'s;animation-delay:'+Math.random()*10+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
-        document.querySelectorAll('.btn').forEach(function(btn){btn.addEventListener('click',function(e){var ripple=document.createElement('span');ripple.className='ripple';var r=this.getBoundingClientRect();var s=Math.max(r.width,r.height);ripple.style.width=ripple.style.height=s+'px';ripple.style.left=(e.clientX-r.left-s/2)+'px';ripple.style.top=(e.clientY-r.top-s/2)+'px';this.appendChild(ripple);ripple.addEventListener('animationend',function(){ripple.remove();});});});
         function getR(){return JSON.parse(localStorage.getItem('reports')||'[]');}function getS(){return JSON.parse(localStorage.getItem('sortingRequests')||'[]');}function getP(){return parseInt(localStorage.getItem('userPoints')||'0');}
         function refreshStats(){var r=getR().length;var kg=getS().reduce(function(s,r){return s+(r.weight||0);},0);var co2=Math.round(kg*0.5);var pts=getP();document.getElementById('v1').textContent=r.toLocaleString('en-US');document.getElementById('v2').textContent=kg.toLocaleString('en-US');document.getElementById('v3').textContent=co2.toLocaleString('en-US');document.getElementById('v4').textContent=pts>=1000?Math.floor(pts/1000)+'K':pts.toLocaleString('en-US');}
         refreshStats();setInterval(refreshStats,4000);
