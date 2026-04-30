@@ -32,7 +32,7 @@
         .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
         .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
+        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; }
         .driver-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 6px 12px; border-radius: 15px; }
         .driver-status .dot { width: 7px; height: 7px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -46,38 +46,37 @@
         .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
         .badge-pending { background: #FFF3E0; color: var(--accent); } .badge-done { background: #E8F5E9; color: var(--primary); }
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); animation: cardIn 0.5s ease both; }
+        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); }
         .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
         .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
         .task-list { display: flex; flex-direction: column; gap: 8px; }
-        .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
+        .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); }
         .task-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         .task-type { font-size: 12px; padding: 4px 10px; border-radius: 10px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
         .task-address { font-size: 12px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
         .task-actions { display: flex; gap: 8px; }
         .btn-task { flex: 1; padding: 10px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-navigate { background: var(--info); color: white; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
-        .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
-        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; margin-bottom: 8px; }
-        .proof-zone.filled { border: 2.5px solid var(--primary-light); cursor: default; }
+        .btn-navigate { background: var(--info); color: white; } .btn-confirm { background: var(--primary); color: white; }
+        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 8px; }
+        .proof-zone.filled { border-color: var(--primary-light); }
         .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
         .proof-emoji { font-size: 38px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
         .proof-actions { display: flex; gap: 8px; }
-        .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; }
         .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
-        .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; display: block; margin-bottom: 8px; } .empty-text { font-size: 14px; color: var(--text-gray); font-weight: 600; }
+        .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; } .empty-text { font-size: 14px; color: var(--text-gray); }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
         @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
-        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); } .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
+        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); } .modal-desc { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
         .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
-        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
+        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); }
         .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
         .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
@@ -117,16 +116,12 @@
             <div class="card-header"><div class="card-icon ci-tasks">📋</div><span class="card-label">المهام المعلقة</span><span class="badge badge-pending" id="pendingBadge">0</span></div>
             <div class="task-list" id="pendingTasks"><div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام</span></div></div>
         </div>
-        <div class="card">
-            <div class="card-header"><div class="card-icon ci-done">✅</div><span class="card-label">المهام المكتملة</span><span class="badge badge-done" id="doneBadge">0</span></div>
-            <div class="task-list" id="doneTasks"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لم تكتمل أي مهمة</span></div></div>
-        </div>
     </main>
 
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
     <div class="overlay" id="confirmOverlay">
-        <div class="modal"><div class="modal-icon">📸</div><div class="modal-title">تأكيد إتمام الجمع</div><div class="modal-desc">التقط صورة للمواد المجمّعة</div>
+        <div class="modal"><div class="modal-icon">📸</div><div class="modal-title">تأكيد إتمام الجمع</div><div class="modal-desc">التقط صورة للمواد</div>
             <div class="proof-zone" id="proofZone" onclick="takeProofPhoto()"><img id="proofPreview" alt="إثبات"><div class="proof-inner" id="proofInner"><span class="proof-emoji">📸</span><span class="proof-text">اضغط لالتقاط صورة</span></div></div>
             <input type="file" id="proofCamera" accept="image/*" capture="environment" style="display:none" onchange="handleProofPhoto(event)">
             <input type="file" id="proofGallery" accept="image/*" style="display:none" onchange="handleProofPhoto(event)">
@@ -157,40 +152,48 @@
             }else{document.getElementById('loginError').style.display='block';}
         }
 
-        async function loadAll(){
+        function loadAll(){
             document.getElementById('refreshBtn').textContent = '⏳';
-            try{
-                var r1=await sb.from('reports').select('*');if(!r1.error) supabaseReports=r1.data;
-                var r2=await sb.from('pickups').select('*');if(!r2.error) supabasePickups=r2.data;
-                var r3=await sb.from('completed').select('*');if(!r3.error) completedTasks=r3.data.map(function(x){return x.task_id;});
-            }catch(e){console.log('خطأ:',e);}
-            var localDone=JSON.parse(localStorage.getItem('completedTasks')||'[]');
-            localDone.forEach(function(x){if(completedTasks.indexOf(x)===-1) completedTasks.push(x);});
-            loadTasks();
-            document.getElementById('refreshBtn').textContent = '🔄 تحديث';
+            document.getElementById('refreshBtn').disabled = true;
+
+            // جلب البيانات - متسلسل بدون await
+            sb.from('reports').select('*').then(function(r1){
+                if(!r1.error) supabaseReports = r1.data;
+                return sb.from('pickups').select('*');
+            }).then(function(r2){
+                if(!r2.error) supabasePickups = r2.data;
+                return sb.from('completed').select('*');
+            }).then(function(r3){
+                if(!r3.error) completedTasks = r3.data.map(function(x){return x.task_id;});
+                var localDone = JSON.parse(localStorage.getItem('completedTasks')||'[]');
+                localDone.forEach(function(x){if(completedTasks.indexOf(x)===-1) completedTasks.push(x);});
+                loadTasks();
+                document.getElementById('refreshBtn').textContent = '🔄 تحديث';
+                document.getElementById('refreshBtn').disabled = false;
+            }).catch(function(e){
+                console.log('خطأ:',e);
+                loadTasks();
+                document.getElementById('refreshBtn').textContent = '🔄 تحديث';
+                document.getElementById('refreshBtn').disabled = false;
+            });
         }
 
         function loadTasks(){
             var allTasks=[];
             supabaseReports.forEach(function(r){
                 if(completedTasks.indexOf('report_'+r.id)===-1){
-                    allTasks.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'});
+                    allTasks.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,category:r.type||'غير محدد'});
                 }
             });
             supabasePickups.forEach(function(r){
                 if(completedTasks.indexOf('pickup_'+r.id)===-1){
-                    allTasks.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material});
+                    allTasks.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,weight:r.weight,material:r.material});
                 }
             });
 
             document.getElementById('pendingCount').textContent=allTasks.length.toLocaleString('en-US');
             document.getElementById('doneCount').textContent=completedTasks.length.toLocaleString('en-US');
             document.getElementById('pendingBadge').textContent=allTasks.length;
-            document.getElementById('doneBadge').textContent=completedTasks.length;
-
-            var totalKg=0;
-            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1) totalKg+=(r.weight||0);});
-            document.getElementById('totalKg').textContent=totalKg.toLocaleString('en-US');
 
             var pc=document.getElementById('pendingTasks');
             if(allTasks.length===0){
