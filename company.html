@@ -10,15 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --accent-light: #FFA726; --danger: #E53935;
-            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px;
-            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-        }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --teal: #009688; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 24px; --radius-sm: 14px; --shadow-xl: 0 30px 80px rgba(0,0,0,0.25); --shadow-lg: 0 20px 60px rgba(0,0,0,0.2); --shadow: 0 4px 16px rgba(0,0,0,0.08); --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
         .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
@@ -48,8 +40,19 @@
         .material-name { font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .material-detail { font-size: 11px; color: var(--text-gray); }
         .material-price { font-size: 16px; font-weight: 900; color: var(--accent); direction: ltr; }
-        .btn-buy { padding: 10px 16px; background: var(--accent); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; }
+        .btn-offer { padding: 10px 16px; background: var(--teal); color: white; border: none; border-radius: 20px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; }
+        .empty-state { text-align: center; padding: 20px; }
+        .empty-emoji { font-size: 40px; display: block; margin-bottom: 6px; }
+        .empty-text { font-size: 12px; color: var(--text-gray); }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
+        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .overlay.show { display: flex; }
+        .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
+        @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
+        .modal-icon { font-size: 60px; } .modal-title { font-size: 18px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
+        .modal-desc { font-size: 12px; color: var(--text-gray); margin-bottom: 16px; }
+        .modal-input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); font-family: 'Cairo', sans-serif; font-size: 14px; text-align: center; direction: ltr; margin-bottom: 10px; }
+        .modal-btn { width: 100%; padding: 12px; border: none; border-radius: var(--radius-sm); background: var(--teal); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
     </style>
 </head>
 <body>
@@ -72,13 +75,25 @@
         </div>
 
         <div class="card">
-            <div class="card-header"><div class="card-icon">📦</div><span class="card-label">المواد المتاحة للشراء</span></div>
-            <div id="materialsList"></div>
+            <div class="card-header"><div class="card-icon">📦</div><span class="card-label">المواد الجاهزة للشراء</span></div>
+            <div id="materialsList"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد مواد متاحة حالياً</span></div></div>
         </div>
 
     </main>
 
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
+
+    <!-- نافذة تقديم عرض -->
+    <div class="overlay" id="offerOverlay">
+        <div class="modal">
+            <div class="modal-icon">💰</div>
+            <div class="modal-title">تقديم عرض شراء</div>
+            <div class="modal-desc" id="offerDesc"></div>
+            <input type="number" class="modal-input" id="offerPrice" placeholder="السعر المقترح (دج/كغ)">
+            <button class="modal-btn" onclick="submitOffer()">📤 إرسال العرض</button>
+            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;" onclick="document.getElementById('offerOverlay').classList.remove('show')">إلغاء</button>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -86,40 +101,75 @@
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#009688','#4CAF50','#FFA726'];for(var i=0;i<20;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
 
+        var currentMaterial = null;
+        var completedIds = [];
+
         async function loadData(){
             try{
+                // المهام المكتملة
+                var comp = await sb.from('completed').select('task_id');
+                if(!comp.error) completedIds = comp.data.map(function(x){return x.task_id;});
+
+                // كل الطلبات
                 var r = await sb.from('pickups').select('*');
                 if(!r.error){
-                    var data = r.data;
-                    var carton = data.filter(function(x){return x.material==='carton';});
-                    var plastique = data.filter(function(x){return x.material==='plastique';});
-                    var verre = data.filter(function(x){return x.material==='verre';});
+                    // فقط المواد التي اكتملت
+                    var completed = r.data.filter(function(x){return completedIds.indexOf('pickup_'+x.id)!==-1;});
+                    
+                    var carton = completed.filter(function(x){return x.material==='carton';});
+                    var plastique = completed.filter(function(x){return x.material==='plastique';});
+                    var verre = completed.filter(function(x){return x.material==='verre';});
 
-                    var kgCarton = carton.reduce(function(s,x){return s+(x.weight||0);},0);
-                    var kgPlastique = plastique.reduce(function(s,x){return s+(x.weight||0);},0);
-                    var kgVerre = verre.reduce(function(s,x){return s+(x.weight||0);},0);
+                    var kgC = carton.reduce(function(s,x){return s+(x.weight||0);},0);
+                    var kgP = plastique.reduce(function(s,x){return s+(x.weight||0);},0);
+                    var kgV = verre.reduce(function(s,x){return s+(x.weight||0);},0);
 
-                    document.getElementById('totalKg').textContent = (kgCarton+kgPlastique+kgVerre).toLocaleString('en-US');
-                    document.getElementById('totalCarton').textContent = kgCarton.toLocaleString('en-US');
-                    document.getElementById('totalPlastique').textContent = kgPlastique.toLocaleString('en-US');
+                    document.getElementById('totalKg').textContent = (kgC+kgP+kgV).toLocaleString('en-US');
+                    document.getElementById('totalCarton').textContent = kgC.toLocaleString('en-US');
+                    document.getElementById('totalPlastique').textContent = kgP.toLocaleString('en-US');
 
-                    var prices = {carton:15, plastique:25, verre:10};
                     var list = [
-                        {name:'كرتون',emoji:'📦',kg:kgCarton,price:15,total:kgCarton*15},
-                        {name:'بلاستيك',emoji:'🫙',kg:kgPlastique,price:25,total:kgPlastique*25},
-                        {name:'زجاج',emoji:'🫗',kg:kgVerre,price:10,total:kgVerre*10}
+                        {name:'كرتون',emoji:'📦',kg:kgC,price:15,mat:'carton'},
+                        {name:'بلاستيك',emoji:'🫙',kg:kgP,price:25,mat:'plastique'},
+                        {name:'زجاج',emoji:'🫗',kg:kgV,price:10,mat:'verre'}
                     ];
 
-                    document.getElementById('materialsList').innerHTML = list.map(function(m){
-                        return '<div class="material-card">'+
-                            '<span class="material-emoji">'+m.emoji+'</span>'+
-                            '<div class="material-info"><div class="material-name">'+m.name+'</div><div class="material-detail">'+m.kg+' كغ متاح · السعر: '+m.price+' دج/كغ</div></div>'+
-                            '<div class="material-price">'+m.total.toLocaleString('en-US')+' دج</div>'+
-                            '<button class="btn-buy" onclick="alert(\'تم إرسال طلب الشراء!\')">شراء</button>'+
-                            '</div>';
-                    }).join('');
+                    var ml = document.getElementById('materialsList');
+                    if(kgC+kgP+kgV===0){
+                        ml.innerHTML = '<div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد مواد متاحة حالياً</span></div>';
+                    } else {
+                        ml.innerHTML = list.map(function(m){
+                            var total = m.kg * m.price;
+                            return '<div class="material-card">'+
+                                '<span class="material-emoji">'+m.emoji+'</span>'+
+                                '<div class="material-info"><div class="material-name">'+m.name+'</div><div class="material-detail">'+m.kg+' كغ متاح · السعر المرجعي: '+m.price+' دج/كغ</div></div>'+
+                                '<div class="material-price">'+total.toLocaleString('en-US')+' دج</div>'+
+                                '<button class="btn-offer" onclick="openOffer(\''+m.mat+'\',\''+m.name+'\','+m.kg+','+m.price+')">🎯 عرض</button>'+
+                                '</div>';
+                        }).join('');
+                    }
                 }
             }catch(e){}
+        }
+
+        function openOffer(mat,name,kg,price){
+            currentMaterial = mat;
+            document.getElementById('offerDesc').innerHTML = '<strong>'+name+'</strong> · '+kg+' كغ متاح · السعر المرجعي: '+price+' دج/كغ';
+            document.getElementById('offerPrice').value = price;
+            document.getElementById('offerOverlay').classList.add('show');
+        }
+
+        function submitOffer(){
+            var price = document.getElementById('offerPrice').value;
+            if(!price) return;
+            sb.from('purchases').insert({
+                material: currentMaterial,
+                price_per_kg: parseInt(price),
+                status: 'pending'
+            }).then(function(){
+                document.getElementById('offerOverlay').classList.remove('show');
+                alert('✅ تم إرسال العرض بنجاح!');
+            });
         }
 
         loadData();
