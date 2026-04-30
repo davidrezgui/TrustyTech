@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Supabase -->
+    <!-- مكتبة Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
@@ -370,10 +370,11 @@
     </div>
 
     <script>
-        // ============ إعداد Supabase ============
-        const SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // ============ Supabase (جاهز عند تحميل الصفحة) ============
+        const supabase = window.supabase.createClient(
+            'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
+        );
 
         // جسيمات
         (function(){
@@ -480,10 +481,9 @@
                 },
                 function(err) {
                     let msg = 'تعذر تحديد الموقع';
-                    if(err.code === 1) msg = 'تم رفض الإذن — افتح إعدادات المتصفح واسمح بالموقع';
-                    else if(err.code === 2) msg = 'إشارة GPS ضعيفة — جرب في مكان مفتوح';
-                    else if(err.code === 3) msg = 'انتهى الوقت — اضغط للمحاولة مجدداً';
-                    
+                    if(err.code === 1) msg = 'تم رفض الإذن';
+                    else if(err.code === 2) msg = 'إشارة GPS ضعيفة';
+                    else if(err.code === 3) msg = 'انتهى الوقت';
                     mi.innerHTML = '<span style="font-size:34px;">❌</span><br><span style="font-weight:700;font-size:12px;">'+msg+'</span><br><span style="font-size:10px;">اضغط للمحاولة مجدداً</span>';
                     mi.style.background = 'linear-gradient(135deg, #FFEBEE, #FFCDD2)';
                     mi.style.cursor = 'pointer';
@@ -509,81 +509,49 @@
             else { b.classList.remove('ready'); b.disabled=true; }
         }
 
-        // ============ إرسال إلى Supabase ============
         async function send() {
             const b = document.getElementById('btnSubmit');
             b.innerHTML = '⏳ جاري الإرسال...';
             b.classList.remove('ready');
             b.disabled = true;
             
+            // حفظ محلي دائماً (احتياط)
+            const reports = JSON.parse(localStorage.getItem('reports')||'[]');
+            reports.push({ photo: S.photo, type: S.type, lat: S.lat, lng: S.lng, time: new Date().toISOString(), status: 'new' });
+            localStorage.setItem('reports', JSON.stringify(reports));
+
+            // محاولة إرسال إلى Supabase
             try {
-                // إرسال إلى Supabase
-                const { data, error } = await supabase
-                    .from('reports')
-                    .insert({
-                        photo_url: S.photo,
-                        type: S.type,
-                        lat: S.lat,
-                        lng: S.lng,
-                        status: 'new'
-                    });
-
-                if(error) {
-                    console.error('خطأ Supabase:', error.message);
-                    // احتياط: حفظ محلي إذا فشل Supabase
-                    const reports = JSON.parse(localStorage.getItem('reports')||'[]');
-                    reports.push({ photo: S.photo, type: S.type, lat: S.lat, lng: S.lng, time: new Date().toISOString(), status: 'new' });
-                    localStorage.setItem('reports', JSON.stringify(reports));
-                } else {
-                    console.log('✅ تم الإرسال إلى Supabase بنجاح');
-                }
-
-                // نجاح دائماً
-                setTimeout(()=>{
-                    document.getElementById('overlay').classList.add('show');
-                    b.innerHTML = '🚀 إرسال البلاغ';
-                }, 700);
-
+                const { error } = await supabase.from('reports').insert({
+                    photo_url: S.photo, type: S.type, lat: S.lat, lng: S.lng, status: 'new'
+                });
+                if(error) console.log('Supabase:', error.message);
+                else console.log('✅ تم الإرسال إلى Supabase');
             } catch(err) {
-                console.error('خطأ:', err);
-                // حفظ محلي كاحتياط
-                const reports = JSON.parse(localStorage.getItem('reports')||'[]');
-                reports.push({ photo: S.photo, type: S.type, lat: S.lat, lng: S.lng, time: new Date().toISOString(), status: 'new' });
-                localStorage.setItem('reports', JSON.stringify(reports));
-                
-                setTimeout(()=>{
-                    document.getElementById('overlay').classList.add('show');
-                    b.innerHTML = '🚀 إرسال البلاغ';
-                }, 700);
+                console.log('Supabase غير متاح، تم الحفظ محلياً');
             }
+
+            setTimeout(()=>{
+                document.getElementById('overlay').classList.add('show');
+                b.innerHTML = '🚀 إرسال البلاغ';
+            }, 700);
         }
 
         function resetAll() {
             document.getElementById('overlay').classList.remove('show');
             deletePhoto();
             S.type = null; S.lat = null; S.lng = null;
-            
             document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
-            ['t2','t3'].forEach(id=>{
-                const el = document.getElementById(id);
-                el.className = 'tag tag-req';
-                el.textContent = 'مطلوب';
-            });
+            ['t2','t3'].forEach(id=>{ const el=document.getElementById(id); el.className='tag tag-req'; el.textContent='مطلوب'; });
             ['c2','c3'].forEach(id=>document.getElementById(id).classList.remove('done'));
-            
             document.getElementById('coords').classList.remove('show');
-            document.getElementById('vLat').textContent = '--';
-            document.getElementById('vLng').textContent = '--';
+            document.getElementById('vLat').textContent = '--'; document.getElementById('vLng').textContent = '--';
             document.getElementById('mapBox').classList.remove('located');
-            
             const mi = document.getElementById('mapInner');
             mi.innerHTML = '<span class="map-emoji">📍</span><br><span style="font-weight:700;font-size:13px;color:#616161;">اضغط لتحديد موقعك</span><br><span style="font-size:10px;color:#9e9e9e;margin-top:2px;">سيظهر طلب الإذن تلقائياً</span>';
             mi.style.background = 'linear-gradient(135deg, #E3F2FD, #F5F5F5)';
-            mi.style.cursor = 'pointer';
-            mi.onclick = getLocation;
-            
-            update();
-            window.scrollTo({top:0, behavior:'smooth'});
+            mi.style.cursor = 'pointer'; mi.onclick = getLocation;
+            update(); window.scrollTo({top:0, behavior:'smooth'});
         }
     </script>
 </body>
