@@ -86,7 +86,7 @@
     <div class="orb orb-2"></div>
 
     <header class="top-nav">
-        <a href="index.html" class="btn-back">←</a>
+        <a href="index.html" class="btn-back" id="backBtn">←</a>
         <span class="nav-title">📸 تبليغ عن مفرغة</span>
         <div class="step-dots">
             <span class="step-dot active" id="s1"></span>
@@ -153,21 +153,21 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+
         // جسيمات
-        (function(){
-            var c=document.getElementById('particlesBg');
-            var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
-            for(var i=0;i<30;i++){
-                var p=document.createElement('div');p.className='particle';
-                var s=Math.random()*5+2;
-                p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';
-                c.appendChild(p);
-            }
-        })();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         var S={photo:null,type:null,lat:null,lng:null};
-        var sb=null;
+
+        // زر الرجوع الذكي
+        sb.auth.getSession().then(function(r){
+            var backBtn = document.getElementById('backBtn');
+            if(r.data.session){ backBtn.href = 'home.html'; }
+            else { backBtn.href = 'index.html'; }
+        });
 
         function takePicture(){if(!S.photo)document.getElementById('cameraInput').click();}
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
@@ -246,27 +246,11 @@
         function send(){
             var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
-            
-            // حفظ محلي
             var reports=JSON.parse(localStorage.getItem('reports')||'[]');
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
-            
-            // نجاح فوري
-            setTimeout(function(){
-                document.getElementById('overlay').classList.add('show');
-                b.innerHTML='🚀 إرسال البلاغ';
-            },500);
-            
-            // Supabase
-            if(sb){
-                sb.from('reports').insert({
-                    photo_url: S.photo, type: S.type, lat: S.lat, lng: S.lng, status: 'new'
-                }).then(function(r){
-                    if(r.error) console.log('Supabase:',r.error.message);
-                    else console.log('✅ وصل للسحابة');
-                });
-            }
+            setTimeout(function(){document.getElementById('overlay').classList.add('show');b.innerHTML='🚀 إرسال البلاغ';},500);
+            sb.from('reports').insert({photo_url:S.photo,type:S.type,lat:S.lat,lng:S.lng,status:'new'}).then(function(){});
         }
 
         function resetAll(){
@@ -281,17 +265,6 @@
             document.getElementById('mapInner').innerHTML='<span class="map-emoji">📍</span><br><span>اضغط لتحديد موقعك</span>';
             update();window.scrollTo({top:0,behavior:'smooth'});
         }
-
-        // تحميل Supabase بعد 3 ثواني
-        setTimeout(function(){
-            var s=document.createElement('script');
-            s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-            s.onload=function(){
-                sb=window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
-                console.log('✅ Supabase جاهز');
-            };
-            document.head.appendChild(s);
-        },3000);
     </script>
 </body>
 </html>
