@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | مدينتنا نظيفة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
+            --accent: #FF6F00; --danger: #E53935;
+            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
+            --radius: 24px; --radius-sm: 14px;
+            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
+        .particle { position: absolute; border-radius: 50%; pointer-events: none; animation: floatUp linear infinite; opacity: 0; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
+        .orb-1 { width: 350px; height: 350px; background: rgba(46,125,50,0.12); top: -8%; right: -8%; }
+        .orb-2 { width: 300px; height: 300px; background: rgba(255,111,0,0.08); bottom: -12%; left: -6%; animation-delay: -4s; }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
+        .btn-back:hover { background: rgba(255,255,255,0.12); }
+        .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
+        .main-container { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 90px 16px 30px; }
+        .login-card {
+            background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            border-radius: var(--radius); padding: 36px 24px; text-align: center;
+            max-width: 400px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.25);
+            animation: cardIn 0.6s ease both;
+        }
+        @keyframes cardIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .login-card h2 { font-size: 22px; font-weight: 900; color: var(--primary-dark); margin-bottom: 8px; }
+        .login-card p { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
+        .login-card input {
+            width: 100%; padding: 14px; border: 2px solid #e0e0e0;
+            border-radius: var(--radius-sm); font-size: 15px; font-family: 'Cairo', sans-serif;
+            margin-bottom: 10px; direction: ltr; text-align: center; transition: var(--transition);
+        }
+        .login-card input:focus { outline: none; border-color: var(--primary); }
+        .login-btn {
+            width: 100%; padding: 14px; border: none; border-radius: var(--radius-sm);
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            font-family: 'Cairo', sans-serif; color: white;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            box-shadow: 0 8px 24px rgba(46,125,50,0.35); transition: var(--transition);
+        }
+        .login-btn:hover { transform: translateY(-2px); }
+        .switch-text { font-size: 12px; color: var(--text-gray); margin-top: 14px; }
+        .switch-link { color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline; }
+        .error-msg { color: var(--danger); font-size: 11px; margin-top: 6px; display: none; }
+        .success-msg { color: var(--primary); font-size: 11px; margin-top: 6px; display: none; }
+        .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
+    </style>
+</head>
+<body>
+
+    <div class="particles-bg" id="particlesBg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <header class="top-nav">
+        <a href="index.html" class="btn-back">←</a>
+        <span class="nav-title">🔐 تسجيل الدخول</span>
+    </header>
+
+    <main class="main-container">
+        
+        <!-- نموذج تسجيل الدخول -->
+        <div class="login-card" id="loginForm">
+            <div style="font-size:50px;margin-bottom:8px;">🔐</div>
+            <h2>تسجيل الدخول</h2>
+            <p>أدخل بريدك الإلكتروني وكلمة المرور</p>
+            <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="loginPass" placeholder="كلمة المرور">
+            <button class="login-btn" onclick="signIn()">دخول</button>
+            <p class="error-msg" id="loginError">بريد أو كلمة مرور خاطئة</p>
+            <p class="switch-text">ليس لديك حساب؟ <span class="switch-link" onclick="showRegister()">إنشاء حساب</span></p>
+        </div>
+
+        <!-- نموذج إنشاء حساب -->
+        <div class="login-card" id="registerForm" style="display:none;">
+            <div style="font-size:50px;margin-bottom:8px;">📝</div>
+            <h2>إنشاء حساب</h2>
+            <p>سجل للاستفادة من النقاط والمكافآت</p>
+            <input type="email" id="regEmail" placeholder="البريد الإلكتروني">
+            <input type="password" id="regPass" placeholder="كلمة المرور (6 أحرف على الأقل)">
+            <button class="login-btn" onclick="signUp()">إنشاء حساب</button>
+            <p class="error-msg" id="regError">حدث خطأ</p>
+            <p class="success-msg" id="regSuccess">تم إنشاء الحساب بنجاح!</p>
+            <p class="switch-text">لديك حساب؟ <span class="switch-link" onclick="showLogin()">تسجيل الدخول</span></p>
+        </div>
+
+        <!-- المستخدم مسجل -->
+        <div class="login-card" id="loggedIn" style="display:none;">
+            <div style="font-size:50px;margin-bottom:8px;">✅</div>
+            <h2>مرحباً!</h2>
+            <p id="userEmailDisplay"></p>
+            <button class="login-btn" onclick="goToProfile()">👤 الملف الشخصي</button>
+            <button class="login-btn" style="background:#E53935;margin-top:8px;" onclick="signOut()">تسجيل الخروج</button>
+        </div>
+
+    </main>
+
+    <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+
+        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5'];for(var i=0;i<25;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
+
+        // التحقق إذا كان المستخدم مسجلاً
+        sb.auth.onAuthStateChange(function(event,session){
+            if(session && session.user){
+                document.getElementById('loginForm').style.display='none';
+                document.getElementById('registerForm').style.display='none';
+                document.getElementById('loggedIn').style.display='block';
+                document.getElementById('userEmailDisplay').textContent = session.user.email;
+            }
+        });
+
+        function showRegister(){
+            document.getElementById('loginForm').style.display='none';
+            document.getElementById('registerForm').style.display='block';
+        }
+
+        function showLogin(){
+            document.getElementById('registerForm').style.display='none';
+            document.getElementById('loginForm').style.display='block';
+        }
+
+        async function signUp(){
+            var email = document.getElementById('regEmail').value;
+            var pass = document.getElementById('regPass').value;
+            if(pass.length < 6){document.getElementById('regError').textContent='كلمة المرور 6 أحرف على الأقل';document.getElementById('regError').style.display='block';return;}
+            var result = await sb.auth.signUp({email:email,password:pass});
+            if(result.error){document.getElementById('regError').textContent=result.error.message;document.getElementById('regError').style.display='block';}
+            else{document.getElementById('regSuccess').style.display='block';setTimeout(function(){window.location.reload();},1500);}
+        }
+
+        async function signIn(){
+            var email = document.getElementById('loginEmail').value;
+            var pass = document.getElementById('loginPass').value;
+            var result = await sb.auth.signInWithPassword({email:email,password:pass});
+            if(result.error){document.getElementById('loginError').style.display='block';}
+            else{window.location.reload();}
+        }
+
+        async function signOut(){
+            await sb.auth.signOut();
+            window.location.reload();
+        }
+
+        function goToProfile(){window.location.href='profile.html';}
+    </script>
+</body>
+</html>
