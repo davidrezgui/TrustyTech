@@ -58,6 +58,7 @@
         .login-btn:hover { transform: translateY(-2px); }
         .switch-text { font-size: 12px; color: var(--text-gray); margin-top: 14px; }
         .switch-link { color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline; }
+        .forgot-link { display: block; margin-top: 8px; font-size: 11px; color: #1E88E5; text-decoration: underline; cursor: pointer; }
         .error-msg { color: var(--danger); font-size: 11px; margin-top: 6px; display: none; }
         .success-msg { color: var(--primary); font-size: 11px; margin-top: 6px; display: none; }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
@@ -85,6 +86,7 @@
             <input type="password" id="loginPass" placeholder="كلمة المرور">
             <button class="login-btn" onclick="signIn()">دخول</button>
             <p class="error-msg" id="loginError">بريد أو كلمة مرور خاطئة</p>
+            <span class="forgot-link" onclick="goToReset()">نسيت كلمة المرور؟</span>
             <p class="switch-text">ليس لديك حساب؟ <span class="switch-link" onclick="showRegister()">إنشاء حساب</span></p>
         </div>
 
@@ -120,7 +122,6 @@
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5'];for(var i=0;i<25;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
 
-        // التحقق إذا كان المستخدم مسجلاً
         sb.auth.onAuthStateChange(function(event,session){
             if(session && session.user){
                 document.getElementById('loginForm').style.display='none';
@@ -130,39 +131,27 @@
             }
         });
 
-        function showRegister(){
-            document.getElementById('loginForm').style.display='none';
-            document.getElementById('registerForm').style.display='block';
-        }
-
-        function showLogin(){
-            document.getElementById('registerForm').style.display='none';
-            document.getElementById('loginForm').style.display='block';
-        }
+        function showRegister(){document.getElementById('loginForm').style.display='none';document.getElementById('registerForm').style.display='block';}
+        function showLogin(){document.getElementById('registerForm').style.display='none';document.getElementById('loginForm').style.display='block';}
 
         async function signUp(){
-            var email = document.getElementById('regEmail').value;
-            var pass = document.getElementById('regPass').value;
-            if(pass.length < 6){document.getElementById('regError').textContent='كلمة المرور 6 أحرف على الأقل';document.getElementById('regError').style.display='block';return;}
-            var result = await sb.auth.signUp({email:email,password:pass});
+            var email=document.getElementById('regEmail').value,pass=document.getElementById('regPass').value;
+            if(pass.length<6){document.getElementById('regError').textContent='كلمة المرور 6 أحرف على الأقل';document.getElementById('regError').style.display='block';return;}
+            var result=await sb.auth.signUp({email:email,password:pass});
             if(result.error){document.getElementById('regError').textContent=result.error.message;document.getElementById('regError').style.display='block';}
             else{document.getElementById('regSuccess').style.display='block';setTimeout(function(){window.location.reload();},1500);}
         }
 
         async function signIn(){
-            var email = document.getElementById('loginEmail').value;
-            var pass = document.getElementById('loginPass').value;
-            var result = await sb.auth.signInWithPassword({email:email,password:pass});
+            var email=document.getElementById('loginEmail').value,pass=document.getElementById('loginPass').value;
+            var result=await sb.auth.signInWithPassword({email:email,password:pass});
             if(result.error){document.getElementById('loginError').style.display='block';}
-            else{window.location.reload();}
+            else{window.location.href='home.html';}
         }
 
-        async function signOut(){
-            await sb.auth.signOut();
-            window.location.reload();
-        }
-
-        function goToProfile(){window.location.href='profile.html';}
+        async function signOut(){await sb.auth.signOut();window.location.reload();}
+        function goToProfile(){window.location.href='home.html';}
+        function goToReset(){window.location.href='reset.html';}
     </script>
 </body>
 </html>
