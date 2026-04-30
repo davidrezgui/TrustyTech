@@ -4,102 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تبليغ عن مفرغة | مدينتنا نظيفة</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --danger: #E53935;
-            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px;
-            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
-            --shadow: 0 4px 16px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-        }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 24px; --radius-sm: 14px; --shadow-xl: 0 30px 80px rgba(0,0,0,0.25); --shadow-lg: 0 20px 60px rgba(0,0,0,0.2); --shadow: 0 4px 16px rgba(0,0,0,0.08); --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: #0a1a0a; min-height: 100vh;
-            color: var(--text-dark); overflow-x: hidden;
-            position: relative; display: flex; flex-direction: column;
-        }
-        .particles-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; overflow: hidden;
-            background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%);
-        }
-        .particle {
-            position: absolute; border-radius: 50%; pointer-events: none;
-            animation: floatUp linear infinite; opacity: 0;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            10% { opacity: 1; } 90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-        .orb {
-            position: fixed; border-radius: 50%; filter: blur(80px);
-            pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite;
-        }
+        body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
+        .particle { position: absolute; border-radius: 50%; pointer-events: none; animation: floatUp linear infinite; opacity: 0; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 350px; height: 350px; background: rgba(46,125,50,0.12); top: -8%; right: -8%; }
         .orb-2 { width: 300px; height: 300px; background: rgba(255,111,0,0.08); bottom: -12%; left: -6%; animation-delay: -4s; }
-        @keyframes orbFloat {
-            0%,100% { transform: translate(0,0) scale(1); }
-            33% { transform: translate(25px,-25px) scale(1.1); }
-            66% { transform: translate(-15px,15px) scale(0.9); }
-        }
-        .top-nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(10,31,10,0.85); backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 10px 16px; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-        }
-        .btn-back {
-            width: 36px; height: 36px; border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05); color: white;
-            cursor: pointer; font-size: 16px; display: flex;
-            align-items: center; justify-content: center;
-            transition: var(--transition); text-decoration: none;
-        }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
         .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
         .step-dots { display: flex; gap: 4px; }
-        .step-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: rgba(255,255,255,0.2); transition: var(--transition);
-        }
+        .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.2); transition: var(--transition); }
         .step-dot.done { background: var(--primary-light); }
         .step-dot.active { background: var(--primary); box-shadow: 0 0 0 4px rgba(76,175,80,0.2); }
-        .main-container {
-            position: relative; z-index: 1; flex: 1;
-            padding: 78px 16px 20px; max-width: 500px; margin: 0 auto; width: 100%;
-        }
+        .main-container { position: relative; z-index: 1; flex: 1; padding: 78px 16px 20px; max-width: 500px; margin: 0 auto; width: 100%; }
         .progress-bar-wrap { margin-bottom: 16px; }
-        .progress-bar {
-            width: 100%; height: 4px; background: rgba(255,255,255,0.08);
-            border-radius: 4px; overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            border-radius: 4px; transition: width 0.5s ease; width: 0%;
-        }
+        .progress-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 4px; transition: width 0.5s ease; width: 0%; }
         .progress-text { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 5px; text-align: left; direction: ltr; }
-        .card {
-            background: rgba(255,255,255,0.94);
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-radius: var(--radius); padding: 20px 18px;
-            box-shadow: var(--shadow-lg); margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: cardIn 0.5s ease both;
-            position: relative; overflow: hidden;
-        }
+        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; position: relative; overflow: hidden; }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
@@ -108,84 +40,40 @@
         .tag { font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
         .tag-req { background: #FFF3E0; color: var(--accent); }
         .tag-ok { background: #E8F5E9; color: var(--primary); }
-        .cam-zone {
-            width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm);
-            background: linear-gradient(145deg, #1a1a2e, #121828);
-            border: 2.5px dashed rgba(255,255,255,0.15);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: var(--transition); position: relative; overflow: hidden;
-        }
+        .cam-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
         .cam-zone.filled { border: 2.5px solid var(--primary-light); border-style: solid; cursor: default; }
         .cam-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
         .cam-emoji { font-size: 42px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .cam-text { font-size: 13px; font-weight: 700; }
-        .cam-hint { font-size: 10px; opacity: 0.5; margin-top: 2px; }
+        .cam-text { font-size: 13px; font-weight: 700; } .cam-hint { font-size: 10px; opacity: 0.5; margin-top: 2px; }
         .flash { position: absolute; top:0;left:0;width:100%;height:100%;background:white;opacity:0;z-index:5;pointer-events:none;transition:opacity 0.05s; }
         .flash.fire { opacity: 0.85; }
         #preview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
         .cam-btns { display: flex; gap: 8px; margin-top: 8px; }
-        .btn-gallery {
-            flex: 1; padding: 10px; border-radius: 20px;
-            border: 1.5px solid rgba(0,0,0,0.08); background: white;
-            cursor: pointer; font-family: 'Cairo', sans-serif;
-            font-size: 12px; font-weight: 600; transition: var(--transition);
-            display: flex; align-items: center; justify-content: center; gap: 5px;
-        }
-        .btn-delete {
-            padding: 10px 16px; border-radius: 20px;
-            border: 1.5px solid #FFCDD2; background: white; color: var(--danger);
-            cursor: pointer; font-family: 'Cairo', sans-serif;
-            font-size: 12px; font-weight: 600; transition: var(--transition);
-            display: none; align-items: center; justify-content: center; gap: 5px;
-        }
+        .btn-gallery { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-delete { padding: 10px 16px; border-radius: 20px; border: 1.5px solid #FFCDD2; background: white; color: var(--danger); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; transition: var(--transition); display: none; align-items: center; justify-content: center; gap: 5px; }
         .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .type-item {
-            padding: 12px 4px; border: 2px solid rgba(0,0,0,0.06);
-            border-radius: var(--radius-sm); text-align: center;
-            cursor: pointer; transition: var(--transition); background: white; position: relative;
-        }
+        .type-item { padding: 12px 4px; border: 2px solid rgba(0,0,0,0.06); border-radius: var(--radius-sm); text-align: center; cursor: pointer; transition: var(--transition); background: white; position: relative; }
         .type-item.selected { border-color: var(--primary); background: #E8F5E9; }
-        .type-check {
-            position: absolute; top: 5px; right: 5px; width: 17px; height: 17px;
-            background: var(--primary); color: white; border-radius: 50%;
-            font-size: 9px; display: none; align-items: center; justify-content: center; font-weight: 700;
-        }
+        .type-check { position: absolute; top: 5px; right: 5px; width: 17px; height: 17px; background: var(--primary); color: white; border-radius: 50%; font-size: 9px; display: none; align-items: center; justify-content: center; font-weight: 700; }
         .type-item.selected .type-check { display: flex; }
         .type-emoji { font-size: 26px; display: block; margin-bottom: 3px; }
         .type-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
         .map-box { width: 100%; height: 180px; border-radius: var(--radius-sm); border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden; transition: var(--transition); }
         .map-box.located { border-color: var(--primary-light); }
-        .map-inner {
-            width: 100%; height: 100%; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            background: linear-gradient(135deg, #E3F2FD, #F5F5F5);
-            transition: var(--transition); cursor: pointer;
-        }
+        .map-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #E3F2FD, #F5F5F5); transition: var(--transition); cursor: pointer; }
         .map-emoji { font-size: 36px; margin-bottom: 4px; animation: bounce 2s ease-in-out infinite; }
         @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .coords { display: none; gap: 8px; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--text-gray); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 16px; justify-content: center; }
         .coords.show { display: flex; }
         .coord-val { color: var(--primary-dark); font-weight: 800; direction: ltr; display: inline-block; }
-        .submit-btn {
-            width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm);
-            font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition);
-            color: white; font-family: 'Cairo', sans-serif;
-            background: rgba(255,255,255,0.1); opacity: 0.4; pointer-events: none;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            margin-top: 2px; border: 1px solid rgba(255,255,255,0.08);
-        }
-        .submit-btn.ready {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            box-shadow: 0 8px 30px rgba(46,125,50,0.4); opacity: 1; pointer-events: auto;
-            border: none;
-        }
+        .submit-btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition); color: white; font-family: 'Cairo', sans-serif; background: rgba(255,255,255,0.1); opacity: 0.4; pointer-events: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; border: 1px solid rgba(255,255,255,0.08); }
+        .submit-btn.ready { background: linear-gradient(135deg, var(--primary), var(--primary-light)); box-shadow: 0 8px 30px rgba(46,125,50,0.4); opacity: 1; pointer-events: auto; border: none; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
         @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
-        .modal-icon { font-size: 70px; }
-        .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
+        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
         .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
         .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
@@ -214,9 +102,7 @@
         </div>
 
         <div class="card" id="c1" style="animation-delay:0.05s">
-            <div class="card-header">
-                <div class="card-icon ci-cam">📷</div><span class="card-label">التقط صورة للمفرغة</span><span class="tag tag-req" id="t1">مطلوب</span>
-            </div>
+            <div class="card-header"><div class="card-icon ci-cam">📷</div><span class="card-label">التقط صورة للمفرغة</span><span class="tag tag-req" id="t1">مطلوب</span></div>
             <div class="cam-zone" id="camZone" onclick="takePicture()">
                 <div class="flash" id="flash"></div><img id="preview" alt="معاينة">
                 <div class="cam-inner" id="camInner"><span class="cam-emoji">📸</span><span class="cam-text">اضغط لفتح الكاميرا</span><span class="cam-hint">التقط صورة للمفرغة</span></div>
@@ -230,9 +116,7 @@
         </div>
 
         <div class="card" id="c2" style="animation-delay:0.1s">
-            <div class="card-header">
-                <div class="card-icon ci-type">🏷️</div><span class="card-label">اختر نوع النفايات</span><span class="tag tag-req" id="t2">مطلوب</span>
-            </div>
+            <div class="card-header"><div class="card-icon ci-type">🏷️</div><span class="card-label">اختر نوع النفايات</span><span class="tag tag-req" id="t2">مطلوب</span></div>
             <div class="type-grid">
                 <div class="type-item" onclick="pickType(this,'menagere')"><span class="type-check">✓</span><span class="type-emoji">🗑️</span><span class="type-name">نفايات منزلية</span></div>
                 <div class="type-item" onclick="pickType(this,'plastique')"><span class="type-check">✓</span><span class="type-emoji">🫙</span><span class="type-name">بلاستيك</span></div>
@@ -244,9 +128,7 @@
         </div>
 
         <div class="card" id="c3" style="animation-delay:0.15s">
-            <div class="card-header">
-                <div class="card-icon ci-loc">📍</div><span class="card-label">تأكيد الموقع الجغرافي</span><span class="tag tag-req" id="t3">مطلوب</span>
-            </div>
+            <div class="card-header"><div class="card-icon ci-loc">📍</div><span class="card-label">تأكيد الموقع الجغرافي</span><span class="tag tag-req" id="t3">مطلوب</span></div>
             <div class="map-box" id="mapBox">
                 <div class="map-inner" id="mapInner" onclick="getLocation()">
                     <span class="map-emoji">📍</span>
@@ -272,29 +154,28 @@
     </div>
 
     <script>
-        // ============ الجسيمات ============
+        // جسيمات
         (function(){
-            const c=document.getElementById('particlesBg');
-            const colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
-            for(let i=0;i<30;i++){
-                const p=document.createElement('div');p.className='particle';
-                const s=Math.random()*5+2;
-                p.style.cssText=`width:${s}px;height:${s}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*8}s;box-shadow:0 0 ${s*2}px currentColor;`;
+            var c=document.getElementById('particlesBg');
+            var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
+            for(var i=0;i<30;i++){
+                var p=document.createElement('div');p.className='particle';
+                var s=Math.random()*5+2;
+                p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';
                 c.appendChild(p);
             }
         })();
 
-        const S={photo:null,type:null,lat:null,lng:null,file:null};
-        let sb=null;
+        var S={photo:null,type:null,lat:null,lng:null};
+        var sb=null;
 
         function takePicture(){if(!S.photo)document.getElementById('cameraInput').click();}
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
 
         function handlePhoto(e){
-            const f=e.target.files[0];if(!f)return;
-            S.file = f;
-            const r=new FileReader();
-            r.onload=ev=>{
+            var f=e.target.files[0];if(!f)return;
+            var r=new FileReader();
+            r.onload=function(ev){
                 S.photo=ev.target.result;
                 document.getElementById('preview').src=S.photo;
                 document.getElementById('preview').style.display='block';
@@ -305,14 +186,14 @@
                 document.getElementById('t1').className='tag tag-ok';document.getElementById('t1').textContent='✓ تم';
                 document.getElementById('c1').classList.add('done');
                 document.getElementById('flash').classList.add('fire');
-                setTimeout(()=>document.getElementById('flash').classList.remove('fire'),100);
+                setTimeout(function(){document.getElementById('flash').classList.remove('fire');},100);
                 update();
             };
             r.readAsDataURL(f);
         }
 
         function deletePhoto(){
-            S.photo=null; S.file=null;
+            S.photo=null;
             document.getElementById('preview').style.display='none';
             document.getElementById('camInner').style.display='block';
             document.getElementById('camZone').classList.remove('filled');
@@ -324,7 +205,7 @@
         }
 
         function pickType(el,type){
-            document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
+            document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
             el.classList.add('selected');S.type=type;
             document.getElementById('t2').className='tag tag-ok';document.getElementById('t2').textContent='✓ تم';
             document.getElementById('c2').classList.add('done');update();
@@ -332,11 +213,11 @@
 
         function getLocation(){
             if(S.lat&&S.lng)return;
-            const mi=document.getElementById('mapInner');
+            var mi=document.getElementById('mapInner');
             if(!navigator.geolocation){mi.innerHTML='<span>⚠️ GPS غير مدعوم</span>';return;}
             mi.innerHTML='<span>📡 جاري التحديد...</span>';
             navigator.geolocation.getCurrentPosition(
-                pos=>{
+                function(pos){
                     S.lat=pos.coords.latitude;S.lng=pos.coords.longitude;
                     document.getElementById('vLat').textContent=S.lat.toFixed(6);
                     document.getElementById('vLng').textContent=S.lng.toFixed(6);
@@ -346,19 +227,19 @@
                     document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
                     document.getElementById('c3').classList.add('done');update();
                 },
-                err=>{mi.innerHTML='<span>❌ تعذر</span>';},
+                function(){mi.innerHTML='<span>❌ تعذر</span>';},
                 {enableHighAccuracy:true,timeout:20000}
             );
         }
 
         function update(){
-            let d=0;if(S.photo)d++;if(S.type)d++;if(S.lat&&S.lng)d++;
+            var d=0;if(S.photo)d++;if(S.type)d++;if(S.lat&&S.lng)d++;
             document.getElementById('pFill').style.width=Math.round((d/3)*100)+'%';
             document.getElementById('pText').textContent=d+' من 3 خطوات';
             document.getElementById('s1').className='step-dot'+(S.photo?' done':' active');
             document.getElementById('s2').className='step-dot'+(S.type?' done':(S.photo?' active':''));
             document.getElementById('s3').className='step-dot'+((S.lat&&S.lng)?' done':(S.type?' active':''));
-            const b=document.getElementById('btnSubmit');
+            var b=document.getElementById('btnSubmit');
             if(d===3){b.classList.add('ready');b.disabled=false;}else{b.classList.remove('ready');b.disabled=true;}
         }
 
@@ -377,35 +258,21 @@
                 b.innerHTML='🚀 إرسال البلاغ';
             },500);
             
-            // رفع الصورة إلى Supabase Storage ثم حفظ البيانات (بدون await)
-            if(sb && S.file){
-                var fileName = 'report_'+Date.now()+'.jpg';
-                sb.storage.from('reports-photos').upload(fileName, S.file).then(function(result){
-                    if(result.error){
-                        console.log('رفع:',result.error.message);
-                    } else {
-                        sb.from('reports').insert({
-                            photo_url: fileName, type: S.type, lat: S.lat, lng: S.lng, status: 'new'
-                        }).then(function(r){
-                            if(r.error) console.log('حفظ:',r.error.message);
-                            else console.log('✅ صورة + بيانات');
-                        });
-                    }
-                });
-            } else if(sb){
+            // Supabase
+            if(sb){
                 sb.from('reports').insert({
-                    type: S.type, lat: S.lat, lng: S.lng, status: 'new'
+                    photo_url: S.photo, type: S.type, lat: S.lat, lng: S.lng, status: 'new'
                 }).then(function(r){
                     if(r.error) console.log('Supabase:',r.error.message);
-                    else console.log('✅ بيانات');
+                    else console.log('✅ وصل للسحابة');
                 });
             }
         }
 
         function resetAll(){
             document.getElementById('overlay').classList.remove('show');
-            deletePhoto();S.type=null;S.lat=null;S.lng=null;S.file=null;
-            document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
+            deletePhoto();S.type=null;S.lat=null;S.lng=null;
+            document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
             ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
             ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
             document.getElementById('coords').classList.remove('show');
@@ -420,10 +287,7 @@
             var s=document.createElement('script');
             s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
             s.onload=function(){
-                sb=window.supabase.createClient(
-                    'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
-                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
-                );
+                sb=window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
                 console.log('✅ Supabase جاهز');
             };
             document.head.appendChild(s);
