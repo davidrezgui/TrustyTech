@@ -292,7 +292,7 @@
 
         function handlePhoto(e){
             const f=e.target.files[0];if(!f)return;
-            S.file = f; // حفظ الملف للرفع لاحقاً
+            S.file = f;
             const r=new FileReader();
             r.onload=ev=>{
                 S.photo=ev.target.result;
@@ -362,51 +362,52 @@
             if(d===3){b.classList.add('ready');b.disabled=false;}else{b.classList.remove('ready');b.disabled=true;}
         }
 
-        async function send(){
-            const b=document.getElementById('btnSubmit');
+        function send(){
+            var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
             
             // حفظ محلي
-            const reports=JSON.parse(localStorage.getItem('reports')||'[]');
+            var reports=JSON.parse(localStorage.getItem('reports')||'[]');
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
-
-            // رفع الصورة إلى Supabase Storage ثم حفظ البيانات
-            if(sb && S.file){
-                const fileName = `report_${Date.now()}.jpg`;
-                const { data: uploadData, error: uploadError } = await sb.storage
-                    .from('reports-photos')
-                    .upload(fileName, S.file);
-
-                if(uploadError) {
-                    console.log('فشل رفع الصورة:', uploadError.message);
-                } else {
-                    // حفظ رابط الصورة في قاعدة البيانات
-                    const { error: insertError } = await sb.from('reports').insert({
-                        photo_url: fileName,
-                        type: S.type,
-                        lat: S.lat,
-                        lng: S.lng,
-                        status: 'new'
-                    });
-                    if(insertError) console.log('فشل حفظ البيانات:', insertError.message);
-                    else console.log('✅ تم رفع الصورة وحفظ البيانات');
-                }
-            }
-
+            
             // نجاح فوري
             setTimeout(function(){
                 document.getElementById('overlay').classList.add('show');
                 b.innerHTML='🚀 إرسال البلاغ';
             },500);
+            
+            // رفع الصورة إلى Supabase Storage ثم حفظ البيانات (بدون await)
+            if(sb && S.file){
+                var fileName = 'report_'+Date.now()+'.jpg';
+                sb.storage.from('reports-photos').upload(fileName, S.file).then(function(result){
+                    if(result.error){
+                        console.log('رفع:',result.error.message);
+                    } else {
+                        sb.from('reports').insert({
+                            photo_url: fileName, type: S.type, lat: S.lat, lng: S.lng, status: 'new'
+                        }).then(function(r){
+                            if(r.error) console.log('حفظ:',r.error.message);
+                            else console.log('✅ صورة + بيانات');
+                        });
+                    }
+                });
+            } else if(sb){
+                sb.from('reports').insert({
+                    type: S.type, lat: S.lat, lng: S.lng, status: 'new'
+                }).then(function(r){
+                    if(r.error) console.log('Supabase:',r.error.message);
+                    else console.log('✅ بيانات');
+                });
+            }
         }
 
         function resetAll(){
             document.getElementById('overlay').classList.remove('show');
             deletePhoto();S.type=null;S.lat=null;S.lng=null;S.file=null;
             document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
-            ['t2','t3'].forEach(id=>{document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
-            ['c2','c3'].forEach(id=>document.getElementById(id).classList.remove('done'));
+            ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
+            ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
             document.getElementById('coords').classList.remove('show');
             document.getElementById('vLat').textContent='--';document.getElementById('vLng').textContent='--';
             document.getElementById('mapBox').classList.remove('located');
