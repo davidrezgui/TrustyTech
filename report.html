@@ -100,6 +100,10 @@
             animation: cardIn 0.5s ease both;
             position: relative; overflow: hidden;
         }
+        .card.done::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary-light), #FFA726, var(--primary-light));
+        }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
@@ -272,7 +276,14 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // ============ SUPABASE ============
+        const supabase = window.supabase.createClient(
+            'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
+        );
+
         // ============ جسيمات ============
         (function(){
             const c=document.getElementById('particlesBg');
@@ -375,8 +386,18 @@
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
             
-            // إظهار النجاح
-            setTimeout(()=>{
+            // إرسال إلى Supabase
+            supabase.from('reports').insert({
+                type:S.type, lat:S.lat, lng:S.lng, status:'new'
+            }).then(function(result) {
+                if(result.error) {
+                    console.log('Supabase:', result.error.message);
+                } else {
+                    console.log('✅ تم الإرسال إلى السحابة!');
+                }
+            });
+            
+            setTimeout(function(){
                 document.getElementById('overlay').classList.add('show');
                 b.innerHTML='🚀 إرسال البلاغ';
             },700);
