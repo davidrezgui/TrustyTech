@@ -56,7 +56,7 @@
         .badge-new { background: #FFEBEE; color: var(--danger); } .badge-ok { background: #E8F5E9; color: var(--primary); } .badge-warn { background: #FFF3E0; color: var(--accent); } .badge-teal { background: #E0F2F1; color: #00695C; } .badge-gold { background: #FFF8E1; color: #F57F17; }
         #mapContainer { width: 100%; height: 300px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid rgba(0,0,0,0.06); z-index: 1; }
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; min-width: 580px; }
+        table { width: 100%; border-collapse: collapse; min-width: 650px; }
         th { text-align: right; padding: 10px 8px; font-size: 10px; font-weight: 700; color: var(--text-gray); border-bottom: 2px solid rgba(0,0,0,0.05); }
         td { padding: 10px 8px; font-size: 11px; border-bottom: 1px solid rgba(0,0,0,0.03); color: var(--text-dark); }
         tr:hover td { background: rgba(0,0,0,0.015); }
@@ -89,9 +89,7 @@
         .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
         .btn-action-sm { padding: 6px 12px; border: none; border-radius: 15px; font-size: 10px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; color: white; margin: 1px; transition: var(--transition); }
-        .btn-accept { background: var(--primary); }
-        .btn-reject { background: var(--danger); }
-        .btn-paid { background: var(--teal); }
+        .btn-accept { background: var(--primary); } .btn-reject { background: var(--danger); } .btn-paid { background: var(--teal); }
     </style>
 </head>
 <body>
@@ -210,12 +208,7 @@
                 t.map(function(x){return '<div class="truck-item"><div class="truck-icon '+(x.status==='free'?'truck-free':'truck-busy')+'">🚛</div><div class="truck-info"><div class="truck-name">'+x.driver+'</div><div class="truck-plate">'+x.plate+'</div></div><span class="truck-status '+(x.status==='free'?'status-free':'status-busy')+'">'+(x.status==='free'?'🟢 متاح':'🟠 مهمة')+'</span></div>';}).join('')+'</div></div>';
         }
 
-        // 🏭 المبيعات مع أزرار القبول والرفع والدفع
-        function updatePurchaseStatus(id,status){
-            sb.from('purchases').update({status:status}).eq('id',id).then(function(){
-                loadAll();
-            });
-        }
+        function updatePurchaseStatus(id,status){sb.from('purchases').update({status:status}).eq('id',id).then(function(){loadAll();});}
 
         function renderSales(){
             var p=supabasePurchases;
@@ -229,8 +222,11 @@
                 '<div class="stat-card" style="padding:12px 8px;"><span class="stat-icon">✅</span><div class="stat-value">'+acceptedCount+'</div><div class="stat-label">مقبول</div></div>'+
                 '<div class="stat-card" style="padding:12px 8px;"><span class="stat-icon">💰</span><div class="stat-value">'+paidCount+'</div><div class="stat-label">مدفوع</div></div></div>'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-sales">🏭</div><span class="card-label">عروض شراء الشركات</span><span class="badge badge-gold">'+p.length+' عرض</span></div>'+
-                '<div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>السعر/كغ</th><th>الحالة</th><th>الإجراء</th><th>الوقت</th></tr></thead><tbody>'+
+                '<div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر/كغ</th><th>الإجمالي</th><th>الحالة</th><th>الإجراء</th><th>الوقت</th></tr></thead><tbody>'+
                 p.map(function(x,i){
+                    var qty = x.quantity||0;
+                    var price = x.price_per_kg||0;
+                    var total = qty * price;
                     var actionBtns = '';
                     if(x.status==='pending'){
                         actionBtns = '<button class="btn-action-sm btn-accept" onclick="updatePurchaseStatus('+x.id+',\'accepted\')">✅ قبول</button> <button class="btn-action-sm btn-reject" onclick="updatePurchaseStatus('+x.id+',\'rejected\')">❌ رفض</button>';
@@ -243,7 +239,7 @@
                     }
                     var statusPill = x.status==='pending'?'pill-pending':(x.status==='accepted'?'pill-done':(x.status==='paid'?'pill-paid':'pill-new'));
                     var statusText = x.status==='pending'?'⏳ معلق':(x.status==='accepted'?'✅ مقبول':(x.status==='paid'?'💰 مدفوع':'❌ مرفوض'));
-                    return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;color:var(--accent);font-weight:700;">'+x.price_per_kg+' دج</td><td><span class="pill '+statusPill+'">'+statusText+'</span></td><td>'+actionBtns+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td></tr>';
+                    return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+qty+' كغ</td><td style="direction:ltr;color:var(--accent);font-weight:700;">'+price+' دج</td><td style="direction:ltr;color:var(--teal);font-weight:700;">'+total.toLocaleString('en-US')+' دج</td><td><span class="pill '+statusPill+'">'+statusText+'</span></td><td>'+actionBtns+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td></tr>';
                 }).join('')+'</tbody></table></div></div>';
         }
 
