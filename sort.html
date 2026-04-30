@@ -10,144 +10,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --accent-light: #FFA726; --danger: #E53935;
-            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px;
-            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
-            --shadow: 0 4px 16px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-        }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --accent-light: #FFA726; --danger: #E53935; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 24px; --radius-sm: 14px; --shadow-xl: 0 30px 80px rgba(0,0,0,0.25); --shadow-lg: 0 20px 60px rgba(0,0,0,0.2); --shadow: 0 4px 16px rgba(0,0,0,0.08); --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: #0a1a0a; min-height: 100vh;
-            color: var(--text-dark); overflow-x: hidden;
-            position: relative; display: flex; flex-direction: column;
-        }
-        .particles-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; overflow: hidden;
-            background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%);
-        }
-        .particle {
-            position: absolute; border-radius: 50%; pointer-events: none;
-            animation: floatUp linear infinite; opacity: 0;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0); opacity: 0; }
-            10% { opacity: 1; } 90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-        .orb {
-            position: fixed; border-radius: 50%; filter: blur(80px);
-            pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite;
-        }
+        body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
+        .particle { position: absolute; border-radius: 50%; pointer-events: none; animation: floatUp linear infinite; opacity: 0; }
+        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 350px; height: 350px; background: rgba(255,111,0,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); bottom: -12%; left: -6%; animation-delay: -4s; }
-        @keyframes orbFloat {
-            0%,100% { transform: translate(0,0) scale(1); }
-            33% { transform: translate(25px,-25px) scale(1.1); }
-            66% { transform: translate(-15px,15px) scale(0.9); }
-        }
-        .top-nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(10,31,10,0.85); backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 10px 16px; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-        }
-        .btn-back {
-            width: 36px; height: 36px; border-radius: 50%;
-            border: 1.5px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.05); color: white;
-            cursor: pointer; font-size: 16px; display: flex;
-            align-items: center; justify-content: center;
-            transition: var(--transition); text-decoration: none;
-        }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
         .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-        .main-container {
-            position: relative; z-index: 1; flex: 1;
-            padding: 78px 16px 20px; max-width: 500px; margin: 0 auto; width: 100%;
-        }
-        .card {
-            background: rgba(255,255,255,0.94);
-            backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-radius: var(--radius); padding: 20px 18px;
-            box-shadow: var(--shadow-lg); margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: cardIn 0.5s ease both;
-            position: relative; overflow: hidden;
-        }
+        .main-container { position: relative; z-index: 1; flex: 1; padding: 78px 16px 20px; max-width: 500px; margin: 0 auto; width: 100%; }
+        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; position: relative; overflow: hidden; }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
         .ci-material { background: #FFF8E1; } .ci-weight { background: #E8F5E9; } .ci-loc { background: #E3F2FD; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
-        .points-card {
-            background: linear-gradient(135deg, #FFA726, #FF9800, #FB8C00);
-            border-radius: var(--radius); padding: 20px 18px;
-            box-shadow: 0 12px 40px rgba(255,111,0,0.35);
-            margin-bottom: 12px; text-align: center; color: white;
-            animation: cardIn 0.5s ease both;
-            position: relative; overflow: hidden;
-        }
+        .points-card { background: linear-gradient(135deg, #FFA726, #FF9800, #FB8C00); border-radius: var(--radius); padding: 20px 18px; box-shadow: 0 12px 40px rgba(255,111,0,0.35); margin-bottom: 12px; text-align: center; color: white; animation: cardIn 0.5s ease both; position: relative; overflow: hidden; }
         .points-label { font-size: 12px; opacity: 0.9; position: relative; z-index: 1; }
         .points-value { font-size: 42px; font-weight: 900; direction: ltr; display: inline-block; margin: 4px 0; position: relative; z-index: 1; }
         .points-sub { font-size: 10px; opacity: 0.8; position: relative; z-index: 1; }
         .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .material-item {
-            padding: 14px 6px; border: 2px solid rgba(0,0,0,0.06);
-            border-radius: var(--radius-sm); text-align: center;
-            cursor: pointer; transition: var(--transition); background: white; position: relative;
-        }
+        .material-item { padding: 14px 6px; border: 2px solid rgba(0,0,0,0.06); border-radius: var(--radius-sm); text-align: center; cursor: pointer; transition: var(--transition); background: white; position: relative; }
         .material-item.selected { border-color: var(--accent); background: #FFF8E1; box-shadow: 0 0 0 4px rgba(255,152,0,0.1); }
-        .material-check {
-            position: absolute; top: 5px; right: 5px; width: 17px; height: 17px;
-            background: var(--accent); color: white; border-radius: 50%;
-            font-size: 9px; display: none; align-items: center; justify-content: center; font-weight: 700;
-        }
+        .material-check { position: absolute; top: 5px; right: 5px; width: 17px; height: 17px; background: var(--accent); color: white; border-radius: 50%; font-size: 9px; display: none; align-items: center; justify-content: center; font-weight: 700; }
         .material-item.selected .material-check { display: flex; }
         .material-emoji { font-size: 28px; display: block; margin-bottom: 3px; }
         .material-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
         .material-price { font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 2px; direction: ltr; }
         .weight-row { display: flex; align-items: center; gap: 10px; }
-        .weight-input {
-            flex: 1; padding: 14px 16px; border: 2px solid rgba(0,0,0,0.06);
-            border-radius: var(--radius-sm); font-size: 18px;
-            font-family: 'Cairo', sans-serif; font-weight: 700;
-            text-align: center; direction: ltr; transition: var(--transition); background: white;
-        }
+        .weight-input { flex: 1; padding: 14px 16px; border: 2px solid rgba(0,0,0,0.06); border-radius: var(--radius-sm); font-size: 18px; font-family: 'Cairo', sans-serif; font-weight: 700; text-align: center; direction: ltr; transition: var(--transition); background: white; }
         .weight-unit { font-size: 14px; font-weight: 700; color: var(--text-gray); background: rgba(0,0,0,0.02); padding: 14px 16px; border-radius: var(--radius-sm); }
         .estimate { background: #E8F5E9; padding: 14px; border-radius: var(--radius-sm); text-align: center; margin-top: 10px; border: 1px solid #C8E6C9; }
         .estimate-label { font-size: 11px; color: var(--text-gray); }
         .estimate-value { font-size: 28px; font-weight: 900; color: var(--primary-dark); direction: ltr; display: inline-block; }
-        .submit-btn {
-            width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm);
-            font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition);
-            color: white; font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            box-shadow: 0 8px 30px rgba(255,111,0,0.35);
-            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px;
-        }
+        .submit-btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition); color: white; font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, var(--accent), var(--accent-light)); box-shadow: 0 8px 30px rgba(255,111,0,0.35); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; }
         .leaderboard { margin-top: 10px; }
-        .lb-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 12px 14px; border-radius: var(--radius-sm);
-            background: rgba(255,255,255,0.5); margin-bottom: 6px;
-            transition: var(--transition);
-        }
+        .lb-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.5); margin-bottom: 6px; transition: var(--transition); }
         .lb-rank { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; direction: ltr; }
-        .rank-1 { background: #FFF8E1; color: #F57F17; }
-        .rank-2 { background: #ECEFF1; color: #546E7A; }
-        .rank-3 { background: #FBE9E7; color: #BF360C; }
-        .rank-other { background: rgba(0,0,0,0.04); color: var(--text-gray); }
-        .lb-avatar { font-size: 22px; } .lb-name { flex: 1; font-weight: 700; font-size: 13px; }
-        .lb-points { font-weight: 900; font-size: 13px; color: var(--primary-dark); direction: ltr; }
+        .rank-1 { background: #FFF8E1; color: #F57F17; } .rank-2 { background: #ECEFF1; color: #546E7A; } .rank-3 { background: #FBE9E7; color: #BF360C; } .rank-other { background: rgba(0,0,0,0.04); color: var(--text-gray); }
+        .lb-avatar { font-size: 22px; } .lb-name { flex: 1; font-weight: 700; font-size: 13px; } .lb-points { font-weight: 900; font-size: 13px; color: var(--primary-dark); direction: ltr; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
@@ -165,7 +72,7 @@
     <div class="orb orb-2"></div>
 
     <header class="top-nav">
-        <a href="index.html" class="btn-back">←</a>
+        <a href="index.html" class="btn-back" id="backBtn">←</a>
         <span class="nav-title">📦 طلب جمع المواد</span>
     </header>
 
@@ -237,6 +144,13 @@
         var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null;
         var userPoints=parseInt(localStorage.getItem('userPoints')||'500');
 
+        // زر الرجوع الذكي
+        supabase.auth.getSession().then(function(r){
+            var backBtn = document.getElementById('backBtn');
+            if(r.data.session){ backBtn.href = 'home.html'; }
+            else { backBtn.href = 'index.html'; }
+        });
+
         function updatePointsDisplay(){
             document.getElementById('totalPoints').textContent=userPoints.toLocaleString('en-US');
             document.getElementById('userRankPoints').textContent=userPoints.toLocaleString('en-US');
@@ -274,13 +188,11 @@
             if(!userLat||!userLng){alert('الرجاء تحديد الموقع');return;}
             var pointsEarned=weight*selectedPrice;
             
-            // حفظ محلي
             var requests=JSON.parse(localStorage.getItem('sortingRequests')||'[]');
             requests.push({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,time:new Date().toISOString(),status:'pending'});
             localStorage.setItem('sortingRequests',JSON.stringify(requests));
             userPoints+=pointsEarned;localStorage.setItem('userPoints',userPoints.toString());updatePointsDisplay();
 
-            // إرسال إلى Supabase
             supabase.from('pickups').insert({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,status:'pending'}).then(function(){});
 
             var names={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
