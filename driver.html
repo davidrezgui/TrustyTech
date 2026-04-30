@@ -29,56 +29,70 @@
         .orb-1 { width: 350px; height: 350px; background: rgba(30,136,229,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); bottom: -12%; left: -6%; animation-delay: -4s; }
         @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
-        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
         .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
+        .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; }
+        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
+        .btn-refresh:hover { background: rgba(255,255,255,0.15); }
+        .btn-refresh:disabled { opacity: 0.5; cursor: wait; }
         .driver-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 6px 12px; border-radius: 15px; }
         .driver-status .dot { width: 7px; height: 7px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
         .main-container { position: relative; z-index: 1; flex: 1; padding: 78px 16px 20px; max-width: 560px; margin: 0 auto; width: 100%; }
-        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); animation: cardIn 0.5s ease both; }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
+        .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
+        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
         .ci-tasks { background: #E3F2FD; } .ci-done { background: #E8F5E9; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
         .badge-pending { background: #FFF3E0; color: var(--accent); } .badge-done { background: #E8F5E9; color: var(--primary); }
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); }
-        .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
-        .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
         .task-list { display: flex; flex-direction: column; gap: 8px; }
-        .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); }
+        .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
+        .task-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .task-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
         .task-type { font-size: 12px; padding: 4px 10px; border-radius: 10px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
         .task-address { font-size: 12px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
         .task-actions { display: flex; gap: 8px; }
         .btn-task { flex: 1; padding: 10px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-navigate { background: var(--info); color: white; } .btn-confirm { background: var(--primary); color: white; }
-        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 8px; }
-        .proof-zone.filled { border-color: var(--primary-light); }
+        .btn-navigate { background: var(--info); color: white; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
+        .btn-navigate:hover { background: #1565C0; }
+        .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
+        .btn-confirm:hover { background: var(--primary-dark); }
+        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; margin-bottom: 8px; }
+        .proof-zone:hover { border-color: rgba(255,255,255,0.4); }
+        .proof-zone.filled { border: 2.5px solid var(--primary-light); border-style: solid; cursor: default; }
         .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
         .proof-emoji { font-size: 38px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .proof-text { font-size: 12px; font-weight: 700; }
         #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
         .proof-actions { display: flex; gap: 8px; }
-        .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; }
+        .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .btn-proof:hover { background: #f9f9f9; }
         .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
-        .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; } .empty-text { font-size: 14px; color: var(--text-gray); }
-        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .btn-proof.danger:hover { background: #FFF5F5; }
+        .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; display: block; margin-bottom: 8px; } .empty-text { font-size: 14px; color: var(--text-gray); font-weight: 600; }
+        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
         @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
-        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); } .modal-desc { font-size: 13px; color: var(--text-gray); margin-bottom: 20px; }
-        .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; } .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
+        .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); box-shadow: 0 6px 20px rgba(46,125,50,0.3); }
+        .modal-btn:hover { background: var(--primary-dark); }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
-        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); }
-        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
-        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
+        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
+        .login-card input:focus { outline: none; border-color: var(--info); }
+        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); }
+        .login-btn:hover { background: #1565C0; transform: translateY(-2px); }
         .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
     </style>
 </head>
@@ -97,9 +111,9 @@
 
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
-            <div style="font-size:55px;">🚛</div>
-            <h2 style="font-size:20px;font-weight:900;color:#2E7D32;">دخول السائق</h2>
-            <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">أدخل كلمة المرور</p>
+            <div style="font-size:55px;margin-bottom:10px;">🚛</div>
+            <h2 style="font-size:20px;font-weight:900;color:#2E7D32;margin-bottom:6px;">دخول السائق</h2>
+            <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">أدخل كلمة المرور للمتابعة</p>
             <input type="password" id="driverPass" placeholder="كلمة المرور">
             <button class="login-btn" onclick="checkPass()">🚛 دخول</button>
             <p class="login-error" id="loginError">كلمة المرور غير صحيحة</p>
@@ -114,32 +128,58 @@
         </div>
         <div class="card">
             <div class="card-header"><div class="card-icon ci-tasks">📋</div><span class="card-label">المهام المعلقة</span><span class="badge badge-pending" id="pendingBadge">0</span></div>
-            <div class="task-list" id="pendingTasks"><div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام</span></div></div>
+            <div class="task-list" id="pendingTasks"><div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div></div>
+        </div>
+        <div class="card">
+            <div class="card-header"><div class="card-icon ci-done">✅</div><span class="card-label">المهام المكتملة</span><span class="badge badge-done" id="doneBadge">0</span></div>
+            <div class="task-list" id="doneTasks"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لم تكتمل أي مهمة بعد</span></div></div>
         </div>
     </main>
 
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
+    <!-- نافذة تأكيد الجمع -->
     <div class="overlay" id="confirmOverlay">
-        <div class="modal"><div class="modal-icon">📸</div><div class="modal-title">تأكيد إتمام الجمع</div><div class="modal-desc">التقط صورة للمواد</div>
-            <div class="proof-zone" id="proofZone" onclick="takeProofPhoto()"><img id="proofPreview" alt="إثبات"><div class="proof-inner" id="proofInner"><span class="proof-emoji">📸</span><span class="proof-text">اضغط لالتقاط صورة</span></div></div>
+        <div class="modal">
+            <div class="modal-icon">📸</div>
+            <div class="modal-title">تأكيد إتمام الجمع</div>
+            <div class="modal-desc">التقط صورة للمواد المجمّعة كإثبات للعملية</div>
+            
+            <div class="proof-zone" id="proofZone" onclick="takeProofPhoto()">
+                <img id="proofPreview" alt="إثبات">
+                <div class="proof-inner" id="proofInner">
+                    <span class="proof-emoji">📸</span>
+                    <span class="proof-text">اضغط لالتقاط صورة إثبات</span>
+                </div>
+            </div>
             <input type="file" id="proofCamera" accept="image/*" capture="environment" style="display:none" onchange="handleProofPhoto(event)">
             <input type="file" id="proofGallery" accept="image/*" style="display:none" onchange="handleProofPhoto(event)">
-            <div class="proof-actions" style="margin-bottom:14px;"><button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button><button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button></div>
-            <button class="modal-btn" onclick="finalConfirm()" style="width:100%;background:#2E7D32">✅ تأكيد وإرسال الإثبات</button>
-            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;" onclick="closeConfirm()">إلغاء</button>
+            
+            <div class="proof-actions" style="margin-bottom:14px;">
+                <button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button>
+                <button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button>
+            </div>
+            
+            <button class="modal-btn" id="btnFinalConfirm" onclick="finalConfirm()" style="width:100%;background:#2E7D32;">✅ تأكيد وإرسال الإثبات</button>
+            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition);" onclick="closeConfirm()">إلغاء</button>
         </div>
     </div>
 
+    <!-- نافذة نجاح -->
     <div class="overlay" id="successOverlay">
-        <div class="modal"><div class="modal-icon">🎉</div><div class="modal-title">تم التأكيد!</div><div class="modal-desc">تم تسجيل المهمة مكتملة</div><button class="modal-btn" onclick="document.getElementById('successOverlay').classList.remove('show');loadTasks();">حسناً</button></div>
+        <div class="modal">
+            <div class="modal-icon">🎉</div>
+            <div class="modal-title">تم تأكيد الجمع بنجاح!</div>
+            <div class="modal-desc">تم تسجيل المهمة كمكتملة وإرسال الإثبات</div>
+            <button class="modal-btn" onclick="document.getElementById('successOverlay').classList.remove('show');loadAll();">حسناً</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784'];for(var i=0;i<25;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         var currentTaskId=null,proofPhoto=null;
         var supabaseReports=[],supabasePickups=[],completedTasks=[];
@@ -153,10 +193,11 @@
         }
 
         function loadAll(){
-            document.getElementById('refreshBtn').textContent = '⏳';
-            document.getElementById('refreshBtn').disabled = true;
+            var btn = document.getElementById('refreshBtn');
+            btn.disabled = true;
+            btn.innerHTML = '⏳';
 
-            // جلب البيانات - متسلسل بدون await
+            // جلب البيانات بالتسلسل الصحيح - بدون await
             sb.from('reports').select('*').then(function(r1){
                 if(!r1.error) supabaseReports = r1.data;
                 return sb.from('pickups').select('*');
@@ -167,39 +208,44 @@
                 if(!r3.error) completedTasks = r3.data.map(function(x){return x.task_id;});
                 var localDone = JSON.parse(localStorage.getItem('completedTasks')||'[]');
                 localDone.forEach(function(x){if(completedTasks.indexOf(x)===-1) completedTasks.push(x);});
-                loadTasks();
-                document.getElementById('refreshBtn').textContent = '🔄 تحديث';
-                document.getElementById('refreshBtn').disabled = false;
+                showAllTasks();
+                btn.disabled = false;
+                btn.innerHTML = '🔄 تحديث';
             }).catch(function(e){
                 console.log('خطأ:',e);
-                loadTasks();
-                document.getElementById('refreshBtn').textContent = '🔄 تحديث';
-                document.getElementById('refreshBtn').disabled = false;
+                showAllTasks();
+                btn.disabled = false;
+                btn.innerHTML = '🔄 تحديث';
             });
         }
 
-        function loadTasks(){
+        function showAllTasks(){
             var allTasks=[];
             supabaseReports.forEach(function(r){
                 if(completedTasks.indexOf('report_'+r.id)===-1){
-                    allTasks.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,category:r.type||'غير محدد'});
+                    allTasks.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'});
                 }
             });
             supabasePickups.forEach(function(r){
                 if(completedTasks.indexOf('pickup_'+r.id)===-1){
-                    allTasks.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,weight:r.weight,material:r.material});
+                    allTasks.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material});
                 }
             });
 
-            document.getElementById('pendingCount').textContent=allTasks.length.toLocaleString('en-US');
-            document.getElementById('doneCount').textContent=completedTasks.length.toLocaleString('en-US');
-            document.getElementById('pendingBadge').textContent=allTasks.length;
+            document.getElementById('pendingCount').textContent = allTasks.length.toLocaleString('en-US');
+            document.getElementById('doneCount').textContent = completedTasks.length.toLocaleString('en-US');
+            document.getElementById('pendingBadge').textContent = allTasks.length;
+            document.getElementById('doneBadge').textContent = completedTasks.length;
 
-            var pc=document.getElementById('pendingTasks');
+            var totalKg=0;
+            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1) totalKg+=(r.weight||0);});
+            document.getElementById('totalKg').textContent = totalKg.toLocaleString('en-US');
+
+            var pc = document.getElementById('pendingTasks');
             if(allTasks.length===0){
-                pc.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';
+                pc.innerHTML = '<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';
             } else {
-                pc.innerHTML=allTasks.map(function(t){
+                pc.innerHTML = allTasks.map(function(t){
                     return '<div class="task-item"><div class="task-row"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button></div></div>';
                 }).join('');
             }
@@ -207,7 +253,15 @@
 
         function navigateTo(lat,lng){window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng,'_blank');}
 
-        function openConfirm(taskId){currentTaskId=taskId;proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('confirmOverlay').classList.add('show');}
+        function openConfirm(taskId){
+            currentTaskId=taskId;proofPhoto=null;
+            document.getElementById('proofPreview').style.display='none';
+            document.getElementById('proofInner').style.display='block';
+            document.getElementById('proofZone').classList.remove('filled');
+            document.getElementById('btnProofGallery').style.display='flex';
+            document.getElementById('btnProofDelete').style.display='none';
+            document.getElementById('confirmOverlay').classList.add('show');
+        }
         function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('show');currentTaskId=null;proofPhoto=null;}
         function takeProofPhoto(){if(!proofPhoto)document.getElementById('proofCamera').click();}
         function openProofGallery(){if(!proofPhoto)document.getElementById('proofGallery').click();}
@@ -215,21 +269,39 @@
         function handleProofPhoto(e){
             var f=e.target.files[0];if(!f)return;
             var r=new FileReader();
-            r.onload=function(ev){proofPhoto=ev.target.result;document.getElementById('proofPreview').src=proofPhoto;document.getElementById('proofPreview').style.display='block';document.getElementById('proofInner').style.display='none';document.getElementById('proofZone').classList.add('filled');document.getElementById('btnProofGallery').style.display='none';document.getElementById('btnProofDelete').style.display='flex';};
+            r.onload=function(ev){
+                proofPhoto=ev.target.result;
+                document.getElementById('proofPreview').src=proofPhoto;
+                document.getElementById('proofPreview').style.display='block';
+                document.getElementById('proofInner').style.display='none';
+                document.getElementById('proofZone').classList.add('filled');
+                document.getElementById('btnProofGallery').style.display='none';
+                document.getElementById('btnProofDelete').style.display='flex';
+            };
             r.readAsDataURL(f);
         }
 
-        function deleteProofPhoto(){proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('proofCamera').value='';document.getElementById('proofGallery').value='';}
+        function deleteProofPhoto(){
+            proofPhoto=null;
+            document.getElementById('proofPreview').style.display='none';
+            document.getElementById('proofInner').style.display='block';
+            document.getElementById('proofZone').classList.remove('filled');
+            document.getElementById('btnProofGallery').style.display='flex';
+            document.getElementById('btnProofDelete').style.display='none';
+            document.getElementById('proofCamera').value='';
+            document.getElementById('proofGallery').value='';
+        }
 
         function finalConfirm(){
-            if(!proofPhoto){alert('الرجاء التقاط صورة إثبات');return;}
+            if(!proofPhoto){alert('الرجاء التقاط صورة إثبات أولاً');return;}
             if(completedTasks.indexOf(currentTaskId)===-1){completedTasks.push(currentTaskId);}
             var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');
             proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};
             localStorage.setItem('taskProofs',JSON.stringify(proofs));
             localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
             sb.from('completed').insert({task_id:currentTaskId,proof_photo:proofPhoto}).then(function(){});
-            closeConfirm();document.getElementById('successOverlay').classList.add('show');
+            closeConfirm();
+            document.getElementById('successOverlay').classList.add('show');
         }
     </script>
 </body>
