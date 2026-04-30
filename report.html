@@ -272,7 +272,7 @@
     </div>
 
     <script>
-        // ============ الجسيمات والأزرار - يعمل فوراً ============
+        // ============ الجسيمات ============
         (function(){
             const c=document.getElementById('particlesBg');
             const colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
@@ -341,11 +341,11 @@
                     document.getElementById('vLng').textContent=S.lng.toFixed(6);
                     document.getElementById('coords').classList.add('show');
                     document.getElementById('mapBox').classList.add('located');
-                    mi.innerHTML='<span style="color:#2E7D32">✅ تم تحديد الموقع</span>';
+                    mi.innerHTML='<span style="color:#2E7D32">✅ تم</span>';
                     document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
                     document.getElementById('c3').classList.add('done');update();
                 },
-                err=>{mi.innerHTML='<span>❌ تعذر - اضغط للمحاولة</span>';},
+                err=>{mi.innerHTML='<span>❌ تعذر</span>';},
                 {enableHighAccuracy:true,timeout:20000}
             );
         }
@@ -370,10 +370,21 @@
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
             
-            // Supabase إذا كان جاهزاً
-            if(sb){sb.from('reports').insert({type:S.type,lat:S.lat,lng:S.lng,status:'new'}).then(r=>{});}
+            // نجاح فوري
+            setTimeout(function(){
+                document.getElementById('overlay').classList.add('show');
+                b.innerHTML='🚀 إرسال البلاغ';
+            },500);
             
-            setTimeout(()=>{document.getElementById('overlay').classList.add('show');b.innerHTML='🚀 إرسال البلاغ';},700);
+            // Supabase في الخلفية
+            if(sb){
+                sb.from('reports').insert({
+                    type:S.type, lat:S.lat, lng:S.lng, status:'new'
+                }).then(function(r){
+                    if(r.error) console.log('Supabase:',r.error.message);
+                    else console.log('✅ وصل للسحابة');
+                });
+            }
         }
 
         function resetAll(){
@@ -394,7 +405,10 @@
             var s=document.createElement('script');
             s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
             s.onload=function(){
-                sb=window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+                sb=window.supabase.createClient(
+                    'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
+                    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
+                );
                 console.log('✅ Supabase جاهز');
             };
             document.head.appendChild(s);
