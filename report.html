@@ -100,10 +100,6 @@
             animation: cardIn 0.5s ease both;
             position: relative; overflow: hidden;
         }
-        .card.done::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, var(--primary-light), #FFA726, var(--primary-light));
-        }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
@@ -271,13 +267,20 @@
         <div class="modal">
             <div class="modal-icon">✅</div>
             <div class="modal-title">تم الإرسال بنجاح!</div>
-            <div class="modal-desc">شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️</div>
+            <div class="modal-desc" id="modalMsg">شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️</div>
             <button class="modal-btn" onclick="resetAll()">📸 إبلاغ جديد</button>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // جسيمات
+        // ============ SUPABASE ============
+        const supabase = window.supabase.createClient(
+            'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
+        );
+
+        // ============ جسيمات ============
         (function(){
             const c=document.getElementById('particlesBg');
             const colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
@@ -370,24 +373,35 @@
             if(d===3){b.classList.add('ready');b.disabled=false;}else{b.classList.remove('ready');b.disabled=true;}
         }
 
-        function send(){
+        async function send(){
             const b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
             
-            // حفظ محلي
+            // 1. حفظ محلي
             const reports=JSON.parse(localStorage.getItem('reports')||'[]');
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
             
-            // إرسال إلى Supabase
-            supabase.from('reports').insert({
-                type:S.type,lat:S.lat,lng:S.lng,status:'new'
-            }).then(()=>console.log('✅Supabase')).catch(()=>console.log('💾Local'));
+            // 2. إرسال إلى Supabase
+            try {
+                const { data, error } = await supabase.from('reports').insert({
+                    type: S.type, lat: S.lat, lng: S.lng, status: 'new'
+                });
+                
+                if(error) {
+                    document.getElementById('modalMsg').innerHTML = 'تم الحفظ محلياً ⚠️<br><small>Supabase: ' + error.message + '</small>';
+                } else {
+                    document.getElementById('modalMsg').innerHTML = '✅ تم الإرسال إلى السحابة بنجاح!<br>شكراً لمساهمتك 🌍♻️';
+                }
+            } catch(err) {
+                document.getElementById('modalMsg').innerHTML = 'تم الحفظ محلياً 💾<br><small>Supabase غير متاح حالياً</small>';
+            }
             
+            // 3. إظهار النجاح دائماً
             setTimeout(()=>{
                 document.getElementById('overlay').classList.add('show');
                 b.innerHTML='🚀 إرسال البلاغ';
-            },700);
+            }, 700);
         }
 
         function resetAll(){
@@ -402,17 +416,9 @@
             const mi=document.getElementById('mapInner');
             mi.innerHTML='<span class="map-emoji">📍</span><br><span style="font-weight:700;font-size:13px;color:#616161;">اضغط لتحديد موقعك</span><br><span style="font-size:10px;color:#9e9e9e;">سيظهر طلب الإذن تلقائياً</span>';
             mi.style.cursor='pointer';mi.onclick=getLocation;
+            document.getElementById('modalMsg').innerHTML='شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️';
             update();window.scrollTo({top:0,behavior:'smooth'});
         }
-    </script>
-
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-        const supabase = window.supabase.createClient(
-            'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
-        );
     </script>
 </body>
 </html>
