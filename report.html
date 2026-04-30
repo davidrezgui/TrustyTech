@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         :root {
             --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
@@ -128,7 +131,6 @@
         .tag-req { background: #FFF3E0; color: var(--accent); }
         .tag-ok { background: #E8F5E9; color: var(--primary); }
 
-        /* كاميرا */
         .cam-zone {
             width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm);
             background: linear-gradient(145deg, #1a1a2e, #121828);
@@ -170,7 +172,6 @@
         }
         .btn-delete:hover { background: #FFF5F5; }
 
-        /* تصنيفات */
         .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .type-item {
             padding: 12px 4px; border: 2px solid rgba(0,0,0,0.06);
@@ -193,7 +194,6 @@
         .type-emoji { font-size: 26px; display: block; margin-bottom: 3px; }
         .type-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
 
-        /* موقع */
         .map-box {
             width: 100%; height: 180px; border-radius: var(--radius-sm);
             border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden;
@@ -297,7 +297,6 @@
             <div class="progress-text" id="pText">0 من 3 خطوات</div>
         </div>
 
-        <!-- 1- صورة -->
         <div class="card" id="c1" style="animation-delay:0.05s">
             <div class="card-header">
                 <div class="card-icon ci-cam">📷</div>
@@ -319,16 +318,11 @@
             <input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
             
             <div class="cam-btns">
-                <button class="btn-gallery" id="btnGallery" onclick="openGallery()">
-                    🖼️ اختر من المعرض
-                </button>
-                <button class="btn-delete" id="btnDelete" onclick="deletePhoto()">
-                    🗑️ حذف الصورة
-                </button>
+                <button class="btn-gallery" id="btnGallery" onclick="openGallery()">🖼️ اختر من المعرض</button>
+                <button class="btn-delete" id="btnDelete" onclick="deletePhoto()">🗑️ حذف الصورة</button>
             </div>
         </div>
 
-        <!-- 2- تصنيف -->
         <div class="card" id="c2" style="animation-delay:0.1s">
             <div class="card-header">
                 <div class="card-icon ci-type">🏷️</div>
@@ -336,28 +330,15 @@
                 <span class="tag tag-req" id="t2">مطلوب</span>
             </div>
             <div class="type-grid">
-                <div class="type-item" onclick="pickType(this,'menagere')">
-                    <span class="type-check">✓</span><span class="type-emoji">🗑️</span><span class="type-name">نفايات منزلية</span>
-                </div>
-                <div class="type-item" onclick="pickType(this,'plastique')">
-                    <span class="type-check">✓</span><span class="type-emoji">🫙</span><span class="type-name">بلاستيك</span>
-                </div>
-                <div class="type-item" onclick="pickType(this,'carton')">
-                    <span class="type-check">✓</span><span class="type-emoji">📦</span><span class="type-name">كرتون</span>
-                </div>
-                <div class="type-item" onclick="pickType(this,'verre')">
-                    <span class="type-check">✓</span><span class="type-emoji">🫗</span><span class="type-name">زجاج</span>
-                </div>
-                <div class="type-item" onclick="pickType(this,'decombres')">
-                    <span class="type-check">✓</span><span class="type-emoji">🧱</span><span class="type-name">أنقاض بناء</span>
-                </div>
-                <div class="type-item" onclick="pickType(this,'autre')">
-                    <span class="type-check">✓</span><span class="type-emoji">❓</span><span class="type-name">أخرى</span>
-                </div>
+                <div class="type-item" onclick="pickType(this,'menagere')"><span class="type-check">✓</span><span class="type-emoji">🗑️</span><span class="type-name">نفايات منزلية</span></div>
+                <div class="type-item" onclick="pickType(this,'plastique')"><span class="type-check">✓</span><span class="type-emoji">🫙</span><span class="type-name">بلاستيك</span></div>
+                <div class="type-item" onclick="pickType(this,'carton')"><span class="type-check">✓</span><span class="type-emoji">📦</span><span class="type-name">كرتون</span></div>
+                <div class="type-item" onclick="pickType(this,'verre')"><span class="type-check">✓</span><span class="type-emoji">🫗</span><span class="type-name">زجاج</span></div>
+                <div class="type-item" onclick="pickType(this,'decombres')"><span class="type-check">✓</span><span class="type-emoji">🧱</span><span class="type-name">أنقاض بناء</span></div>
+                <div class="type-item" onclick="pickType(this,'autre')"><span class="type-check">✓</span><span class="type-emoji">❓</span><span class="type-name">أخرى</span></div>
             </div>
         </div>
 
-        <!-- 3- موقع -->
         <div class="card" id="c3" style="animation-delay:0.15s">
             <div class="card-header">
                 <div class="card-icon ci-loc">📍</div>
@@ -371,9 +352,7 @@
                     <span style="font-size:10px;color:#9e9e9e;margin-top:2px;">سيظهر طلب الإذن تلقائياً</span>
                 </div>
             </div>
-            <div class="coords" id="coords">
-                ✅ تم التحديد — <span class="coord-val" id="vLat">--</span>, <span class="coord-val" id="vLng">--</span>
-            </div>
+            <div class="coords" id="coords">✅ تم التحديد — <span class="coord-val" id="vLat">--</span>, <span class="coord-val" id="vLng">--</span></div>
         </div>
 
         <button class="submit-btn" id="btnSubmit" disabled onclick="send()">🚀 إرسال البلاغ</button>
@@ -391,6 +370,11 @@
     </div>
 
     <script>
+        // ============ إعداد Supabase ============
+        const SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         // جسيمات
         (function(){
             const c = document.getElementById('particlesBg');
@@ -406,9 +390,8 @@
 
         const S = { photo: null, type: null, lat: null, lng: null };
 
-        // ============ كاميرا ============
         function takePicture() {
-            if(S.photo) return; // إذا توجد صورة لا تفعل شيئاً
+            if(S.photo) return;
             document.getElementById('cameraInput').click();
         }
 
@@ -455,7 +438,6 @@
             update();
         }
 
-        // ============ تصنيف ============
         function pickType(el, type) {
             document.querySelectorAll('.type-item').forEach(i=>i.classList.remove('selected'));
             el.classList.add('selected');
@@ -466,10 +448,8 @@
             update();
         }
 
-        // ============ موقع ============
         function getLocation() {
             if(S.lat && S.lng) return;
-
             const mi = document.getElementById('mapInner');
             
             if(!navigator.geolocation) {
@@ -477,14 +457,12 @@
                 return;
             }
 
-            // عرض أننا ننتظر الإذن
             mi.innerHTML = '<span style="font-size:30px;">📡</span><br><span style="font-weight:700;font-size:12px;">جاري طلب الإذن...</span><span style="font-size:10px;color:#9e9e9e;">الرجاء الموافقة على تحديد الموقع</span>';
             mi.style.cursor = 'wait';
             mi.onclick = null;
 
             navigator.geolocation.getCurrentPosition(
                 function(pos) {
-                    // نجاح
                     S.lat = pos.coords.latitude;
                     S.lng = pos.coords.longitude;
                     document.getElementById('vLat').textContent = S.lat.toFixed(6);
@@ -501,7 +479,6 @@
                     update();
                 },
                 function(err) {
-                    // فشل
                     let msg = 'تعذر تحديد الموقع';
                     if(err.code === 1) msg = 'تم رفض الإذن — افتح إعدادات المتصفح واسمح بالموقع';
                     else if(err.code === 2) msg = 'إشارة GPS ضعيفة — جرب في مكان مفتوح';
@@ -512,20 +489,13 @@
                     mi.style.cursor = 'pointer';
                     mi.onclick = getLocation;
                 },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 20000,
-                    maximumAge: 0
-                }
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
             );
         }
 
-        // ============ تحديث ============
         function update() {
             let d = 0;
-            if(S.photo) d++;
-            if(S.type) d++;
-            if(S.lat && S.lng) d++;
+            if(S.photo) d++; if(S.type) d++; if(S.lat && S.lng) d++;
             
             document.getElementById('pFill').style.width = Math.round((d/3)*100)+'%';
             document.getElementById('pText').textContent = d+' من 3 خطوات';
@@ -539,25 +509,53 @@
             else { b.classList.remove('ready'); b.disabled=true; }
         }
 
-        function send() {
+        // ============ إرسال إلى Supabase ============
+        async function send() {
             const b = document.getElementById('btnSubmit');
             b.innerHTML = '⏳ جاري الإرسال...';
             b.classList.remove('ready');
             b.disabled = true;
             
-            const report = {
-                photo: S.photo, type: S.type, lat: S.lat, lng: S.lng,
-                time: new Date().toISOString(), status: 'new'
-            };
-            
-            const reports = JSON.parse(localStorage.getItem('reports')||'[]');
-            reports.push(report);
-            localStorage.setItem('reports', JSON.stringify(reports));
-            
-            setTimeout(()=>{
-                document.getElementById('overlay').classList.add('show');
-                b.innerHTML = '🚀 إرسال البلاغ';
-            }, 700);
+            try {
+                // إرسال إلى Supabase
+                const { data, error } = await supabase
+                    .from('reports')
+                    .insert({
+                        photo_url: S.photo,
+                        type: S.type,
+                        lat: S.lat,
+                        lng: S.lng,
+                        status: 'new'
+                    });
+
+                if(error) {
+                    console.error('خطأ Supabase:', error.message);
+                    // احتياط: حفظ محلي إذا فشل Supabase
+                    const reports = JSON.parse(localStorage.getItem('reports')||'[]');
+                    reports.push({ photo: S.photo, type: S.type, lat: S.lat, lng: S.lng, time: new Date().toISOString(), status: 'new' });
+                    localStorage.setItem('reports', JSON.stringify(reports));
+                } else {
+                    console.log('✅ تم الإرسال إلى Supabase بنجاح');
+                }
+
+                // نجاح دائماً
+                setTimeout(()=>{
+                    document.getElementById('overlay').classList.add('show');
+                    b.innerHTML = '🚀 إرسال البلاغ';
+                }, 700);
+
+            } catch(err) {
+                console.error('خطأ:', err);
+                // حفظ محلي كاحتياط
+                const reports = JSON.parse(localStorage.getItem('reports')||'[]');
+                reports.push({ photo: S.photo, type: S.type, lat: S.lat, lng: S.lng, time: new Date().toISOString(), status: 'new' });
+                localStorage.setItem('reports', JSON.stringify(reports));
+                
+                setTimeout(()=>{
+                    document.getElementById('overlay').classList.add('show');
+                    b.innerHTML = '🚀 إرسال البلاغ';
+                }, 700);
+            }
         }
 
         function resetAll() {
