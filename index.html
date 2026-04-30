@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="مدينتنا نظيفة">
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogItmF2K3Zitin2YYg2YbZt9mF2YrZgSIsCiAgInNob3J0X25hbWUiOiAi2YXYrdmK2KfZhiIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMWEwYSIsCiAgInRoZW1lX2NvbG9yIjogIiMwYTFhMGEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOGVtJyBmb250LXNpemU9JzkwJz7wn4yLPC90ZXh0Pjwvc3ZnPiIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICAgIH0KICBdCn0">
+    <meta name="description" content="منصة وطنية للاقتصاد الأخضر - تبليغ عن المفرغات، فرز ذكي، وتتبع البصمة الكربونية">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,8 +25,9 @@
             --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
             --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --radius: 24px; --radius-sm: 14px;
+            --radius: 24px; --radius-sm: 14px; --radius-xs: 10px;
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+            --transition-fast: all 0.2s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,6 +39,7 @@
             position: relative; display: flex; flex-direction: column;
         }
 
+        /* ============ خلفية ============ */
         .particles-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; overflow: hidden;
@@ -65,12 +67,13 @@
             66% { transform: translate(-20px,20px) scale(0.9); }
         }
 
+        /* ============ شريط علوي ============ */
         .top-nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(10,31,10,0.85); backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding: 12px 20px; display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
             box-shadow: 0 4px 30px rgba(0,0,0,0.3);
         }
         .nav-brand {
@@ -91,20 +94,23 @@
             border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06);
             color: white; cursor: pointer; font-family: 'Cairo', sans-serif;
             font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 5px;
+            white-space: nowrap;
         }
         .btn-share:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.4); }
 
+        /* ============ محتوى ============ */
         .main-container {
             position: relative; z-index: 1; flex: 1;
             display: flex; flex-direction: column; align-items: center;
-            padding: 90px 16px 30px; gap: 20px;
+            padding: 82px 16px 24px; gap: 18px;
         }
 
+        /* ============ بطاقة ============ */
         .card {
             width: 100%; max-width: 480px;
             background: rgba(255,255,255,0.94);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-radius: var(--radius); padding: 36px 24px 28px;
+            border-radius: var(--radius); padding: 32px 20px 24px;
             box-shadow: var(--shadow-xl); text-align: center;
             border: 1px solid rgba(255,255,255,0.25);
             animation: cardAppear 1s ease 0.3s both;
@@ -114,20 +120,21 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .logo-wrapper { position: relative; display: inline-block; margin-bottom: 8px; }
+        /* ============ شعار ============ */
+        .logo-wrapper { position: relative; display: inline-block; margin-bottom: 6px; }
         .logo-ring {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-            width: 100px; height: 100px; border-radius: 50%;
+            width: 90px; height: 90px; border-radius: 50%;
             border: 3px dashed rgba(46,125,50,0.3); animation: spin 20s linear infinite;
         }
         .logo-ring-2 {
-            width: 120px; height: 120px; border-style: dotted;
+            width: 108px; height: 108px; border-style: dotted;
             animation-direction: reverse; animation-duration: 25s;
             border-color: rgba(255,111,0,0.25);
         }
         @keyframes spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
         .logo-icon {
-            font-size: 54px; animation: bounce 2s ease-in-out infinite;
+            font-size: 50px; animation: bounce 2s ease-in-out infinite;
             position: relative; z-index: 2; display: block;
         }
         .logo-badge {
@@ -142,8 +149,9 @@
             50% { box-shadow: 0 4px 28px rgba(255,111,0,0.9); }
         }
 
+        /* ============ عنوان ============ */
         .main-title {
-            font-size: 30px; font-weight: 900;
+            font-size: 28px; font-weight: 900;
             background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin-bottom: 2px;
@@ -152,30 +160,32 @@
 
         .trust-bar {
             display: flex; align-items: center; justify-content: center;
-            gap: 6px; margin-bottom: 18px; flex-wrap: wrap;
+            gap: 6px; margin-bottom: 16px; flex-wrap: wrap;
         }
         .trust-item {
             font-size: 10px; font-weight: 700; color: var(--primary-dark);
             background: rgba(46,125,50,0.08); padding: 4px 10px;
             border-radius: 15px; display: flex; align-items: center; gap: 4px;
+            white-space: nowrap;
         }
         .trust-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--primary-light); }
 
         .tech-bar {
             display: flex; align-items: center; justify-content: center;
-            gap: 10px; margin-bottom: 22px; flex-wrap: wrap;
+            gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
         }
-        .tech-item { font-size: 10px; font-weight: 600; color: var(--text-gray); display: flex; align-items: center; gap: 3px; }
+        .tech-item { font-size: 10px; font-weight: 600; color: var(--text-gray); display: flex; align-items: center; gap: 3px; white-space: nowrap; }
         .tech-dot { width: 5px; height: 5px; border-radius: 50%; }
         .td-green { background: var(--primary-light); }
         .td-orange { background: var(--accent-light); }
         .td-blue { background: var(--info); }
 
-        .btn-grid { display: flex; flex-direction: column; gap: 10px; }
+        /* ============ أزرار ============ */
+        .btn-grid { display: flex; flex-direction: column; gap: 9px; }
         .btn {
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 15px 20px; border: none; border-radius: var(--radius-sm);
-            font-size: 15px; font-weight: 700; cursor: pointer;
+            padding: 14px 18px; border: none; border-radius: var(--radius-sm);
+            font-size: 14px; font-weight: 700; cursor: pointer;
             transition: var(--transition); text-decoration: none; color: white;
             font-family: 'Cairo', sans-serif; position: relative; overflow: hidden;
         }
@@ -184,7 +194,7 @@
             transform: scale(0); animation: rippleEffect 0.7s ease-out; pointer-events: none;
         }
         @keyframes rippleEffect { to { transform: scale(4); opacity: 0; } }
-        .btn-icon { font-size: 22px; position: relative; z-index: 1; }
+        .btn-icon { font-size: 20px; position: relative; z-index: 1; }
         .btn-text { position: relative; z-index: 1; }
 
         .btn-report { background: linear-gradient(135deg, #EF5350, #C62828); box-shadow: 0 8px 24px rgba(198,40,40,0.35); animation: btnSlideIn 0.6s ease 0.4s both; }
@@ -210,19 +220,19 @@
 
         /* ============ إحصائيات ============ */
         .stats {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
-            margin-top: 22px; padding-top: 18px;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+            margin-top: 20px; padding-top: 16px;
             border-top: 1px solid rgba(46,125,50,0.12);
             animation: fadeIn 0.8s ease 1s both;
         }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .stat-item {
-            text-align: center; padding: 4px 2px; border-radius: 8px;
+            text-align: center; padding: 6px 2px; border-radius: var(--radius-xs);
             transition: var(--transition); cursor: default;
         }
         .stat-item:hover { background: rgba(46,125,50,0.04); transform: translateY(-2px); }
         .stat-value {
-            font-size: 18px; font-weight: 900; color: var(--primary-dark);
+            font-size: 17px; font-weight: 900; color: var(--primary-dark);
             direction: ltr; display: inline-block;
         }
         .stat-label { font-size: 9px; color: var(--text-gray); font-weight: 600; margin-top: 1px; }
@@ -232,51 +242,93 @@
             width: 100%; max-width: 480px;
             background: rgba(255,255,255,0.94);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-            border-radius: var(--radius); padding: 24px 20px;
+            border-radius: var(--radius); padding: 24px 18px;
             box-shadow: var(--shadow-lg); text-align: center;
             border: 1px solid rgba(255,255,255,0.2);
             animation: cardAppear 1s ease 0.5s both;
         }
         .how-title {
-            font-size: 18px; font-weight: 900; color: var(--primary-dark); margin-bottom: 16px;
+            font-size: 17px; font-weight: 900; color: var(--primary-dark); margin-bottom: 14px;
         }
         .how-steps {
-            display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+            display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
         }
         .how-step {
-            flex: 1; min-width: 100px; max-width: 140px; text-align: center;
-            background: rgba(46,125,50,0.04); padding: 16px 10px;
+            flex: 1; min-width: 90px; max-width: 140px; text-align: center;
+            background: rgba(46,125,50,0.04); padding: 14px 8px;
             border-radius: var(--radius-sm); transition: var(--transition);
         }
         .how-step:hover { background: rgba(46,125,50,0.08); transform: translateY(-3px); }
         .how-num {
-            width: 36px; height: 36px; border-radius: 50%;
+            width: 34px; height: 34px; border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white; font-size: 18px; font-weight: 900;
+            color: white; font-size: 16px; font-weight: 900;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 8px; box-shadow: 0 4px 12px rgba(46,125,50,0.3);
         }
-        .how-step-title { font-size: 13px; font-weight: 800; color: var(--primary-dark); margin-bottom: 3px; }
+        .how-step-title { font-size: 13px; font-weight: 800; color: var(--primary-dark); margin-bottom: 2px; }
         .how-step-desc { font-size: 10px; color: var(--text-gray); line-height: 1.5; }
 
+        /* ============ فooter ============ */
         .footer {
             position: relative; z-index: 1; text-align: center;
-            padding: 10px 20px; font-size: 10px;
+            padding: 10px 16px; font-size: 10px;
             color: rgba(255,255,255,0.55);
             background: linear-gradient(transparent, rgba(0,0,0,0.4));
             display: flex; align-items: center; justify-content: center;
-            gap: 8px; flex-wrap: wrap;
+            gap: 6px; flex-wrap: wrap;
         }
         .footer strong { color: rgba(255,255,255,0.8); }
         .footer-sep { width: 1px; height: 12px; background: rgba(255,255,255,0.2); }
 
-        @media (max-width: 400px) {
+        /* ============ تجاوب ============ */
+        @media (max-width: 480px) {
             .main-title { font-size: 24px; }
-            .logo-icon { font-size: 44px; }
-            .btn { padding: 13px 14px; font-size: 13px; }
-            .stat-value { font-size: 15px; }
+            .logo-icon { font-size: 42px; }
+            .logo-ring { width: 75px; height: 75px; }
+            .logo-ring-2 { width: 90px; height: 90px; }
+            .btn { padding: 12px 14px; font-size: 13px; }
+            .btn-icon { font-size: 18px; }
+            .stat-value { font-size: 14px; }
+            .card { padding: 24px 14px 18px; }
             .how-steps { flex-direction: column; align-items: center; }
-            .how-step { max-width: 100%; width: 100%; }
+            .how-step { max-width: 100%; width: 100%; display: flex; align-items: center; gap: 10px; text-align: right; }
+            .how-num { margin: 0; flex-shrink: 0; }
+        }
+
+        @media (max-width: 360px) {
+            .main-title { font-size: 20px; }
+            .btn { padding: 10px 12px; font-size: 12px; }
+            .btn-icon { font-size: 16px; }
+            .stat-value { font-size: 13px; }
+            .stat-label { font-size: 8px; }
+            .trust-item { font-size: 9px; padding: 3px 8px; }
+            .tech-item { font-size: 9px; }
+        }
+
+        @media (min-width: 768px) {
+            .main-title { font-size: 32px; }
+            .logo-icon { font-size: 56px; }
+            .btn { padding: 16px 22px; font-size: 15px; }
+        }
+
+        /* ============ شريط التثبيت ============ */
+        #installBanner {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000;
+            background: white; padding: 14px 20px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+            align-items: center; gap: 12px; border-radius: 20px 20px 0 0;
+            animation: slideUp 0.4s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .install-btn {
+            padding: 10px 18px; background: #2E7D32; color: white;
+            border: none; border-radius: 20px; font-weight: 700;
+            font-family: 'Cairo', sans-serif; cursor: pointer; white-space: nowrap;
+        }
+        .install-close {
+            background: none; border: none; font-size: 20px;
+            cursor: pointer; color: #90A4AE;
         }
     </style>
 </head>
@@ -345,19 +397,19 @@
 
             <div class="stats">
                 <div class="stat-item">
-                    <div class="stat-value" id="v1">1,250</div>
+                    <div class="stat-value" id="v1">0</div>
                     <div class="stat-label">بلاغ</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="v2">850</div>
+                    <div class="stat-value" id="v2">0</div>
                     <div class="stat-label">كغ مدور</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="v3">320</div>
+                    <div class="stat-value" id="v3">0</div>
                     <div class="stat-label">CO₂ وفر</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="v4">45K</div>
+                    <div class="stat-value" id="v4">0</div>
                     <div class="stat-label">نقطة</div>
                 </div>
             </div>
@@ -369,18 +421,24 @@
             <div class="how-steps">
                 <div class="how-step">
                     <div class="how-num">1</div>
-                    <div class="how-step-title">بلّغ</div>
-                    <div class="how-step-desc">صور المفرغة وأرسل الموقع</div>
+                    <div style="flex:1;">
+                        <div class="how-step-title">بلّغ</div>
+                        <div class="how-step-desc">صور المفرغة وأرسل الموقع</div>
+                    </div>
                 </div>
                 <div class="how-step">
                     <div class="how-num">2</div>
-                    <div class="how-step-title">اجمع</div>
-                    <div class="how-step-desc">السائق يتلقى المهمة ويتوجه</div>
+                    <div style="flex:1;">
+                        <div class="how-step-title">اجمع</div>
+                        <div class="how-step-desc">السائق يتلقى المهمة ويتوجه</div>
+                    </div>
                 </div>
                 <div class="how-step">
                     <div class="how-num">3</div>
-                    <div class="how-step-title">كافأ</div>
-                    <div class="how-step-desc">اربح نقاطاً خضراء قابلة للاستبدال</div>
+                    <div style="flex:1;">
+                        <div class="how-step-title">كافأ</div>
+                        <div class="how-step-desc">اربح نقاطاً خضراء قابلة للاستبدال</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -390,14 +448,25 @@
     <footer class="footer">
         <span>© 2026 <strong>مدينتنا نظيفة</strong></span>
         <span class="footer-sep"></span>
-        <span>🇩🇿 version 1.0.0</span>
+        <span>🇩🇿 v1.0.0</span>
         <span class="footer-sep"></span>
         <span>جميع الحقوق محفوظة</span>
     </footer>
 
+    <!-- شريط تثبيت التطبيق -->
+    <div id="installBanner">
+        <span style="font-size:32px;">📲</span>
+        <div style="flex:1;">
+            <div style="font-weight:800;font-size:13px;color:#1B5E20;">تثبيت التطبيق</div>
+            <div style="font-size:10px;color:#90A4AE;">أضف المنصة إلى شاشتك الرئيسية</div>
+        </div>
+        <button class="install-btn" onclick="installApp()">تثبيت</button>
+        <button class="install-close" onclick="document.getElementById('installBanner').style.display='none'">✕</button>
+    </div>
+
     <script>
         // جسيمات
-        (function particles() {
+        (function(){
             const c = document.getElementById('particlesBg');
             const colors = ['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];
             for(let i=0;i<35;i++){
@@ -424,36 +493,31 @@
             });
         });
 
-        // إحصائيات حية
-        function getReports() { return JSON.parse(localStorage.getItem('reports')||'[]'); }
-        function getSorting() { return JSON.parse(localStorage.getItem('sortingRequests')||'[]'); }
-        function getCompleted() { return JSON.parse(localStorage.getItem('completedTasks')||'[]'); }
-        function getUserPoints() { return parseInt(localStorage.getItem('userPoints')||'0'); }
+        // إحصائيات حية من localStorage
+        function getR() { return JSON.parse(localStorage.getItem('reports')||'[]'); }
+        function getS() { return JSON.parse(localStorage.getItem('sortingRequests')||'[]'); }
+        function getP() { return parseInt(localStorage.getItem('userPoints')||'0'); }
 
-        function updateLiveStats() {
-            const reports = getReports().length;
-            const sorting = getSorting();
-            const totalKg = sorting.reduce((s,r) => s + (r.weight||0), 0);
-            const co2 = Math.round(totalKg * 0.5);
-            const points = getUserPoints();
+        function refreshStats() {
+            const rLen = getR().length;
+            const kg = getS().reduce((s,r) => s + (r.weight||0), 0);
+            const co2 = Math.round(kg * 0.5);
+            const pts = getP();
 
-            document.getElementById('v1').textContent = reports.toLocaleString('en-US');
-            document.getElementById('v2').textContent = totalKg.toLocaleString('en-US');
+            document.getElementById('v1').textContent = rLen.toLocaleString('en-US');
+            document.getElementById('v2').textContent = kg.toLocaleString('en-US');
             document.getElementById('v3').textContent = co2.toLocaleString('en-US');
-            document.getElementById('v4').textContent = points >= 1000 ? Math.floor(points/1000)+'K' : points.toLocaleString('en-US');
+            document.getElementById('v4').textContent = pts >= 1000 ? Math.floor(pts/1000)+'K' : pts.toLocaleString('en-US');
         }
-
-        updateLiveStats();
-        setInterval(updateLiveStats, 3000);
+        refreshStats();
+        setInterval(refreshStats, 4000);
 
         // زر النشر
         function sharePlatform() {
             const url = window.location.href;
             const text = 'مدينتنا نظيفة - منصة وطنية للاقتصاد الأخضر ♻️';
-            
             if(navigator.share) {
-                navigator.share({ title: 'مدينتنا نظيفة', text: text, url: url })
-                    .catch(() => {});
+                navigator.share({ title: 'مدينتنا نظيفة', text, url }).catch(()=>{});
             } else {
                 navigator.clipboard.writeText(url).then(() => {
                     const btn = document.querySelector('.btn-share');
@@ -463,11 +527,26 @@
             }
         }
 
-        // PWA - تسجيل Service Worker
-        if('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('data:application/javascript,self.addEventListener("fetch",function(e){e.respondWith(fetch(e.request).catch(function(){return caches.match(e.request)}))});');
-            });
+        // PWA - تثبيت التطبيق
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setTimeout(() => {
+                document.getElementById('installBanner').style.display = 'flex';
+            }, 2000);
+        });
+
+        function installApp() {
+            if(deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(() => {
+                    document.getElementById('installBanner').style.display = 'none';
+                });
+            } else {
+                alert('للتثبيت: افتح القائمة (⋮) ← أضف إلى الشاشة الرئيسية');
+                document.getElementById('installBanner').style.display = 'none';
+            }
         }
     </script>
 </body>
