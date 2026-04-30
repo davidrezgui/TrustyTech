@@ -306,18 +306,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // ============ SUPABASE ============
-        var sb = window.supabase.createClient(
-            'https://ctkkkpcjwebkrcbzsvpf.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc'
-        );
+        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        // بيانات من Supabase
         var supabaseReports = [];
         var supabasePickups = [];
-        var supabaseCompleted = [];
 
-        // ============ جسيمات ============
         (function(){
             var c=document.getElementById('particlesBg');
             var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#FFCC02','#CE93D8','#26A69A'];
@@ -329,49 +322,29 @@
             }
         })();
 
-        // ============ تسجيل الدخول ============
         function checkPass(){
-            var pass=document.getElementById('adminPass').value;
-            if(pass==='admin2026'){
+            if(document.getElementById('adminPass').value==='admin2026'){
                 document.getElementById('loginScreen').style.display='none';
                 document.getElementById('dashMain').style.display='block';
                 loadAll();
-            }else{
-                document.getElementById('loginError').style.display='block';
-            }
+            }else{document.getElementById('loginError').style.display='block';}
         }
 
-        var currentTab='overview';
-        var mainMap=null;
+        var currentTab='overview',mainMap=null;
 
-        function getReports(){
-            var local=JSON.parse(localStorage.getItem('reports')||'[]');
-            return local.concat(supabaseReports);
-        }
-        function getSortingRequests(){
-            var local=JSON.parse(localStorage.getItem('sortingRequests')||'[]');
-            return local.concat(supabasePickups);
-        }
-        function getCompletedTasks(){
-            var local=JSON.parse(localStorage.getItem('completedTasks')||'[]');
-            return local.concat(supabaseCompleted);
-        }
+        // ✅ من Supabase فقط - بدون localStorage
+        function getReports(){ return supabaseReports; }
+        function getSortingRequests(){ return supabasePickups; }
+        function getCompletedTasks(){ return JSON.parse(localStorage.getItem('completedTasks')||'[]'); }
 
         async function loadAll(){
-            // جلب من Supabase
             try{
-                var r1=await sb.from('reports').select('*');
-                if(!r1.error) supabaseReports=r1.data;
-                var r2=await sb.from('pickups').select('*');
-                if(!r2.error) supabasePickups=r2.data;
-                var r3=await sb.from('completed').select('*');
-                if(!r3.error) supabaseCompleted=r3.data.map(function(x){return x.task_id;});
+                var r1=await sb.from('reports').select('*');if(!r1.error) supabaseReports=r1.data;
+                var r2=await sb.from('pickups').select('*');if(!r2.error) supabasePickups=r2.data;
             }catch(e){}
-            
             renderTab();
             if(currentTab==='overview') setTimeout(initMap,400);
-            var btn=document.querySelector('.btn-refresh');
-            btn.textContent='✅ تم';
+            var btn=document.querySelector('.btn-refresh');btn.textContent='✅ تم';
             setTimeout(function(){btn.textContent='🔄 تحديث';},800);
         }
 
@@ -389,106 +362,72 @@
             return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0')+' · '+d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();
         }
 
-        function getTypeName(type){
-            var names={menagere:'منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض',autre:'أخرى'};
-            return names[type]||type||'—';
-        }
-
-        function getMaterialName(mat){
-            var names={carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
-            return names[mat]||mat||'—';
-        }
+        function getTypeName(type){var n={menagere:'منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض',autre:'أخرى'};return n[type]||type||'—';}
+        function getMaterialName(mat){var n={carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};return n[mat]||mat||'—';}
 
         function initMap(){
-            var reports=getReports();
-            var sorting=getSortingRequests();
+            var reports=getReports(),sorting=getSortingRequests();
             var allPoints=reports.concat(sorting).filter(function(r){return r.lat&&r.lng;});
-
             if(mainMap){mainMap.remove();mainMap=null;}
-            var mapEl=document.getElementById('mapContainer');
-            if(!mapEl) return;
-
-            var centerLat=allPoints.length>0?allPoints[0].lat:36.0736;
-            var centerLng=allPoints.length>0?allPoints[0].lng:4.7631;
-
-            mainMap=L.map('mapContainer').setView([centerLat,centerLng],13);
+            var mapEl=document.getElementById('mapContainer');if(!mapEl) return;
+            var clat=allPoints.length>0?allPoints[0].lat:36.0736,clng=allPoints.length>0?allPoints[0].lng:4.7631;
+            mainMap=L.map('mapContainer').setView([clat,clng],13);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(mainMap);
-
-            var reportIcon=L.divIcon({className:'custom-marker',html:'<div style="background:#E53935;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(229,57,53,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">🗑️</span></div>',iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-30]});
-            var pickupIcon=L.divIcon({className:'custom-marker',html:'<div style="background:#FF9800;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(255,152,0,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">📦</span></div>',iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-30]});
-
-            reports.forEach(function(r){
-                if(r.lat&&r.lng){
-                    L.marker([r.lat,r.lng],{icon:reportIcon}).addTo(mainMap).bindPopup('<div style="font-family:Cairo,sans-serif;text-align:right"><strong>🚨 بلاغ</strong><br>النوع: '+getTypeName(r.type)+'</div>');
-                }
-            });
-            sorting.forEach(function(r){
-                if(r.lat&&r.lng){
-                    L.marker([r.lat,r.lng],{icon:pickupIcon}).addTo(mainMap).bindPopup('<div style="font-family:Cairo,sans-serif;text-align:right"><strong>📦 طلب جمع</strong><br>'+getMaterialName(r.material)+'</div>');
-                }
-            });
-
-            if(allPoints.length===0){
-                L.marker([36.0736,4.7631]).addTo(mainMap).bindPopup('<div style="font-family:Cairo,sans-serif;text-align:right"><strong>📍 برج بوعريريج</strong></div>').openPopup();
-            }
+            var ri=L.divIcon({html:'<div style="background:#E53935;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(229,57,53,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">🗑️</span></div>',iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-30]});
+            var pi=L.divIcon({html:'<div style="background:#FF9800;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(255,152,0,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">📦</span></div>',iconSize:[28,28],iconAnchor:[14,28],popupAnchor:[0,-30]});
+            reports.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:ri}).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>🚨 بلاغ</strong><br>'+getTypeName(r.type)+'</div>');});
+            sorting.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:pi}).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>📦 جمع</strong><br>'+getMaterialName(r.material)+'</div>');});
+            if(allPoints.length===0) L.marker([36.0736,4.7631]).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>📍 برج بوعريريج</strong></div>').openPopup();
             setTimeout(function(){if(mainMap)mainMap.invalidateSize();},200);
         }
 
         function renderOverview(){
-            var reports=getReports();
-            var sorting=getSortingRequests();
-            var completed=getCompletedTasks();
-            var totalWeight=sorting.reduce(function(s,r){return s+(r.weight||0);},0);
-            var co2Saved=Math.round(totalWeight*0.5);
-            var allPoints=reports.concat(sorting).filter(function(r){return r.lat&&r.lng;});
-
+            var r=getReports(),s=getSortingRequests(),c=getCompletedTasks();
+            var tw=s.reduce(function(a,b){return a+(b.weight||0);},0),co2=Math.round(tw*0.5);
+            var all=r.concat(s).filter(function(x){return x.lat;});
             return '<div class="stats-grid">'+
-                '<div class="stat-card"><span class="stat-icon">📋</span><div class="stat-value">'+reports.length.toLocaleString('en-US')+'</div><div class="stat-label">بلاغ مفرغة</div></div>'+
-                '<div class="stat-card"><span class="stat-icon">📦</span><div class="stat-value">'+sorting.length.toLocaleString('en-US')+'</div><div class="stat-label">طلب جمع</div></div>'+
-                '<div class="stat-card"><span class="stat-icon">✅</span><div class="stat-value">'+completed.length.toLocaleString('en-US')+'</div><div class="stat-label">مهمة مكتملة</div></div>'+
-                '<div class="stat-card"><span class="stat-icon">🌱</span><div class="stat-value">'+co2Saved.toLocaleString('en-US')+'</div><div class="stat-label">كغ CO₂ وفر</div></div>'+
-                '</div>'+
-                (reports.length===0&&sorting.length===0?'<div class="highlight-box warning"><span style="font-size:20px">ℹ️</span><br><strong>لوحة التحكم جاهزة</strong><br><span style="font-size:11px;color:var(--text-gray)">في انتظار أول بلاغ</span></div>':'')+
-                '<div class="card"><div class="card-header"><div class="card-icon ci-map">🗺️</div><span class="card-label">خريطة — '+allPoints.length+' نقطة</span></div><div id="mapContainer"></div>'+
+                '<div class="stat-card"><span class="stat-icon">📋</span><div class="stat-value">'+r.length.toLocaleString('en-US')+'</div><div class="stat-label">بلاغ</div></div>'+
+                '<div class="stat-card"><span class="stat-icon">📦</span><div class="stat-value">'+s.length.toLocaleString('en-US')+'</div><div class="stat-label">طلب جمع</div></div>'+
+                '<div class="stat-card"><span class="stat-icon">✅</span><div class="stat-value">'+c.length.toLocaleString('en-US')+'</div><div class="stat-label">مكتمل</div></div>'+
+                '<div class="stat-card"><span class="stat-icon">🌱</span><div class="stat-value">'+co2.toLocaleString('en-US')+'</div><div class="stat-label">كغ CO₂</div></div></div>'+
+                (r.length===0&&s.length===0?'<div class="highlight-box warning"><span style="font-size:20px">ℹ️</span><br><strong>في انتظار البلاغات</strong></div>':'')+
+                '<div class="card"><div class="card-header"><div class="card-icon ci-map">🗺️</div><span class="card-label">خريطة — '+all.length+' نقطة</span></div><div id="mapContainer"></div>'+
                 '<div class="map-legend"><span><span class="legend-dot ld-report"></span> بلاغ</span><span><span class="legend-dot ld-pickup"></span> طلب جمع</span></div></div>'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-co2">🌱</div><span class="card-label">البصمة الكربونية</span></div>'+
-                '<div style="display:flex;justify-content:space-between;font-size:11px"><span>تم توفير '+co2Saved+' كغ CO₂</span><span>الهدف: 1,000 كغ</span></div>'+
-                '<div class="co2-bar"><div class="co2-fill" style="width:'+Math.min((co2Saved/1000)*100,100)+'%"></div></div></div>';
+                '<div style="display:flex;justify-content:space-between;font-size:11px"><span>'+co2+' كغ CO₂</span><span>الهدف: 1,000</span></div>'+
+                '<div class="co2-bar"><div class="co2-fill" style="width:'+Math.min((co2/1000)*100,100)+'%"></div></div></div>';
         }
 
         function renderReports(){
-            var reports=getReports();
-            if(reports.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد بلاغات</span></div></div>';
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-reports">📋</div><span class="card-label">بلاغات المفرغات</span><span class="badge badge-new">'+reports.length+'</span></div>'+
-                '<div class="table-wrap"><table><thead><tr><th>#</th><th>النوع</th><th>الإحداثيات</th><th>الوقت</th><th>الحالة</th></tr></thead><tbody>'+
-                reports.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+getTypeName(r.type)+'</td><td style="direction:ltr;font-size:10px">'+(r.lat?r.lat.toFixed(4):'--')+', '+(r.lng?r.lng.toFixed(4):'--')+'</td><td style="direction:ltr;white-space:nowrap;font-size:10px">'+formatTime(r.time||r.created_at)+'</td><td><span class="pill pill-new">جديد</span></td></tr>';}).join('')+
+            var r=getReports();if(r.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد بلاغات</span></div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-reports">📋</div><span class="card-label">بلاغات المفرغات</span><span class="badge badge-new">'+r.length+'</span></div>'+
+                '<div class="table-wrap"><table><thead><tr><th>#</th><th>النوع</th><th>الإحداثيات</th><th>الوقت</th></tr></thead><tbody>'+
+                r.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getTypeName(x.type)+'</td><td style="direction:ltr;font-size:10px">'+(x.lat?x.lat.toFixed(4):'--')+', '+(x.lng?x.lng.toFixed(4):'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.time||x.created_at)+'</td></tr>';}).join('')+
                 '</tbody></table></div></div>';
         }
 
         function renderSorting(){
-            var sorting=getSortingRequests();
-            if(sorting.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد طلبات فرز</span></div></div>';
-            var totalW=sorting.reduce(function(s,r){return s+(r.weight||0);},0);
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-sorting">📦</div><span class="card-label">طلبات الفرز</span><span class="badge badge-warn">'+sorting.length+'</span></div>'+
-                '<div style="font-size:12px;margin-bottom:12px;color:var(--primary-dark)">⚖️ '+totalW+' كغ</div>'+
+            var s=getSortingRequests();if(s.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد طلبات</span></div></div>';
+            var tw=s.reduce(function(a,b){return a+(b.weight||0);},0);
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-sorting">📦</div><span class="card-label">طلبات الفرز</span><span class="badge badge-warn">'+s.length+'</span></div>'+
+                '<div style="font-size:12px;margin-bottom:12px;color:var(--primary-dark)">⚖️ '+tw+' كغ</div>'+
                 '<div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الوزن</th><th>الموقع</th><th>الوقت</th></tr></thead><tbody>'+
-                sorting.map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+getMaterialName(r.material)+'</td><td style="direction:ltr">'+(r.weight||0)+' كغ</td><td style="direction:ltr;font-size:10px">'+(r.lat?r.lat.toFixed(4):'--')+', '+(r.lng?r.lng.toFixed(4):'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(r.time||r.created_at)+'</td></tr>';}).join('')+
+                s.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getMaterialName(x.material)+'</td><td style="direction:ltr">'+(x.weight||0)+' كغ</td><td style="direction:ltr;font-size:10px">'+(x.lat?x.lat.toFixed(4):'--')+', '+(x.lng?x.lng.toFixed(4):'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.time||x.created_at)+'</td></tr>';}).join('')+
                 '</tbody></table></div></div>';
         }
 
         function renderFleet(){
-            var trucks=[{id:1,driver:'كريم حداد',plate:'12345-16-01',status:'free',lat:36.7538,lng:3.0588},{id:2,driver:'نور الدين بلقاسم',plate:'12346-16-01',status:'busy',lat:36.7123,lng:3.1123},{id:3,driver:'عبد الله مرزوق',plate:'12347-16-01',status:'free',lat:36.7456,lng:3.0891}];
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-trucks">🚛</div><span class="card-label">أسطول الشاحنات</span><span class="badge badge-ok">'+trucks.length+' شاحنة</span></div><div class="truck-list">'+
-                trucks.map(function(t){return '<div class="truck-item"><div class="truck-icon '+(t.status==='free'?'truck-free':'truck-busy')+'">🚛</div><div class="truck-info"><div class="truck-name">'+t.driver+'</div><div class="truck-plate">'+t.plate+' · 📍 '+t.lat+', '+t.lng+'</div></div><span class="truck-status '+(t.status==='free'?'status-free':'status-busy')+'">'+(t.status==='free'?'🟢 متاح':'🟠 في مهمة')+'</span></div>';}).join('')+
-                '</div></div>';
+            var t=[{id:1,driver:'كريم حداد',plate:'12345-16-01',status:'free',lat:36.7538,lng:3.0588},{id:2,driver:'نور الدين بلقاسم',plate:'12346-16-01',status:'busy',lat:36.7123,lng:3.1123},{id:3,driver:'عبد الله مرزوق',plate:'12347-16-01',status:'free',lat:36.7456,lng:3.0891}];
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-trucks">🚛</div><span class="card-label">أسطول الشاحنات</span><span class="badge badge-ok">'+t.length+' شاحنة</span></div><div class="truck-list">'+
+                t.map(function(x){return '<div class="truck-item"><div class="truck-icon '+(x.status==='free'?'truck-free':'truck-busy')+'">🚛</div><div class="truck-info"><div class="truck-name">'+x.driver+'</div><div class="truck-plate">'+x.plate+'</div></div><span class="truck-status '+(x.status==='free'?'status-free':'status-busy')+'">'+(x.status==='free'?'🟢 متاح':'🟠 مهمة')+'</span></div>';}).join('')+'</div></div>';
         }
 
         function renderTab(){
-            var container=document.getElementById('tabContent');
-            if(currentTab==='overview'){container.innerHTML=renderOverview();setTimeout(initMap,400);}
-            else if(currentTab==='reports') container.innerHTML=renderReports();
-            else if(currentTab==='sorting') container.innerHTML=renderSorting();
-            else if(currentTab==='fleet') container.innerHTML=renderFleet();
+            var c=document.getElementById('tabContent');
+            if(currentTab==='overview'){c.innerHTML=renderOverview();setTimeout(initMap,400);}
+            else if(currentTab==='reports') c.innerHTML=renderReports();
+            else if(currentTab==='sorting') c.innerHTML=renderSorting();
+            else if(currentTab==='fleet') c.innerHTML=renderFleet();
         }
     </script>
 </body>
