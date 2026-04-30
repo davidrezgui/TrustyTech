@@ -20,16 +20,13 @@
             --shadow: 0 4px 16px rgba(0,0,0,0.08);
             --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Cairo', sans-serif;
             background: #0a1a0a; min-height: 100vh;
             color: var(--text-dark); overflow-x: hidden;
             position: relative; display: flex; flex-direction: column;
         }
-
         .particles-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; overflow: hidden;
@@ -55,7 +52,6 @@
             33% { transform: translate(25px,-25px) scale(1.1); }
             66% { transform: translate(-15px,15px) scale(0.9); }
         }
-
         .top-nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             background: rgba(10,31,10,0.85); backdrop-filter: blur(25px);
@@ -74,12 +70,10 @@
         }
         .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-
         .main-container {
             position: relative; z-index: 1; flex: 1;
             padding: 78px 16px 20px; max-width: 500px; margin: 0 auto; width: 100%;
         }
-
         .card {
             background: rgba(255,255,255,0.94);
             backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
@@ -90,16 +84,10 @@
             position: relative; overflow: hidden;
         }
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-        .card-icon {
-            width: 36px; height: 36px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; font-size: 17px;
-        }
+        .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
         .ci-material { background: #FFF8E1; } .ci-weight { background: #E8F5E9; } .ci-loc { background: #E3F2FD; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
-
-        /* ============ بطاقة النقاط ============ */
         .points-card {
             background: linear-gradient(135deg, #FFA726, #FF9800, #FB8C00);
             border-radius: var(--radius); padding: 20px 18px;
@@ -108,37 +96,16 @@
             animation: cardIn 0.5s ease both;
             position: relative; overflow: hidden;
         }
-        .points-card::before {
-            content: ''; position: absolute; top: -30px; right: -30px;
-            width: 120px; height: 120px; background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-        .points-card::after {
-            content: ''; position: absolute; bottom: -20px; left: -20px;
-            width: 80px; height: 80px; background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-        }
         .points-label { font-size: 12px; opacity: 0.9; position: relative; z-index: 1; }
-        .points-value {
-            font-size: 42px; font-weight: 900; direction: ltr; display: inline-block;
-            margin: 4px 0; position: relative; z-index: 1;
-        }
+        .points-value { font-size: 42px; font-weight: 900; direction: ltr; display: inline-block; margin: 4px 0; position: relative; z-index: 1; }
         .points-sub { font-size: 10px; opacity: 0.8; position: relative; z-index: 1; }
-
-        /* ============ مواد ============ */
         .material-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .material-item {
             padding: 14px 6px; border: 2px solid rgba(0,0,0,0.06);
             border-radius: var(--radius-sm); text-align: center;
             cursor: pointer; transition: var(--transition); background: white; position: relative;
         }
-        .material-item:hover { border-color: #ccc; transform: translateY(-2px); box-shadow: var(--shadow); }
-        .material-item.selected {
-            border-color: var(--accent); background: #FFF8E1;
-            box-shadow: 0 0 0 4px rgba(255,152,0,0.1);
-            animation: pop 0.35s ease;
-        }
-        @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .material-item.selected { border-color: var(--accent); background: #FFF8E1; box-shadow: 0 0 0 4px rgba(255,152,0,0.1); }
         .material-check {
             position: absolute; top: 5px; right: 5px; width: 17px; height: 17px;
             background: var(--accent); color: white; border-radius: 50%;
@@ -148,49 +115,25 @@
         .material-emoji { font-size: 28px; display: block; margin-bottom: 3px; }
         .material-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
         .material-price { font-size: 10px; color: var(--accent); font-weight: 600; margin-top: 2px; direction: ltr; }
-
-        /* ============ وزن ============ */
         .weight-row { display: flex; align-items: center; gap: 10px; }
         .weight-input {
             flex: 1; padding: 14px 16px; border: 2px solid rgba(0,0,0,0.06);
             border-radius: var(--radius-sm); font-size: 18px;
             font-family: 'Cairo', sans-serif; font-weight: 700;
-            text-align: center; direction: ltr; transition: var(--transition);
-            background: white;
+            text-align: center; direction: ltr; transition: var(--transition); background: white;
         }
-        .weight-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255,152,0,0.08); }
-        .weight-unit {
-            font-size: 14px; font-weight: 700; color: var(--text-gray);
-            background: rgba(0,0,0,0.02); padding: 14px 16px;
-            border-radius: var(--radius-sm);
-        }
-
-        /* ============ تقدير النقاط ============ */
-        .estimate {
-            background: #E8F5E9; padding: 14px; border-radius: var(--radius-sm);
-            text-align: center; margin-top: 10px; border: 1px solid #C8E6C9;
-        }
+        .weight-unit { font-size: 14px; font-weight: 700; color: var(--text-gray); background: rgba(0,0,0,0.02); padding: 14px 16px; border-radius: var(--radius-sm); }
+        .estimate { background: #E8F5E9; padding: 14px; border-radius: var(--radius-sm); text-align: center; margin-top: 10px; border: 1px solid #C8E6C9; }
         .estimate-label { font-size: 11px; color: var(--text-gray); }
-        .estimate-value {
-            font-size: 28px; font-weight: 900; color: var(--primary-dark);
-            direction: ltr; display: inline-block;
-        }
-
-        /* ============ زر ============ */
+        .estimate-value { font-size: 28px; font-weight: 900; color: var(--primary-dark); direction: ltr; display: inline-block; }
         .submit-btn {
             width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm);
             font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition);
             color: white; font-family: 'Cairo', sans-serif;
             background: linear-gradient(135deg, var(--accent), var(--accent-light));
             box-shadow: 0 8px 30px rgba(255,111,0,0.35);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            margin-top: 2px;
+            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px;
         }
-        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(255,111,0,0.5); }
-        .submit-btn:active { transform: scale(0.96); }
-        .submit-btn:disabled { background: rgba(255,255,255,0.1); box-shadow: none; opacity: 0.4; cursor: not-allowed; }
-
-        /* ============ لوحة المتصدرين ============ */
         .leaderboard { margin-top: 10px; }
         .lb-item {
             display: flex; align-items: center; gap: 10px;
@@ -198,55 +141,21 @@
             background: rgba(255,255,255,0.5); margin-bottom: 6px;
             transition: var(--transition);
         }
-        .lb-item:hover { background: rgba(255,255,255,0.8); transform: translateX(-3px); }
-        .lb-rank {
-            width: 30px; height: 30px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 13px; flex-shrink: 0; direction: ltr;
-        }
+        .lb-rank { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; flex-shrink: 0; direction: ltr; }
         .rank-1 { background: #FFF8E1; color: #F57F17; }
         .rank-2 { background: #ECEFF1; color: #546E7A; }
         .rank-3 { background: #FBE9E7; color: #BF360C; }
         .rank-other { background: rgba(0,0,0,0.04); color: var(--text-gray); }
-        .lb-avatar { font-size: 22px; }
-        .lb-name { flex: 1; font-weight: 700; font-size: 13px; }
+        .lb-avatar { font-size: 22px; } .lb-name { flex: 1; font-weight: 700; font-size: 13px; }
         .lb-points { font-weight: 900; font-size: 13px; color: var(--primary-dark); direction: ltr; }
-
-        .overlay {
-            position: fixed; top:0;left:0;width:100%;height:100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px); z-index: 2000;
-            display: none; align-items: center; justify-content: center; padding: 20px;
-        }
+        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
-        .modal {
-            background: white; border-radius: var(--radius); padding: 34px 22px 26px;
-            text-align: center; max-width: 360px; width: 100%;
-            animation: spring 0.6s ease; box-shadow: var(--shadow-xl);
-        }
-        @keyframes spring {
-            0% { transform: scale(0.6) translateY(40px); opacity: 0; }
-            55% { transform: scale(1.03) translateY(-4px); opacity: 1; }
-            100% { transform: scale(1) translateY(0); }
-        }
-        .modal-icon { font-size: 70px; animation: popIcon 0.7s ease; }
-        @keyframes popIcon { 0%{transform:scale(0) rotate(-30deg);} 60%{transform:scale(1.2) rotate(5deg);} 100%{transform:scale(1) rotate(0);} }
-        .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
+        .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
+        @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
+        .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
         .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
-        .modal-btn {
-            padding: 12px 30px; border: none; border-radius: 25px;
-            background: var(--accent); color: white; font-size: 14px; font-weight: 700;
-            cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition);
-            box-shadow: 0 6px 20px rgba(255,111,0,0.3);
-        }
-        .modal-btn:hover { background: #E65100; }
-
-        .footer {
-            position: relative; z-index: 1; text-align: center;
-            padding: 8px 20px; font-size: 9px;
-            color: rgba(255,255,255,0.45);
-            background: linear-gradient(transparent, rgba(0,0,0,0.3));
-        }
+        .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--accent); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
     </style>
 </head>
 <body>
@@ -262,95 +171,49 @@
 
     <main class="main-container">
         
-        <!-- بطاقة النقاط -->
         <div class="points-card" style="animation-delay:0.05s">
             <div class="points-label">⭐ رصيد نقاطك الخضراء</div>
             <div class="points-value" id="totalPoints">500</div>
             <div class="points-sub">نقطة قابلة للاستبدال بمكافآت</div>
         </div>
 
-        <!-- 1- اختيار المادة -->
         <div class="card" style="animation-delay:0.1s">
-            <div class="card-header">
-                <div class="card-icon ci-material">♻️</div>
-                <span class="card-label">اختر نوع المادة للتجميع</span>
-            </div>
+            <div class="card-header"><div class="card-icon ci-material">♻️</div><span class="card-label">اختر نوع المادة للتجميع</span></div>
             <div class="material-grid">
-                <div class="material-item selected" onclick="selectMaterial(this,'carton')" data-price="10">
-                    <span class="material-check">✓</span>
-                    <span class="material-emoji">📦</span>
-                    <span class="material-name">كرتون</span>
-                    <span class="material-price">10 نقاط/كغ</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial(this,'plastique')" data-price="15">
-                    <span class="material-check">✓</span>
-                    <span class="material-emoji">🫙</span>
-                    <span class="material-name">بلاستيك</span>
-                    <span class="material-price">15 نقاط/كغ</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial(this,'verre')" data-price="8">
-                    <span class="material-check">✓</span>
-                    <span class="material-emoji">🫗</span>
-                    <span class="material-name">زجاج</span>
-                    <span class="material-price">8 نقاط/كغ</span>
-                </div>
+                <div class="material-item selected" onclick="selectMaterial(this,'carton')" data-price="10"><span class="material-check">✓</span><span class="material-emoji">📦</span><span class="material-name">كرتون</span><span class="material-price">10 نقاط/كغ</span></div>
+                <div class="material-item" onclick="selectMaterial(this,'plastique')" data-price="15"><span class="material-check">✓</span><span class="material-emoji">🫙</span><span class="material-name">بلاستيك</span><span class="material-price">15 نقاط/كغ</span></div>
+                <div class="material-item" onclick="selectMaterial(this,'verre')" data-price="8"><span class="material-check">✓</span><span class="material-emoji">🫗</span><span class="material-name">زجاج</span><span class="material-price">8 نقاط/كغ</span></div>
             </div>
         </div>
 
-        <!-- 2- الوزن -->
         <div class="card" style="animation-delay:0.15s">
-            <div class="card-header">
-                <div class="card-icon ci-weight">⚖️</div>
-                <span class="card-label">أدخل الوزن التقديري</span>
-            </div>
+            <div class="card-header"><div class="card-icon ci-weight">⚖️</div><span class="card-label">أدخل الوزن التقديري</span></div>
             <div class="weight-row">
                 <input type="number" class="weight-input" id="weightInput" value="5" min="1" max="500" oninput="updateEstimate()">
                 <span class="weight-unit">كيلوغرام</span>
             </div>
-            <div class="estimate">
-                <div class="estimate-label">🗂️ النقاط المقدرة للطلب</div>
-                <div class="estimate-value" id="estimatedPoints">50</div>
-            </div>
+            <div class="estimate"><div class="estimate-label">🗂️ النقاط المقدرة للطلب</div><div class="estimate-value" id="estimatedPoints">50</div></div>
         </div>
 
-        <!-- 3- موقع -->
         <div class="card" style="animation-delay:0.2s">
-            <div class="card-header">
-                <div class="card-icon ci-loc">📍</div>
-                <span class="card-label">موقع استلام المواد</span>
-                <span style="font-size:10px;color:var(--accent);" id="locStatus">انقر للتحديد</span>
-            </div>
-            <div class="map-box" id="mapBox" style="width:100%;height:160px;border-radius:var(--radius-sm);border:2.5px solid rgba(0,0,0,0.06);overflow:hidden;">
-                <div class="map-inner" id="mapInner" onclick="getLocation()" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#E3F2FD,#F5F5F5);cursor:pointer;transition:var(--transition);">
-                    <span style="font-size:34px;">📍</span>
-                    <span style="font-weight:700;font-size:13px;color:#616161;">اضغط لتحديد موقع الاستلام</span>
-                    <span style="font-size:10px;color:#9e9e9e;margin-top:2px;">سيظهر طلب الإذن تلقائياً</span>
+            <div class="card-header"><div class="card-icon ci-loc">📍</div><span class="card-label">موقع استلام المواد</span><span style="font-size:10px;color:var(--accent);" id="locStatus">انقر للتحديد</span></div>
+            <div id="mapBox" style="width:100%;height:160px;border-radius:var(--radius-sm);border:2.5px solid rgba(0,0,0,0.06);overflow:hidden;">
+                <div id="mapInner" onclick="getLocation()" style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#E3F2FD,#F5F5F5);cursor:pointer;transition:var(--transition);">
+                    <span style="font-size:34px;">📍</span><span style="font-weight:700;font-size:13px;color:#616161;">اضغط لتحديد موقع الاستلام</span><span style="font-size:10px;color:#9e9e9e;">سيظهر طلب الإذن تلقائياً</span>
                 </div>
             </div>
-            <div id="coords" style="display:none;margin-top:8px;font-size:11px;text-align:center;color:var(--primary-dark);font-weight:600;">
-                ✅ الموقع: <span id="vLat" style="direction:ltr;display:inline-block;">--</span>, <span id="vLng" style="direction:ltr;display:inline-block;">--</span>
-            </div>
+            <div id="coords" style="display:none;margin-top:8px;font-size:11px;text-align:center;color:var(--primary-dark);font-weight:600;">✅ الموقع: <span id="vLat" style="direction:ltr;display:inline-block;">--</span>, <span id="vLng" style="direction:ltr;display:inline-block;">--</span></div>
         </div>
 
-        <!-- زر -->
         <button class="submit-btn" id="btnSubmit" onclick="send()">🚛 طلب جمع المواد</button>
 
-        <!-- لوحة المتصدرين -->
         <div class="card leaderboard" style="animation-delay:0.25s">
-            <div class="card-header">
-                <div class="card-icon" style="background:#E8F5E9;">🏆</div>
-                <span class="card-label">أفضل القائمين بالفرز</span>
-            </div>
+            <div class="card-header"><div class="card-icon" style="background:#E8F5E9;">🏆</div><span class="card-label">أفضل القائمين بالفرز</span></div>
             <div id="lbList">
                 <div class="lb-item"><div class="lb-rank rank-1">1</div><span class="lb-avatar">🥇</span><span class="lb-name">أحمد ب.</span><span class="lb-points">12,500</span></div>
                 <div class="lb-item"><div class="lb-rank rank-2">2</div><span class="lb-avatar">🥈</span><span class="lb-name">سارة م.</span><span class="lb-points">10,200</span></div>
                 <div class="lb-item"><div class="lb-rank rank-3">3</div><span class="lb-avatar">🥉</span><span class="lb-name">يوسف ك.</span><span class="lb-points">8,900</span></div>
-                <div class="lb-item" id="userRank" style="background:#E8F5E9;border:1px solid #C8E6C9;">
-                    <div class="lb-rank rank-other">—</div>
-                    <span class="lb-avatar">⭐</span>
-                    <span class="lb-name">أنت</span>
-                    <span class="lb-points" id="userRankPoints">500</span>
-                </div>
+                <div class="lb-item" id="userRank" style="background:#E8F5E9;border:1px solid #C8E6C9;"><div class="lb-rank rank-other">—</div><span class="lb-avatar">⭐</span><span class="lb-name">أنت</span><span class="lb-points" id="userRankPoints">500</span></div>
             </div>
         </div>
     </main>
@@ -359,132 +222,74 @@
 
     <div class="overlay" id="overlay">
         <div class="modal">
-            <div class="modal-icon">🎉</div>
-            <div class="modal-title">تم تقديم الطلب بنجاح!</div>
-            <div class="modal-desc" id="modalMsg">سيصلك مندوب الشركة قريباً لاستلام المواد<br>شكراً لمساهمتك في الاقتصاد الأخضر ♻️</div>
+            <div class="modal-icon">🎉</div><div class="modal-title">تم تقديم الطلب بنجاح!</div>
+            <div class="modal-desc" id="modalMsg">سيصلك مندوب الشركة قريباً</div>
             <button class="modal-btn" onclick="document.getElementById('overlay').classList.remove('show')">حسناً</button>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // جسيمات
-        (function(){
-            const c = document.getElementById('particlesBg');
-            const colors = ['#FFA726','#FFCC02','#4CAF50','#81C784','#FF9800','#FFF176'];
-            for(let i=0;i<30;i++){
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const s = Math.random()*5+2;
-                p.style.cssText = `width:${s}px;height:${s}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;animation-duration:${Math.random()*10+8}s;animation-delay:${Math.random()*8}s;box-shadow:0 0 ${s*2}px currentColor;`;
-                c.appendChild(p);
-            }
-        })();
+        var supabase = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        let selectedMaterial = 'carton';
-        let selectedPrice = 10;
-        let userLat = null;
-        let userLng = null;
-        let userPoints = parseInt(localStorage.getItem('userPoints') || '500');
+        (function(){var c=document.getElementById('particlesBg');var colors=['#FFA726','#FFCC02','#4CAF50','#81C784','#FF9800','#FFF176'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
-        function updatePointsDisplay() {
-            document.getElementById('totalPoints').textContent = userPoints.toLocaleString('en-US');
-            document.getElementById('userRankPoints').textContent = userPoints.toLocaleString('en-US');
+        var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null;
+        var userPoints=parseInt(localStorage.getItem('userPoints')||'500');
+
+        function updatePointsDisplay(){
+            document.getElementById('totalPoints').textContent=userPoints.toLocaleString('en-US');
+            document.getElementById('userRankPoints').textContent=userPoints.toLocaleString('en-US');
         }
-
-        function selectMaterial(el, material) {
-            document.querySelectorAll('.material-item').forEach(i => i.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedMaterial = material;
-            selectedPrice = parseInt(el.getAttribute('data-price'));
-            updateEstimate();
+        function selectMaterial(el,material){
+            document.querySelectorAll('.material-item').forEach(function(i){i.classList.remove('selected');});
+            el.classList.add('selected');selectedMaterial=material;selectedPrice=parseInt(el.getAttribute('data-price'));updateEstimate();
         }
-
-        function updateEstimate() {
-            const weight = parseInt(document.getElementById('weightInput').value) || 0;
-            const points = weight * selectedPrice;
-            document.getElementById('estimatedPoints').textContent = points.toLocaleString('en-US');
+        function updateEstimate(){
+            var weight=parseInt(document.getElementById('weightInput').value)||0;
+            document.getElementById('estimatedPoints').textContent=(weight*selectedPrice).toLocaleString('en-US');
         }
-
-        function getLocation() {
-            if(userLat && userLng) return;
-            const mi = document.getElementById('mapInner');
-            
-            if(!navigator.geolocation) {
-                mi.innerHTML = '<span style="font-size:30px">⚠️</span><br><span style="font-weight:700;font-size:12px;">متصفحك لا يدعم GPS</span>';
-                return;
-            }
-
-            mi.innerHTML = '<span style="font-size:28px;">📡</span><br><span style="font-weight:700;font-size:12px;">جاري طلب الإذن...</span>';
-            mi.style.cursor = 'wait';
-            mi.onclick = null;
-
+        function getLocation(){
+            if(userLat&&userLng)return;
+            var mi=document.getElementById('mapInner');
+            if(!navigator.geolocation){mi.innerHTML='<span>⚠️ GPS غير مدعوم</span>';return;}
+            mi.innerHTML='<span>📡 جاري طلب الإذن...</span>';mi.style.cursor='wait';mi.onclick=null;
             navigator.geolocation.getCurrentPosition(
-                function(pos) {
-                    userLat = pos.coords.latitude;
-                    userLng = pos.coords.longitude;
-                    document.getElementById('vLat').textContent = userLat.toFixed(6);
-                    document.getElementById('vLng').textContent = userLng.toFixed(6);
-                    document.getElementById('coords').style.display = 'block';
-                    document.getElementById('locStatus').textContent = '✓ تم';
-                    document.getElementById('locStatus').style.color = '#4CAF50';
-                    mi.innerHTML = '<span style="font-size:36px;">✅</span><br><span style="font-weight:700;color:#2E7D32;">تم تحديد الموقع</span>';
-                    mi.style.background = 'linear-gradient(135deg, #E8F5E9, #C8E6C9)';
-                    mi.style.cursor = 'default';
+                function(pos){
+                    userLat=pos.coords.latitude;userLng=pos.coords.longitude;
+                    document.getElementById('vLat').textContent=userLat.toFixed(6);
+                    document.getElementById('vLng').textContent=userLng.toFixed(6);
+                    document.getElementById('coords').style.display='block';
+                    document.getElementById('locStatus').textContent='✓ تم';document.getElementById('locStatus').style.color='#4CAF50';
+                    mi.innerHTML='<span style="color:#2E7D32">✅ تم تحديد الموقع</span>';mi.style.cursor='default';
                 },
-                function(err) {
-                    let msg = 'تعذر التحديد';
-                    if(err.code === 1) msg = 'تم رفض الإذن';
-                    else if(err.code === 2) msg = 'إشارة GPS ضعيفة';
-                    else if(err.code === 3) msg = 'انتهى الوقت';
-                    mi.innerHTML = '<span style="font-size:30px;">❌</span><br><span style="font-weight:700;font-size:12px;">'+msg+'</span><br><span style="font-size:10px;">اضغط للمحاولة</span>';
-                    mi.style.background = 'linear-gradient(135deg, #FFEBEE, #FFCDD2)';
-                    mi.style.cursor = 'pointer';
-                    mi.onclick = getLocation;
-                },
-                { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+                function(err){mi.innerHTML='<span>❌ تعذر</span>';mi.style.cursor='pointer';mi.onclick=getLocation;},
+                {enableHighAccuracy:true,timeout:20000}
             );
         }
 
-        function send() {
-            const weight = parseInt(document.getElementById('weightInput').value) || 0;
-            if(weight <= 0) { alert('الرجاء إدخال الوزن'); return; }
-            if(!userLat || !userLng) { alert('الرجاء تحديد الموقع'); return; }
-
-            const pointsEarned = weight * selectedPrice;
+        function send(){
+            var weight=parseInt(document.getElementById('weightInput').value)||0;
+            if(weight<=0){alert('الرجاء إدخال الوزن');return;}
+            if(!userLat||!userLng){alert('الرجاء تحديد الموقع');return;}
+            var pointsEarned=weight*selectedPrice;
             
-            const request = {
-                material: selectedMaterial,
-                weight: weight,
-                points: pointsEarned,
-                lat: userLat,
-                lng: userLng,
-                time: new Date().toISOString(),
-                status: 'pending'
-            };
+            // حفظ محلي
+            var requests=JSON.parse(localStorage.getItem('sortingRequests')||'[]');
+            requests.push({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,time:new Date().toISOString(),status:'pending'});
+            localStorage.setItem('sortingRequests',JSON.stringify(requests));
+            userPoints+=pointsEarned;localStorage.setItem('userPoints',userPoints.toString());updatePointsDisplay();
 
-            const requests = JSON.parse(localStorage.getItem('sortingRequests')||'[]');
-            requests.push(request);
-            localStorage.setItem('sortingRequests', JSON.stringify(requests));
+            // إرسال إلى Supabase
+            supabase.from('pickups').insert({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,status:'pending'}).then(function(){});
 
-            userPoints += pointsEarned;
-            localStorage.setItem('userPoints', userPoints.toString());
-            updatePointsDisplay();
-
-            const names = { carton: 'كرتون', plastique: 'بلاستيك', verre: 'زجاج' };
-            document.getElementById('modalMsg').innerHTML = 
-                'تمت إضافة <strong style="color:#2E7D32;">+'+pointsEarned.toLocaleString('en-US')+'</strong> نقطة إلى رصيدك!<br>'+
-                'سيصلك مندوب الشركة لاستلام <strong>'+weight+' كغ</strong> من <strong>'+names[selectedMaterial]+'</strong><br>'+
-                'شكراً لمساهمتك في الاقتصاد الأخضر ♻️';
-            
+            var names={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
+            document.getElementById('modalMsg').innerHTML='تمت إضافة <strong style="color:#2E7D32">+'+pointsEarned.toLocaleString('en-US')+'</strong> نقطة!<br>استلام <strong>'+weight+' كغ</strong> من <strong>'+names[selectedMaterial]+'</strong>';
             document.getElementById('overlay').classList.add('show');
-
-            // إعادة تعيين
-            document.getElementById('weightInput').value = '5';
-            updateEstimate();
+            document.getElementById('weightInput').value='5';updateEstimate();
         }
 
-        updatePointsDisplay();
-        updateEstimate();
+        updatePointsDisplay();updateEstimate();
     </script>
 </body>
 </html>
