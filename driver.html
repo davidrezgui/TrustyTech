@@ -46,21 +46,23 @@
         .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
         .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
         .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
-        .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
         .ci-tasks { background: #E3F2FD; } .ci-done { background: #E8F5E9; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
         .badge-pending { background: #FFF3E0; color: var(--accent); } .badge-done { background: #E8F5E9; color: var(--primary); }
-        .task-list { display: flex; flex-direction: column; gap: 8px; }
+        .task-list { display: flex; flex-direction: column; gap: 10px; }
         .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
         .task-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-        .task-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-        .task-type { font-size: 12px; padding: 4px 10px; border-radius: 10px; font-weight: 700; }
+        .task-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+        .task-type { font-size: 11px; padding: 5px 10px; border-radius: 10px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
+        .task-category { font-size: 11px; color: var(--text-gray); font-weight: 600; }
+        .task-time { font-size: 10px; color: var(--text-gray); margin-right: auto; direction: ltr; }
         .task-address { font-size: 12px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
         .task-actions { display: flex; gap: 8px; }
-        .btn-task { flex: 1; padding: 10px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-task { flex: 1; padding: 11px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-navigate { background: var(--info); color: white; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
         .btn-navigate:hover { background: #1565C0; }
         .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
@@ -179,7 +181,7 @@
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         var currentTaskId=null,proofPhoto=null;
         var supabaseReports=[],supabasePickups=[],completedTasks=[];
@@ -197,17 +199,18 @@
             btn.disabled = true;
             btn.innerHTML = '⏳';
 
-            // جلب البيانات بالتسلسل الصحيح - بدون await
-            sb.from('reports').select('*').then(function(r1){
-                if(!r1.error) supabaseReports = r1.data;
-                return sb.from('pickups').select('*');
-            }).then(function(r2){
-                if(!r2.error) supabasePickups = r2.data;
-                return sb.from('completed').select('*');
-            }).then(function(r3){
-                if(!r3.error) completedTasks = r3.data.map(function(x){return x.task_id;});
+            Promise.all([
+                sb.from('reports').select('*'),
+                sb.from('pickups').select('*'),
+                sb.from('completed').select('*')
+            ]).then(function(results){
+                if(!results[0].error) supabaseReports = results[0].data;
+                if(!results[1].error) supabasePickups = results[1].data;
+                if(!results[2].error) completedTasks = results[2].data.map(function(x){return x.task_id;});
+                
                 var localDone = JSON.parse(localStorage.getItem('completedTasks')||'[]');
                 localDone.forEach(function(x){if(completedTasks.indexOf(x)===-1) completedTasks.push(x);});
+                
                 showAllTasks();
                 btn.disabled = false;
                 btn.innerHTML = '🔄 تحديث';
@@ -223,12 +226,18 @@
             var allTasks=[];
             supabaseReports.forEach(function(r){
                 if(completedTasks.indexOf('report_'+r.id)===-1){
-                    allTasks.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'});
+                    allTasks.push({
+                        id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',
+                        lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'
+                    });
                 }
             });
             supabasePickups.forEach(function(r){
                 if(completedTasks.indexOf('pickup_'+r.id)===-1){
-                    allTasks.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material});
+                    allTasks.push({
+                        id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',
+                        lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material
+                    });
                 }
             });
 
@@ -246,7 +255,23 @@
                 pc.innerHTML = '<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';
             } else {
                 pc.innerHTML = allTasks.map(function(t){
-                    return '<div class="task-item"><div class="task-row"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button></div></div>';
+                    var catNames = {menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'};
+                    var matNames = {carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
+                    var categoryText = t.type==='report' ? (catNames[t.category]||t.category||'') : (matNames[t.material]||t.material||'');
+                    var timeText = t.time ? new Date(t.time).toLocaleString('ar-DZ',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+                    
+                    return '<div class="task-item">'+
+                        '<div class="task-header">'+
+                            '<span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span>'+
+                            '<span class="task-category">'+categoryText+'</span>'+
+                            '<span class="task-time">'+timeText+'</span>'+
+                        '</div>'+
+                        '<div class="task-address">📍 '+ (t.lat?t.lat.toFixed(5):'--') +', '+ (t.lng?t.lng.toFixed(5):'--') +'</div>'+
+                        '<div class="task-actions">'+
+                            '<button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button>'+
+                            '<button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button>'+
+                        '</div>'+
+                    '</div>';
                 }).join('');
             }
         }
