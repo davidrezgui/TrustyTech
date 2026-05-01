@@ -161,22 +161,13 @@
 
         var S={photo:null,type:null,lat:null,lng:null};
 
-        // زر الرجوع الذكي - نتحقق من الجلسة عبر API
         (function(){
+            var backBtn = document.getElementById('backBtn');
+            backBtn.href = 'index.html';
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', SUPABASE_URL + '/auth/v1/user', true);
-            xhr.setRequestHeader('apikey', SUPABASE_KEY);
-            xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_KEY);
+            xhr.open('GET', SUPABASE_URL + '/auth/v1/user?apikey=' + SUPABASE_KEY, true);
             xhr.onload = function(){
-                var backBtn = document.getElementById('backBtn');
-                if(xhr.status === 200){
-                    backBtn.href = 'home.html';
-                } else {
-                    backBtn.href = 'index.html';
-                }
-            };
-            xhr.onerror = function(){
-                document.getElementById('backBtn').href = 'index.html';
+                if(xhr.status === 200) backBtn.href = 'home.html';
             };
             xhr.send();
         })();
@@ -265,15 +256,9 @@
             var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
 
-            // حفظ احتياطي في localStorage
-            var reports=JSON.parse(localStorage.getItem('reports')||'[]');
-            reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
-            localStorage.setItem('reports',JSON.stringify(reports));
-
-            // إرسال إلى Supabase بنفس طريقة dashboard
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', SUPABASE_URL + '/rest/v1/reports', true);
-            xhr.setRequestHeader('apikey', SUPABASE_KEY);
+            var url = SUPABASE_URL + '/rest/v1/reports?apikey=' + SUPABASE_KEY;
+            xhr.open('POST', url, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Prefer', 'return=minimal');
             xhr.timeout = 15000;
@@ -282,19 +267,18 @@
                 if(xhr.status === 201){
                     document.getElementById('overlay').classList.add('show');
                 } else {
-                    alert('❌ خطأ ' + xhr.status + '\n\nتم الحفظ محلياً. سيتم الإرسال لاحقاً.');
+                    alert('❌ خطأ: ' + xhr.status);
+                    b.classList.add('ready');
+                    b.disabled=false;
                 }
                 b.innerHTML='🚀 إرسال البلاغ';
             };
 
             xhr.onerror = function(){
-                alert('⚠️ تعذر الاتصال. تم الحفظ محلياً.');
+                alert('❌ فشل الاتصال');
                 b.innerHTML='🚀 إرسال البلاغ';
-            };
-
-            xhr.ontimeout = function(){
-                alert('⏰ انتهت المهلة. تم الحفظ محلياً.');
-                b.innerHTML='🚀 إرسال البلاغ';
+                b.classList.add('ready');
+                b.disabled=false;
             };
 
             xhr.send(JSON.stringify({
