@@ -12,7 +12,7 @@
     <style>
         :root {
             --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --info: #1E88E5; --danger: #E53935;
+            --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2;
             --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
             --radius: 24px; --radius-sm: 14px;
             --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
@@ -67,7 +67,7 @@
         .btn-navigate:hover { background: #1565C0; }
         .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
         .btn-confirm:hover { background: var(--primary-dark); }
-        .btn-qr { background: #7B1FA2; color: white; box-shadow: 0 4px 14px rgba(123,31,162,0.3); flex: 0.5; font-size: 18px; }
+        .btn-qr { background: #7B1FA2; color: white; box-shadow: 0 4px 14px rgba(123,31,162,0.3); flex: 0.4; font-size: 18px; }
         .btn-qr:hover { background: #6A1B9A; }
         .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; margin-bottom: 8px; }
         .proof-zone:hover { border-color: rgba(255,255,255,0.4); }
@@ -212,7 +212,7 @@
         var supabaseReports=[],supabasePickups=[],completedTasks=[];
         var qrStream=null,allTasksFlat=[];
 
-        // ============ دالة تنسيق التاريخ الجزائري jj/mm/aaaa ============
+        // ============ تنسيق التاريخ الجزائري jj/mm/aaaa ============
         function formatDateDZ(isoString) {
             if (!isoString) return '--/--/----';
             var d = new Date(isoString);
@@ -222,7 +222,7 @@
             return day + '/' + month + '/' + year;
         }
 
-        // ============ دالة تنسيق الوقت hh:mm:ss ============
+        // ============ تنسيق الوقت hh:mm:ss ============
         function formatTimeDZ(isoString) {
             if (!isoString) return '--:--:--';
             var d = new Date(isoString);
@@ -316,6 +316,7 @@
                         '<div class="task-address">📍 '+ (t.lat?t.lat.toFixed(5):'--') +', '+ (t.lng?t.lng.toFixed(5):'--') +'</div>'+
                         '<div class="task-actions">'+
                             '<button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button>'+
+                            '<button class="btn-task btn-qr" onclick="openQRScan()" title="مسح QR Code">📱</button>'+
                             '<button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button>'+
                         '</div>'+
                     '</div>';
@@ -326,8 +327,12 @@
         function navigateTo(lat,lng){window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng,'_blank');}
 
         // ============ QR Code Functions ============
+        function openQRScan() {
+            document.getElementById('qrManualInput').value = '';
+            document.getElementById('qrOverlay').classList.add('show');
+        }
+
         function openConfirm(taskId) {
-            // يمكن استدعاؤها من QR Code أو الزر العادي
             currentTaskId=taskId;proofPhoto=null;
             document.getElementById('proofPreview').style.display='none';
             document.getElementById('proofInner').style.display='block';
@@ -375,7 +380,6 @@
                     }
                     scanLoop();
                     
-                    // إضافة زر إغلاق على الفيديو
                     video.onclick = function() {
                         stopQRScanner();
                         video.style.display = 'none';
@@ -399,16 +403,12 @@
         }
 
         function processQRResult(codeText) {
-            // codeText نموذج: "MISSION:42" أو "report_42" أو "pickup_42"
             var taskId = codeText.trim();
             
-            // تنظيف النص
             if (taskId.indexOf('MISSION:') === 0) {
                 taskId = taskId.replace('MISSION:', '').trim();
-                // يمكن أن يكون رقم فقط، نبحث عنه
             }
             
-            // البحث عن المهمة
             var found = null;
             for (var i = 0; i < allTasksFlat.length; i++) {
                 if (allTasksFlat[i].id === taskId || allTasksFlat[i].id.indexOf(taskId) !== -1) {
@@ -418,7 +418,6 @@
             }
             
             if (!found) {
-                // محاولة البحث برقم فقط
                 for (var j = 0; j < allTasksFlat.length; j++) {
                     if (allTasksFlat[j].id === 'report_' + taskId || allTasksFlat[j].id === 'pickup_' + taskId) {
                         found = allTasksFlat[j];
