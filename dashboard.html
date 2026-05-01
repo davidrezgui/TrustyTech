@@ -18,7 +18,7 @@
             --accent: #FF6F00; --accent-light: #FFA726;
             --danger: #E53935; --info: #1E88E5; --teal: #009688; --gold: #FFD700; --purple: #7B1FA2;
             --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px; --radius-xs: 8px;
+            --radius: 24px; --radius-sm: 14px;
             --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
             --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
             --shadow: 0 4px 16px rgba(0,0,0,0.08);
@@ -34,7 +34,7 @@
         .orb-2 { width: 300px; height: 300px; background: rgba(0,150,136,0.08); bottom: -12%; left: -6%; animation-delay: -4s; }
         .orb-3 { width: 250px; height: 250px; background: rgba(123,31,162,0.06); top: 40%; left: 50%; animation-delay: -6s; }
         @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
-        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
         .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
         .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
@@ -51,10 +51,10 @@
         .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-        .ci-reports { background: #FFEBEE; } .ci-trucks { background: #E3F2FD; } .ci-co2 { background: #E0F2F1; } .ci-map { background: #FFF3E0; } .ci-sorting { background: #F3E5F5; } .ci-sales { background: #FFF8E1; } .ci-analytics { background: #EDE7F6; }
+        .ci-reports { background: #FFEBEE; } .ci-trucks { background: #E3F2FD; } .ci-co2 { background: #E0F2F1; } .ci-map { background: #FFF3E0; } .ci-sorting { background: #F3E5F5; } .ci-sales { background: #FFF8E1; } .ci-analytics { background: #EDE7F6; } .ci-invoices { background: #E8EAF6; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
-        .badge-new { background: #FFEBEE; color: var(--danger); } .badge-ok { background: #E8F5E9; color: var(--primary); } .badge-warn { background: #FFF3E0; color: var(--accent); } .badge-teal { background: #E0F2F1; color: #00695C; } .badge-gold { background: #FFF8E1; color: #F57F17; } .badge-purple { background: #EDE7F6; color: #6A1B9A; }
+        .badge-new { background: #FFEBEE; color: var(--danger); } .badge-ok { background: #E8F5E9; color: var(--primary); } .badge-warn { background: #FFF3E0; color: var(--accent); } .badge-teal { background: #E0F2F1; color: #00695C; } .badge-purple { background: #E8EAF6; color: #283593; }
         #mapContainer { width: 100%; height: 300px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid rgba(0,0,0,0.06); z-index: 1; }
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; min-width: 650px; }
@@ -87,13 +87,11 @@
         .ld-report { background: #E53935; } .ld-pickup { background: #FF9800; }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
         .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
-        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
-        .login-card input:focus { outline: none; border-color: var(--primary); }
-        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); }
-        .login-btn:hover { background: #1B5E20; transform: translateY(-2px); }
+        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
+        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
         .btn-action-sm { padding: 6px 12px; border: none; border-radius: 15px; font-size: 10px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; color: white; margin: 1px; transition: var(--transition); }
-        .btn-accept { background: var(--primary); } .btn-reject { background: var(--danger); } .btn-paid { background: var(--teal); }
+        .btn-accept { background: var(--primary); } .btn-reject { background: var(--danger); } .btn-paid { background: var(--teal); } .btn-invoice { background: var(--purple); }
         .chart-box { background: white; border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; box-shadow: var(--shadow); }
         .chart-box canvas { max-height: 250px; }
     </style>
@@ -113,7 +111,7 @@
 
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
-            <div style="font-size:55px;margin-bottom:10px;">📊</div>
+            <div style="font-size:55px;">📊</div>
             <h2 style="font-size:20px;font-weight:900;color:#2E7D32;">لوحة تحكم الإدارة</h2>
             <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">دخول مخصص للمشرفين فقط</p>
             <input type="password" id="adminPass" placeholder="كلمة المرور"><button class="login-btn" onclick="checkPass()">🔒 دخول</button>
@@ -129,6 +127,7 @@
             <button class="tab-btn" onclick="switchTab('fleet', this)">🚛 الأسطول</button>
             <button class="tab-btn" onclick="switchTab('sales', this)">🏭 المبيعات</button>
             <button class="tab-btn" onclick="switchTab('analytics', this)">📈 تحليلات</button>
+            <button class="tab-btn" onclick="switchTab('invoices', this)">🧾 الفواتير</button>
         </div>
         <div id="tabContent"></div>
     </main>
@@ -139,10 +138,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
-        var supabaseReports=[],supabasePickups=[],supabasePurchases=[];
+        var supabaseReports=[],supabasePickups=[],supabasePurchases=[],supabaseInvoices=[];
         var analyticsCharts=[];
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#009688','#7B1FA2','#FFCC02'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#009688','#7B1FA2','#FFCC02'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
 
         function checkPass(){if(document.getElementById('adminPass').value==='admin2026'){document.getElementById('loginScreen').style.display='none';document.getElementById('dashMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
@@ -155,20 +154,19 @@
             Promise.all([
                 sb.from('reports').select('*'),
                 sb.from('pickups').select('*'),
-                sb.from('purchases').select('*').order('created_at',{ascending:false})
+                sb.from('purchases').select('*').order('created_at',{ascending:false}),
+                sb.from('invoices').select('*').order('created_at',{ascending:false})
             ]).then(function(results){
                 if(!results[0].error) supabaseReports=results[0].data;
                 if(!results[1].error) supabasePickups=results[1].data;
                 if(!results[2].error) supabasePurchases=results[2].data;
+                if(!results[3].error) supabaseInvoices=results[3].data;
                 renderTab();
                 if(currentTab==='overview') setTimeout(initMap,400);
                 if(currentTab==='analytics') setTimeout(renderAnalytics,500);
                 var btn=document.querySelector('.btn-refresh');btn.textContent='✅ تم';
                 setTimeout(function(){btn.textContent='🔄 تحديث';},800);
-            }).catch(function(e){
-                console.log('خطأ:',e);
-                renderTab();
-            });
+            }).catch(function(e){console.log('خطأ:',e);renderTab();});
         }
 
         function switchTab(tab,btn){
@@ -231,15 +229,38 @@
 
         function updatePurchaseStatus(id,status){sb.from('purchases').update({status:status}).eq('id',id).then(function(){loadAll();});}
 
+        function issueInvoice(purchaseId){
+            var p = supabasePurchases.find(function(x){return x.id===purchaseId;});
+            if(!p) return;
+            var total = (p.quantity||0) * (p.price_per_kg||0);
+            sb.from('invoices').insert({
+                purchase_id: purchaseId,
+                material: p.material,
+                quantity: p.quantity,
+                price_per_kg: p.price_per_kg,
+                total: total,
+                company_name: 'شركة التدوير',
+                status: 'issued'
+            }).then(function(){loadAll();});
+        }
+
+        function printInvoice(invId){window.open('invoice.html?id='+invId,'_blank');}
+
         function renderSales(){
             var p=supabasePurchases;if(p.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">💰</span><span class="empty-text">لا توجد عروض</span></div></div>';
             var names={carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-sales">🏭</div><span class="card-label">عروض شراء الشركات</span><span class="badge badge-teal">'+p.length+' عرض</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody>'+p.map(function(x,i){var q=x.quantity||0,pr=x.price_per_kg||0,tot=q*pr,a='';if(x.status==='pending')a='<button class="btn-action-sm btn-accept" onclick="updatePurchaseStatus('+x.id+',\'accepted\')">✅</button> <button class="btn-action-sm btn-reject" onclick="updatePurchaseStatus('+x.id+',\'rejected\')">❌</button>';else if(x.status==='accepted')a='<button class="btn-action-sm btn-paid" onclick="updatePurchaseStatus('+x.id+',\'paid\')">💰</button>';else if(x.status==='paid')a='<span class="pill pill-paid">✅</span>';else a='<span class="pill pill-new">❌</span>';var sp=x.status==='pending'?'pill-pending':(x.status==='accepted'?'pill-done':(x.status==='paid'?'pill-paid':'pill-new'));var st=x.status==='pending'?'⏳':(x.status==='accepted'?'✅':(x.status==='paid'?'💰':'❌'));return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+q+' كغ</td><td style="direction:ltr;">'+pr+' دج</td><td style="direction:ltr;color:var(--teal);">'+tot.toLocaleString('en-US')+' دج</td><td><span class="pill '+sp+'">'+st+'</span></td><td>'+a+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-sales">🏭</div><span class="card-label">عروض شراء الشركات</span><span class="badge badge-teal">'+p.length+' عرض</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody>'+p.map(function(x,i){var q=x.quantity||0,pr=x.price_per_kg||0,tot=q*pr,a='';if(x.status==='pending')a='<button class="btn-action-sm btn-accept" onclick="updatePurchaseStatus('+x.id+',\'accepted\')">✅</button> <button class="btn-action-sm btn-reject" onclick="updatePurchaseStatus('+x.id+',\'rejected\')">❌</button>';else if(x.status==='accepted')a='<button class="btn-action-sm btn-paid" onclick="updatePurchaseStatus('+x.id+',\'paid\')">💰</button>';else if(x.status==='paid'){var alreadyInvoiced=supabaseInvoices.some(function(inv){return inv.purchase_id===x.id;});a=alreadyInvoiced?'<span class="pill pill-purple">🧾 صدرت</span>':'<button class="btn-action-sm btn-invoice" onclick="issueInvoice('+x.id+')">🧾 إصدار فاتورة</button>';}else a='<span class="pill pill-new">❌</span>';var sp=x.status==='pending'?'pill-pending':(x.status==='accepted'?'pill-done':(x.status==='paid'?'pill-paid':'pill-new'));var st=x.status==='pending'?'⏳':(x.status==='accepted'?'✅':(x.status==='paid'?'💰':'❌'));return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+q+' كغ</td><td style="direction:ltr;">'+pr+' دج</td><td style="direction:ltr;color:var(--teal);">'+tot.toLocaleString('en-US')+' دج</td><td><span class="pill '+sp+'">'+st+'</span></td><td>'+a+'</td></tr>';}).join('')+'</tbody></table></div></div>';
         }
 
         function renderAnalyticsHTML(){
             return '<div class="card"><div class="card-header"><div class="card-icon ci-analytics">📊</div><span class="card-label">توزيع أنواع النفايات</span></div><div class="chart-box"><canvas id="chartPie"></canvas></div></div>'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-analytics">📈</div><span class="card-label">كميات المواد المجمعة</span></div><div class="chart-box"><canvas id="chartBar"></canvas></div></div>';
+        }
+
+        function renderInvoices(){
+            var inv=supabaseInvoices;if(inv.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">🧾</span><span class="empty-text">لا توجد فواتير بعد</span></div></div>';
+            var names={carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-invoices">🧾</div><span class="card-label">الفواتير الصادرة</span><span class="badge badge-purple">'+inv.length+' فاتورة</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th>الوقت</th><th>طباعة</th></tr></thead><tbody>'+inv.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+(x.quantity||0)+' كغ</td><td style="direction:ltr;">'+x.price_per_kg+' دج</td><td style="direction:ltr;color:var(--teal);font-weight:700;">'+(x.total||0).toLocaleString('en-US')+' دج</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td><td><button class="btn-action-sm btn-invoice" onclick="printInvoice('+x.id+')">🖨️</button></td></tr>';}).join('')+'</tbody></table></div></div>';
         }
 
         function renderTab(){
@@ -250,6 +271,7 @@
             else if(currentTab==='fleet') c.innerHTML=renderFleet();
             else if(currentTab==='sales') c.innerHTML=renderSales();
             else if(currentTab==='analytics'){c.innerHTML=renderAnalyticsHTML();setTimeout(renderAnalytics,500);}
+            else if(currentTab==='invoices') c.innerHTML=renderInvoices();
         }
     </script>
 </body>
