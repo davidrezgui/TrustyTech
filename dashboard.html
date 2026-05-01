@@ -93,9 +93,11 @@
         .btn-change-pass { background: var(--info); }
         .btn-export { background: var(--teal); }
         .btn-clear { background: var(--danger); }
+        .btn-send-notif { background: var(--info); }
         .confirm-box { display: none; margin-top: 10px; padding: 14px; background: #FFEBEE; border-radius: var(--radius-sm); border: 1px solid #FFCDD2; }
         .confirm-box input { width: 100%; padding: 10px; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; direction: ltr; margin-bottom: 8px; font-family: 'Cairo', sans-serif; }
         .confirm-box button { padding: 8px 16px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; color: white; margin: 2px; }
+        .notif-success { display: none; color: var(--primary); font-size: 12px; font-weight: 700; text-align: center; margin-top: 6px; }
     </style>
 </head>
 <body>
@@ -151,7 +153,6 @@
 
         async function checkPass(){
             var pass = document.getElementById('adminPass').value;
-            // نجلب كلمة المرور من Supabase
             try{
                 var r = await sb.from('settings').select('admin_password').eq('id',1).single();
                 if(r.data) currentAdminPassword = r.data.admin_password;
@@ -280,10 +281,25 @@
 
         // ============ ⚙️ الإعدادات ============
         function renderSettings(){
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-settings">🔐</div><span class="card-label">تغيير كلمة مرور المشرف</span></div>'+
+            return '<!-- 📨 إرسال إشعار جديد -->'+
+                '<div class="card"><div class="card-header"><div class="card-icon" style="background:#E3F2FD;">✉️</div><span class="card-label">إرسال إشعار جديد</span></div>'+
+                '<input type="text" class="settings-input" id="notifTitle" placeholder="عنوان الإشعار" style="text-align:right;direction:rtl;">'+
+                '<textarea id="notifMessage" class="settings-input" placeholder="نص الإشعار" style="text-align:right;direction:rtl;height:80px;resize:vertical;font-family:\'Cairo\',sans-serif;"></textarea>'+
+                '<select id="notifType" class="settings-input" style="text-align:right;direction:rtl;font-family:\'Cairo\',sans-serif;">'+
+                    '<option value="info">🔵 معلومات</option>'+
+                    '<option value="success">🟢 نجاح</option>'+
+                    '<option value="warning">🟠 تحذير</option>'+
+                    '<option value="danger">🔴 خطر</option>'+
+                '</select>'+
+                '<button class="btn-settings btn-send-notif" onclick="sendNotification()">🚀 إرسال الإشعار</button>'+
+                '<p class="notif-success" id="notifSuccess">✅ تم إرسال الإشعار بنجاح!</p></div>'+
+
+                '<!-- 🔐 تغيير كلمة المرور -->'+
+                '<div class="card"><div class="card-header"><div class="card-icon ci-settings">🔐</div><span class="card-label">تغيير كلمة مرور المشرف</span></div>'+
                 '<input type="password" class="settings-input" id="newPassword" placeholder="كلمة المرور الجديدة">'+
                 '<button class="btn-settings btn-change-pass" onclick="changePassword()">🔐 حفظ كلمة المرور الجديدة</button></div>'+
 
+                '<!-- 📊 حالة قاعدة البيانات -->'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-settings">📊</div><span class="card-label">حالة قاعدة البيانات</span></div>'+
                 '<div class="table-wrap"><table><thead><tr><th>الجدول</th><th>عدد السجلات</th></tr></thead><tbody>'+
                 '<tr><td>📋 البلاغات (reports)</td><td style="direction:ltr;font-weight:700;">'+supabaseReports.length.toLocaleString('en-US')+'</td></tr>'+
@@ -292,9 +308,11 @@
                 '<tr><td>🧾 الفواتير (invoices)</td><td style="direction:ltr;font-weight:700;">'+supabaseInvoices.length.toLocaleString('en-US')+'</td></tr>'+
                 '</tbody></table></div></div>'+
 
+                '<!-- 📥 تصدير -->'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-settings">📥</div><span class="card-label">تصدير البيانات</span></div>'+
                 '<button class="btn-settings btn-export" onclick="exportCSV()">📥 تحميل CSV (البلاغات وطلبات الجمع)</button></div>'+
 
+                '<!-- 🗄️ تفريغ -->'+
                 '<div class="card"><div class="card-header"><div class="card-icon ci-settings" style="background:#FFEBEE;">🗄️</div><span class="card-label">تفريغ قاعدة البيانات</span></div>'+
                 '<p style="font-size:11px;color:var(--danger);margin-bottom:10px;">⚠️ تحذير: هذا الإجراء لا يمكن التراجع عنه. جميع البيانات ستحذف نهائياً.</p>'+
                 '<button class="btn-settings btn-clear" onclick="showClearConfirm()">🗄️ تفريغ جميع البيانات</button>'+
@@ -303,6 +321,50 @@
                 '<input type="password" id="confirmPass" placeholder="كلمة المرور">'+
                 '<button class="btn-action-sm btn-accept" onclick="clearAllData()">✅ تأكيد التفريغ</button>'+
                 '<button class="btn-action-sm btn-reject" onclick="hideClearConfirm()">❌ إلغاء</button></div></div>';
+        }
+
+        // ============ 🚀 دالة إرسال الإشعار ============
+        function sendNotification() {
+            var title = document.getElementById('notifTitle').value.trim();
+            var message = document.getElementById('notifMessage').value.trim();
+            var type = document.getElementById('notifType').value;
+            
+            if (!title || !message) {
+                alert('⚠️ الرجاء ملء العنوان والنص');
+                return;
+            }
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', API_URL + '/rest/v1/notifications');
+            xhr.setRequestHeader('apikey', API_KEY);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Prefer', 'return=minimal');
+            
+            xhr.onload = function () {
+                if (xhr.status === 201) {
+                    document.getElementById('notifTitle').value = '';
+                    document.getElementById('notifMessage').value = '';
+                    document.getElementById('notifType').value = 'info';
+                    var successMsg = document.getElementById('notifSuccess');
+                    successMsg.style.display = 'block';
+                    setTimeout(function () {
+                        successMsg.style.display = 'none';
+                    }, 2500);
+                } else {
+                    alert('❌ خطأ في إرسال الإشعار. الرمز: ' + xhr.status);
+                }
+            };
+            
+            xhr.onerror = function () {
+                alert('❌ خطأ في الاتصال بالقاعدة');
+            };
+            
+            xhr.send(JSON.stringify({
+                title: title,
+                message: message,
+                type: type,
+                is_read: false
+            }));
         }
 
         function showClearConfirm(){document.getElementById('clearConfirm').style.display='block';}
