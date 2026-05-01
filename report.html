@@ -62,14 +62,17 @@
         .type-item.selected .type-check { display: flex; }
         .type-emoji { font-size: 26px; display: block; margin-bottom: 3px; }
         .type-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
-        .map-box { width: 100%; height: 180px; border-radius: var(--radius-sm); border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden; transition: var(--transition); }
+        .map-box { width: 100%; border-radius: var(--radius-sm); border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden; transition: var(--transition); padding: 16px; text-align: center; }
         .map-box.located { border-color: var(--primary-light); }
-        .map-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #E3F2FD, #F5F5F5); transition: var(--transition); cursor: pointer; }
+        .map-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .map-emoji { font-size: 36px; margin-bottom: 4px; animation: bounce 2s ease-in-out infinite; }
         @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        .coords { display: none; gap: 8px; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--text-gray); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 16px; justify-content: center; }
-        .coords.show { display: flex; }
-        .coord-val { color: var(--primary-dark); font-weight: 800; direction: ltr; display: inline-block; }
+        .coords { display: none; margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--primary-dark); background: rgba(0,0,0,0.02); padding: 10px 14px; border-radius: 16px; text-align: center; direction: ltr; }
+        .coords.show { display: block; }
+        .btn-locate { width: 100%; padding: 12px; border-radius: 20px; border: 2px solid #1E88E5; background: white; color: #1E88E5; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; transition: var(--transition); margin-top: 10px; }
+        .btn-locate:hover { background: #E3F2FD; }
+        .btn-locate:active { transform: scale(0.97); }
+        .btn-locate.loading { opacity: 0.7; pointer-events: none; }
         .submit-btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition); color: white; font-family: 'Cairo', sans-serif; background: rgba(255,255,255,0.1); opacity: 0.4; pointer-events: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; border: 1px solid rgba(255,255,255,0.08); }
         .submit-btn.ready { background: linear-gradient(135deg, var(--primary), var(--primary-light)); box-shadow: 0 8px 30px rgba(46,125,50,0.4); opacity: 1; pointer-events: auto; border: none; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -79,6 +82,8 @@
         .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; }
         .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
         .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .report-id { font-size: 14px; color: var(--primary); font-weight: 800; direction: ltr; margin: 6px 0; }
+        .points-earned { font-size: 12px; color: var(--accent); font-weight: 700; }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
     </style>
 </head>
@@ -114,7 +119,7 @@
             <input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
             <div class="cam-btns">
                 <button class="btn-gallery" id="btnGallery" onclick="openGallery()">🖼️ اختر من المعرض</button>
-                <button class="btn-delete" id="btnDelete" onclick="deletePhoto()">🗑️ حذف الصورة</button>
+                <button class="btn-delete" id="btnDelete" onclick="deletePhoto()">🗑️ حذف وإعادة تصوير</button>
             </div>
         </div>
 
@@ -133,13 +138,13 @@
         <div class="card" id="c3" style="animation-delay:0.15s">
             <div class="card-header"><div class="card-icon ci-loc">📍</div><span class="card-label">تأكيد الموقع الجغرافي</span><span class="tag tag-req" id="t3">مطلوب</span></div>
             <div class="map-box" id="mapBox">
-                <div class="map-inner" id="mapInner" onclick="getLocation()">
-                    <span class="map-emoji">📍</span>
-                    <span style="font-weight:700;font-size:13px;color:#616161;">اضغط لتحديد موقعك</span>
-                    <span style="font-size:10px;color:#9e9e9e;">سيظهر طلب الإذن تلقائياً</span>
+                <div class="map-inner">
+                    <span class="map-emoji" id="mapEmoji">📍</span>
+                    <span style="font-weight:700;font-size:13px;color:#616161;" id="mapText">اضغط الزر لتحديد موقعك تلقائياً</span>
+                    <button class="btn-locate" id="btnLocate" onclick="getLocation()">📍 تحديد موقعي الحالي</button>
                 </div>
+                <div class="coords" id="coords"></div>
             </div>
-            <div class="coords" id="coords">✅ تم التحديد — <span class="coord-val" id="vLat">--</span>, <span class="coord-val" id="vLng">--</span></div>
         </div>
 
         <button class="submit-btn" id="btnSubmit" disabled onclick="send()">🚀 إرسال البلاغ</button>
@@ -151,7 +156,11 @@
         <div class="modal">
             <div class="modal-icon">✅</div>
             <div class="modal-title">تم الإرسال بنجاح!</div>
-            <div class="modal-desc">شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️</div>
+            <div class="modal-desc">
+                شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️
+                <div class="report-id" id="reportIdDisplay"></div>
+                <span class="points-earned" id="pointsDisplay"></span>
+            </div>
             <button class="modal-btn" onclick="resetAll()">📸 إبلاغ جديد</button>
         </div>
     </div>
@@ -163,14 +172,24 @@
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         var S={photo:null,type:null,lat:null,lng:null};
+        var currentUserId = null;
+        var isLoggedIn = false;
 
+        // معرفة حالة المستخدم
         (function(){
             var backBtn = document.getElementById('backBtn');
             backBtn.href = 'index.html';
             var xhr = new XMLHttpRequest();
             xhr.open('GET', SUPABASE_URL + '/auth/v1/user?apikey=' + SUPABASE_KEY, true);
             xhr.onload = function(){
-                if(xhr.status === 200) backBtn.href = 'home.html';
+                if(xhr.status === 200){
+                    backBtn.href = 'home.html';
+                    isLoggedIn = true;
+                    try {
+                        var user = JSON.parse(xhr.responseText);
+                        currentUserId = user.id;
+                    } catch(e) {}
+                }
             };
             xhr.send();
         })();
@@ -219,28 +238,51 @@
 
         function getLocation(){
             if(S.lat&&S.lng)return;
-            var mi=document.getElementById('mapInner');
-            if(!navigator.geolocation){mi.innerHTML='<span>⚠️ GPS غير مدعوم</span>';return;}
-            mi.innerHTML='<span>📡 جاري التحديد...</span>';
+            var mapText = document.getElementById('mapText');
+            var btn = document.getElementById('btnLocate');
+            var mapEmoji = document.getElementById('mapEmoji');
+
+            if(!navigator.geolocation){
+                mapText.textContent = '⚠️ GPS غير مدعوم في متصفحك';
+                return;
+            }
+
+            btn.textContent = '📡 جاري التحديد...';
+            btn.classList.add('loading');
+            mapText.textContent = 'جاري البحث عن موقعك...';
+
             navigator.geolocation.getCurrentPosition(
                 function(pos){
-                    S.lat=pos.coords.latitude;S.lng=pos.coords.longitude;
-                    document.getElementById('vLat').textContent=S.lat.toFixed(6);
-                    document.getElementById('vLng').textContent=S.lng.toFixed(6);
+                    S.lat = pos.coords.latitude;
+                    S.lng = pos.coords.longitude;
+                    
+                    document.getElementById('coords').textContent = S.lat.toFixed(6) + ', ' + S.lng.toFixed(6);
                     document.getElementById('coords').classList.add('show');
                     document.getElementById('mapBox').classList.add('located');
-                    mi.innerHTML='<span style="color:#2E7D32">✅ تم</span>';
-                    document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
-                    document.getElementById('c3').classList.add('done');update();
+                    mapEmoji.textContent = '✅';
+                    mapText.textContent = 'تم تحديد الموقع بنجاح';
+                    btn.textContent = '📍 إعادة التحديد';
+                    btn.classList.remove('loading');
+                    
+                    document.getElementById('t3').className='tag tag-ok';
+                    document.getElementById('t3').textContent='✓ تم';
+                    document.getElementById('c3').classList.add('done');
+                    update();
                 },
                 function(err){
+                    btn.classList.remove('loading');
+                    btn.textContent = '📍 حاول مرة أخرى';
+                    
                     if(err.code === 1){
-                        mi.innerHTML='<span style="color:#E53935;">⚠️ GPS غير مفعل. الرجاء تشغيله من الإعدادات</span>';
+                        mapText.textContent = '⚠️ GPS غير مفعل. الرجاء تشغيله من إعدادات الهاتف';
+                        alert('⚠️ لتحديد موقعك:\n\n1. افتح إعدادات الهاتف\n2. ابحث عن "الموقع" أو "GPS"\n3. قم بتشغيله\n4. ارجع لهذه الصفحة واضغط مرة أخرى');
+                    } else if(err.code === 2){
+                        mapText.textContent = '⚠️ تعذر الحصول على الموقع. تأكد من أنك في منطقة مفتوحة.';
                     } else {
-                        mi.innerHTML='<span style="color:#E53935;">❌ تعذر تحديد الموقع</span>';
+                        mapText.textContent = '⏰ انتهت المهلة. الرجاء المحاولة مرة أخرى.';
                     }
                 },
-                {enableHighAccuracy:true,timeout:20000}
+                {enableHighAccuracy:true,timeout:20000,maximumAge:0}
             );
         }
 
@@ -263,11 +305,37 @@
             var url = SUPABASE_URL + '/rest/v1/reports?apikey=' + SUPABASE_KEY;
             xhr.open('POST', url, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Prefer', 'return=minimal');
+            xhr.setRequestHeader('Prefer', 'return=representation');
             xhr.timeout = 15000;
 
             xhr.onload = function(){
                 if(xhr.status === 201){
+                    var result = JSON.parse(xhr.responseText);
+                    var reportId = result[0] ? result[0].id : '—';
+
+                    // عرض رقم البلاغ
+                    document.getElementById('reportIdDisplay').textContent = 'رقم البلاغ: #' + reportId;
+
+                    // نقاط للمستخدم المسجل
+                    if(isLoggedIn && currentUserId){
+                        var points = parseInt(localStorage.getItem('greenPoints') || '0');
+                        points += 5;
+                        localStorage.setItem('greenPoints', points.toString());
+                        document.getElementById('pointsDisplay').textContent = '✨ لقد كسبت 5 نقاط خضراء!';
+                    }
+
+                    // إشعار تلقائي
+                    var notifXhr = new XMLHttpRequest();
+                    notifXhr.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
+                    notifXhr.setRequestHeader('Content-Type', 'application/json');
+                    notifXhr.setRequestHeader('Prefer', 'return=minimal');
+                    notifXhr.send(JSON.stringify({
+                        title: 'بلاغ جديد',
+                        message: 'تم تسجيل بلاغ جديد عن مفرغة (' + (S.type || 'غير محدد') + ') #' + reportId,
+                        type: 'info',
+                        is_read: false
+                    }));
+
                     document.getElementById('overlay').classList.add('show');
                 } else {
                     alert('❌ خطأ: ' + xhr.status);
@@ -295,14 +363,23 @@
 
         function resetAll(){
             document.getElementById('overlay').classList.remove('show');
-            deletePhoto();S.type=null;S.lat=null;S.lng=null;
+            document.getElementById('reportIdDisplay').textContent = '';
+            document.getElementById('pointsDisplay').textContent = '';
+            deletePhoto();
+            S.type=null;S.lat=null;S.lng=null;
             document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
-            ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
+            ['t2','t3'].forEach(function(id){
+                document.getElementById(id).className='tag tag-req';
+                document.getElementById(id).textContent='مطلوب';
+            });
             ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
             document.getElementById('coords').classList.remove('show');
-            document.getElementById('vLat').textContent='--';document.getElementById('vLng').textContent='--';
+            document.getElementById('coords').textContent = '';
             document.getElementById('mapBox').classList.remove('located');
-            document.getElementById('mapInner').innerHTML='<span class="map-emoji">📍</span><br><span>اضغط لتحديد موقعك</span>';
+            document.getElementById('mapEmoji').textContent = '📍';
+            document.getElementById('mapText').textContent = 'اضغط الزر لتحديد موقعك تلقائياً';
+            document.getElementById('btnLocate').textContent = '📍 تحديد موقعي الحالي';
+            document.getElementById('btnLocate').classList.remove('loading');
             update();window.scrollTo({top:0,behavior:'smooth'});
         }
     </script>
