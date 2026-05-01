@@ -153,21 +153,33 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+        var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        // جسيمات
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         var S={photo:null,type:null,lat:null,lng:null};
 
-        // زر الرجوع الذكي
-        sb.auth.getSession().then(function(r){
-            var backBtn = document.getElementById('backBtn');
-            if(r.data.session){ backBtn.href = 'home.html'; }
-            else { backBtn.href = 'index.html'; }
-        });
+        // زر الرجوع الذكي - نتحقق من الجلسة عبر API
+        (function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', SUPABASE_URL + '/auth/v1/user', true);
+            xhr.setRequestHeader('apikey', SUPABASE_KEY);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_KEY);
+            xhr.onload = function(){
+                var backBtn = document.getElementById('backBtn');
+                if(xhr.status === 200){
+                    backBtn.href = 'home.html';
+                } else {
+                    backBtn.href = 'index.html';
+                }
+            };
+            xhr.onerror = function(){
+                document.getElementById('backBtn').href = 'index.html';
+            };
+            xhr.send();
+        })();
 
         function takePicture(){if(!S.photo)document.getElementById('cameraInput').click();}
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
@@ -227,7 +239,13 @@
                     document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
                     document.getElementById('c3').classList.add('done');update();
                 },
-                function(){mi.innerHTML='<span>❌ تعذر</span>';},
+                function(err){
+                    if(err.code === 1){
+                        mi.innerHTML='<span style="color:#E53935;">⚠️ GPS غير مفعل. الرجاء تشغيله من الإعدادات</span>';
+                    } else {
+                        mi.innerHTML='<span style="color:#E53935;">❌ تعذر تحديد الموقع</span>';
+                    }
+                },
                 {enableHighAccuracy:true,timeout:20000}
             );
         }
@@ -246,11 +264,46 @@
         function send(){
             var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
+
+            // حفظ احتياطي في localStorage
             var reports=JSON.parse(localStorage.getItem('reports')||'[]');
             reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
             localStorage.setItem('reports',JSON.stringify(reports));
-            setTimeout(function(){document.getElementById('overlay').classList.add('show');b.innerHTML='🚀 إرسال البلاغ';},500);
-            sb.from('reports').insert({photo_url:S.photo,type:S.type,lat:S.lat,lng:S.lng,status:'new'}).then(function(){});
+
+            // إرسال إلى Supabase بنفس طريقة dashboard
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', SUPABASE_URL + '/rest/v1/reports', true);
+            xhr.setRequestHeader('apikey', SUPABASE_KEY);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Prefer', 'return=minimal');
+            xhr.timeout = 15000;
+
+            xhr.onload = function(){
+                if(xhr.status === 201){
+                    document.getElementById('overlay').classList.add('show');
+                } else {
+                    alert('❌ خطأ ' + xhr.status + '\n\nتم الحفظ محلياً. سيتم الإرسال لاحقاً.');
+                }
+                b.innerHTML='🚀 إرسال البلاغ';
+            };
+
+            xhr.onerror = function(){
+                alert('⚠️ تعذر الاتصال. تم الحفظ محلياً.');
+                b.innerHTML='🚀 إرسال البلاغ';
+            };
+
+            xhr.ontimeout = function(){
+                alert('⏰ انتهت المهلة. تم الحفظ محلياً.');
+                b.innerHTML='🚀 إرسال البلاغ';
+            };
+
+            xhr.send(JSON.stringify({
+                photo_url: S.photo || '',
+                type: S.type,
+                lat: S.lat,
+                lng: S.lng,
+                status: 'new'
+            }));
         }
 
         function resetAll(){
