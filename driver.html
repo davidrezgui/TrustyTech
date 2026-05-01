@@ -47,7 +47,6 @@
         .badge-pending { background: #FFF3E0; color: var(--accent); } .badge-done { background: #E8F5E9; color: var(--primary); }
         .task-list { display: flex; flex-direction: column; gap: 10px; }
         .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
-        .task-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .task-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
         .task-type { font-size: 11px; padding: 5px 10px; border-radius: 10px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
@@ -76,10 +75,10 @@
         @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
         .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; } .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
         .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); box-shadow: 0 6px 20px rgba(46,125,50,0.3); display: block; width: 100%; text-align: center; }
+        .btn-cancel { margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition); }
         .qr-modal { max-width: 380px; }
         .qr-input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 14px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
         .qr-input:focus { outline: none; border-color: var(--purple); }
-        .btn-cancel { margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition); }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
         .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
@@ -128,7 +127,6 @@
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
-    <!-- نافذة التأكيد -->
     <div class="overlay" id="confirmOverlay">
         <div class="modal">
             <div class="modal-icon">📸</div>
@@ -149,7 +147,6 @@
         </div>
     </div>
 
-    <!-- نافذة النجاح -->
     <div class="overlay" id="successOverlay">
         <div class="modal">
             <div class="modal-icon">🎉</div>
@@ -159,7 +156,6 @@
         </div>
     </div>
 
-    <!-- نافذة QR -->
     <div class="overlay" id="qrOverlay">
         <div class="modal qr-modal">
             <div class="modal-icon">📱</div>
@@ -175,10 +171,14 @@
     <video id="qrVideo" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:3000;background:black;" playsinline></video>
     <canvas id="qrCanvas" style="display:none;"></canvas>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
+        
+        // Supabase Client للإرسال فقط
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
 
@@ -189,6 +189,7 @@
 
         function checkPass(){if(document.getElementById('driverPass').value==='1234'){document.getElementById('loginScreen').style.display='none';document.getElementById('driverMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
+        // القراءة بـ XMLHttpRequest (سريع، بدون timeout)
         function apiGet(table){
             return new Promise(function(resolve){
                 var fields='*';
@@ -239,6 +240,7 @@
         }
         function deleteProofPhoto(){proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('proofCamera').value='';document.getElementById('proofGallery').value='';}
 
+        // الإرسال بـ Supabase Client (يتعامل مع الصور الكبيرة)
         function finalConfirm(){
             if(!proofPhoto){alert('الرجاء التقاط صورة إثبات أولاً');return;}
             if(!currentTaskId){alert('خطأ: لا توجد مهمة');return;}
@@ -247,8 +249,10 @@
             var el=document.getElementById('task_'+currentTaskId);if(el)el.style.opacity='0.4';
             document.getElementById('confirmOverlay').classList.remove('show');
             document.getElementById('successOverlay').classList.add('show');
-            var xhr=new XMLHttpRequest();xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');xhr.timeout=20000;
-            xhr.send(JSON.stringify({task_id:currentTaskId,proof_photo:proofPhoto}));
+            
+            // إرسال عبر Supabase Client
+            sb.from('completed').insert({task_id:currentTaskId,proof_photo:proofPhoto}).then(function(){});
+            
             currentTaskId=null;proofPhoto=null;
         }
 
@@ -260,7 +264,6 @@
         function processQRResult(t){var tid=t.trim();if(tid.indexOf('MISSION:')===0)tid=tid.replace('MISSION:','').trim();var f=null;for(var i=0;i<allTasksFlat.length;i++){if(allTasksFlat[i].id===tid||allTasksFlat[i].id.indexOf(tid)!==-1){f=allTasksFlat[i];break;}}if(!f){for(var j=0;j<allTasksFlat.length;j++){if(allTasksFlat[j].id==='report_'+tid||allTasksFlat[j].id==='pickup_'+tid){f=allTasksFlat[j];break;}}}if(f)openConfirm(f.id);else alert('❌ لم يتم العثور على مهمة: '+tid);}
         function applyManualQR(){var v=document.getElementById('qrManualInput').value.trim();if(!v){alert('⚠️ الرجاء إدخال كود المهمة');return;}processQRResult(v);document.getElementById('qrOverlay').classList.remove('show');}
 
-        // سحب للتحديث
         (function(){var sy=0,m=document.getElementById('driverMain');if(!m)return;m.addEventListener('touchstart',function(e){sy=e.touches[0].clientY;});m.addEventListener('touchmove',function(e){if(e.touches[0].clientY-sy>60&&window.scrollY===0)document.getElementById('pullIndicator').style.display='block';});m.addEventListener('touchend',function(e){if(e.changedTouches[0].clientY-sy>80&&window.scrollY===0)loadAll();document.getElementById('pullIndicator').style.display='none';});})();
     </script>
 </body>
