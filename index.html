@@ -69,7 +69,6 @@
         .btn-hero:active { transform:translateY(0); }
         .btn-report { background:linear-gradient(135deg,#EF5350,#C62828); box-shadow:0 8px 24px rgba(198,40,40,0.35); font-size:16px; }
         .btn-schedule { background:linear-gradient(135deg,#1E88E5,#42A5F5); box-shadow:0 8px 24px rgba(30,136,229,0.35); }
-        .btn-notifications { background:linear-gradient(135deg,#7B1FA2,#AB47BC); box-shadow:0 8px 24px rgba(123,31,162,0.35); }
         .btn-login { background:linear-gradient(135deg,var(--primary),var(--primary-light)); box-shadow:0 8px 24px rgba(46,125,50,0.35); }
         .btn-register { background:transparent; border:2px solid var(--primary); color:var(--primary-dark); }
         .btn-register:hover { background:rgba(46,125,50,0.06); }
@@ -100,7 +99,7 @@
     <header class="navbar">
         <div class="brand"><div class="brand-icon">🌍</div><span>مدينتنا نظيفة</span></div>
         <div class="nav-actions">
-            <a href="notifications.html" class="btn-notif">🔔 الإشعارات</a>
+            <a href="notifications.html" class="btn-notif" id="notifBtn">🔔 الإشعارات</a>
             <button class="btn-share" onclick="sharePlatform()">📤 نشر</button>
         </div>
     </header>
@@ -122,7 +121,6 @@
             
             <a href="report.html" class="btn-hero btn-report">📸 أبلغ عن مفرغة</a>
             <a href="schedule.html" class="btn-hero btn-schedule">📅 جدول المواعيد</a>
-            <a href="notifications.html" class="btn-hero btn-notifications">🔔 الإشعارات والتنبيهات</a>
             <a href="login.html" class="btn-hero btn-login">🔐 تسجيل الدخول</a>
             <a href="login.html" class="btn-hero btn-register" onclick="localStorage.setItem('showRegister','true')">📝 إنشاء حساب جديد</a>
             
@@ -148,26 +146,24 @@
         (function(){var c=document.body;var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#AB47BC'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+10)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
         function sharePlatform(){var u=window.location.href;if(navigator.share){navigator.share({title:'مدينتنا نظيفة',text:'منصة وطنية للاقتصاد الأخضر ♻️',url:u}).catch(function(){});}else{navigator.clipboard.writeText(u).then(function(){var b=document.querySelector('.btn-share');b.textContent='✅ تم النسخ';setTimeout(function(){b.textContent='📤 نشر';},2000);});}}
 
-        // تحديث عدد الإشعارات
+        // عداد الإشعارات غير المقروءة
         (function(){
-            try{
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET','https://ctkkkpcjwebkrcbzsvpf.supabase.co/rest/v1/notifications?select=count&is_read=eq.false',true);
-                xhr.setRequestHeader('apikey','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
-                xhr.onload = function(){
-                    if(xhr.status === 200){
-                        var data = JSON.parse(xhr.responseText);
-                        var count = data[0]?.count || 0;
-                        if(count > 0){
-                            var badge = document.createElement('span');
-                            badge.className = 'notif-badge';
-                            badge.textContent = count > 99 ? '99+' : count;
-                            document.querySelector('.btn-notif').appendChild(badge);
-                        }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','https://ctkkkpcjwebkrcbzsvpf.supabase.co/rest/v1/notifications?select=count&is_read=eq.false',true);
+            xhr.setRequestHeader('apikey','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    var data = JSON.parse(xhr.responseText);
+                    var count = data[0]?.count || 0;
+                    if(count > 0){
+                        var badge = document.createElement('span');
+                        badge.className = 'notif-badge';
+                        badge.textContent = count > 99 ? '99+' : count;
+                        document.getElementById('notifBtn').appendChild(badge);
                     }
-                };
-                xhr.send();
-            }catch(e){}
+                }
+            };
+            xhr.send();
         })();
     </script>
 </body>
