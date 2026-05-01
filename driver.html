@@ -7,22 +7,11 @@
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>واجهة السائق | مدينتنا نظيفة</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2;
-            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px;
-            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
-            --shadow: 0 4px 16px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-        }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 24px; --radius-sm: 14px; --shadow-xl: 0 30px 80px rgba(0,0,0,0.25); --shadow-lg: 0 20px 60px rgba(0,0,0,0.2); --shadow: 0 4px 16px rgba(0,0,0,0.08); --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
         .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
@@ -68,14 +57,10 @@
         .task-actions { display: flex; gap: 8px; }
         .btn-task { flex: 1; padding: 11px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-navigate { background: var(--info); color: white; box-shadow: 0 4px 14px rgba(30,136,229,0.3); }
-        .btn-navigate:hover { background: #1565C0; }
         .btn-confirm { background: var(--primary); color: white; box-shadow: 0 4px 14px rgba(46,125,50,0.3); }
-        .btn-confirm:hover { background: var(--primary-dark); }
         .btn-qr { background: #7B1FA2; color: white; box-shadow: 0 4px 14px rgba(123,31,162,0.3); flex: 0.4; font-size: 18px; }
-        .btn-qr:hover { background: #6A1B9A; }
         .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; margin-bottom: 8px; }
-        .proof-zone:hover { border-color: rgba(255,255,255,0.4); }
-        .proof-zone.filled { border: 2.5px solid var(--primary-light); border-style: solid; cursor: default; }
+        .proof-zone.filled { border: 2.5px solid var(--primary-light); border-style: solid; }
         .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
         .proof-emoji { font-size: 38px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -83,20 +68,18 @@
         #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
         .proof-actions { display: flex; gap: 8px; }
         .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 4px; }
-        .btn-proof:hover { background: #f9f9f9; }
         .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
-        .btn-proof.danger:hover { background: #FFF5F5; }
         .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; display: block; margin-bottom: 8px; } .empty-text { font-size: 14px; color: var(--text-gray); font-weight: 600; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 34px 22px 26px; text-align: center; max-width: 360px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
         @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
         .modal-icon { font-size: 70px; } .modal-title { font-size: 20px; font-weight: 900; color: var(--primary-dark); margin: 8px 0; } .modal-desc { font-size: 13px; color: var(--text-gray); line-height: 1.7; margin-bottom: 20px; }
-        .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); box-shadow: 0 6px 20px rgba(46,125,50,0.3); }
-        .modal-btn:hover { background: var(--primary-dark); }
+        .modal-btn { padding: 12px 30px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); box-shadow: 0 6px 20px rgba(46,125,50,0.3); display: block; width: 100%; text-align: center; }
         .qr-modal { max-width: 380px; }
         .qr-input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 14px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
         .qr-input:focus { outline: none; border-color: var(--purple); }
+        .btn-cancel { margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition); }
         .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
         .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
@@ -108,18 +91,15 @@
     </style>
 </head>
 <body>
-
     <div class="particles-bg" id="particlesBg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-
     <header class="top-nav">
         <a href="index.html" class="btn-back">←</a>
         <span class="nav-title">🚛 واجهة السائق</span>
         <button class="btn-refresh" onclick="loadAll()" id="refreshBtn">🔄 تحديث</button>
         <div class="driver-status"><span class="dot"></span> متصل</div>
     </header>
-
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
             <div style="font-size:55px;margin-bottom:10px;">🚛</div>
@@ -130,7 +110,6 @@
             <p class="login-error" id="loginError">كلمة المرور غير صحيحة</p>
         </div>
     </div>
-
     <main class="main-container" id="driverMain" style="display:none;">
         <div class="pull-indicator" id="pullIndicator">🔽 اسحب للأسفل للتحديث</div>
         <div class="stats-row">
@@ -147,9 +126,9 @@
             <div class="task-list" id="doneTasks"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لم تكتمل أي مهمة بعد</span></div></div>
         </div>
     </main>
-
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
+    <!-- نافذة التأكيد -->
     <div class="overlay" id="confirmOverlay">
         <div class="modal">
             <div class="modal-icon">📸</div>
@@ -165,11 +144,12 @@
                 <button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button>
                 <button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button>
             </div>
-            <button class="modal-btn" id="btnFinalConfirm" onclick="finalConfirm()" style="width:100%;background:#2E7D32;">✅ تأكيد وإرسال الإثبات</button>
-            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;transition:var(--transition);" onclick="closeConfirm()">إلغاء</button>
+            <button class="modal-btn" id="btnFinalConfirm" onclick="finalConfirm()" style="background:#2E7D32;">✅ تأكيد وإرسال الإثبات</button>
+            <button class="btn-cancel" onclick="closeConfirm()">إلغاء</button>
         </div>
     </div>
 
+    <!-- نافذة النجاح -->
     <div class="overlay" id="successOverlay">
         <div class="modal">
             <div class="modal-icon">🎉</div>
@@ -179,20 +159,19 @@
         </div>
     </div>
 
+    <!-- نافذة QR -->
     <div class="overlay" id="qrOverlay">
         <div class="modal qr-modal">
             <div class="modal-icon">📱</div>
             <div class="modal-title">مسح QR Code</div>
             <div class="modal-desc">أدخل الكود يدوياً أو امسح QR للتعرف على المهمة</div>
             <input type="text" class="qr-input" id="qrManualInput" placeholder="أدخل كود المهمة يدوياً" dir="ltr">
-            <p style="font-size:11px;color:var(--text-gray);margin-bottom:12px;">أو استخدم كاميرا الهاتف لمسح الملصق</p>
-            <button class="modal-btn" onclick="scanQRWithCamera()" style="width:100%;background:#7B1FA2;">📷 فتح الكاميرا للمسح</button>
+            <button class="modal-btn" onclick="scanQRWithCamera()" style="background:#7B1FA2;">📷 فتح الكاميرا للمسح</button>
             <p style="font-size:10px;color:var(--text-gray);margin:8px 0;">— أو —</p>
-            <button class="modal-btn" onclick="applyManualQR()" style="width:100%;background:var(--info);">✅ تطبيق الكود المدخل</button>
-            <button style="margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600;" onclick="closeQROverlay()">إلغاء</button>
+            <button class="modal-btn" onclick="applyManualQR()" style="background:var(--info);">✅ تطبيق الكود المدخل</button>
+            <button class="btn-cancel" onclick="closeQROverlay()">إلغاء</button>
         </div>
     </div>
-
     <video id="qrVideo" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:3000;background:black;" playsinline></video>
     <canvas id="qrCanvas" style="display:none;"></canvas>
 
@@ -201,248 +180,88 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
 
-        var currentTaskId=null,proofPhoto=null;
-        var supabaseReports=[],supabasePickups=[],completedTasks=[];
-        var qrStream=null,allTasksFlat=[];
-        var pendingSync=[];
+        var currentTaskId=null,proofPhoto=null,supabaseReports=[],supabasePickups=[],completedTasks=[],qrStream=null,allTasksFlat=[];
 
-        function playSuccessSound(){
-            try {
-                var ctx = new (window.AudioContext || window.webkitAudioContext)();
-                var o = ctx.createOscillator(), g = ctx.createGain();
-                o.connect(g); g.connect(ctx.destination);
-                o.type = 'sine'; g.gain.value = 0.3;
-                o.frequency.setValueAtTime(523, ctx.currentTime);
-                o.frequency.setValueAtTime(659, ctx.currentTime + 0.1);
-                o.frequency.setValueAtTime(784, ctx.currentTime + 0.2);
-                g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-                o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.4);
-            } catch(e) {}
-        }
+        function formatDateDZ(iso){if(!iso)return'--/--/----';var d=new Date(iso);return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
+        function formatTimeDZ(iso){if(!iso)return'--:--:--';var d=new Date(iso);return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0');}
 
-        function formatDateDZ(isoString) {
-            if (!isoString) return '--/--/----';
-            var d = new Date(isoString);
-            return d.getDate().toString().padStart(2,'0') + '/' + (d.getMonth()+1).toString().padStart(2,'0') + '/' + d.getFullYear();
-        }
-
-        function formatTimeDZ(isoString) {
-            if (!isoString) return '--:--:--';
-            var d = new Date(isoString);
-            return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0') + ':' + d.getSeconds().toString().padStart(2,'0');
-        }
-
-        function checkPass(){
-            if(document.getElementById('driverPass').value==='1234'){
-                document.getElementById('loginScreen').style.display='none';
-                document.getElementById('driverMain').style.display='block';
-                loadAll(); syncPending();
-            }else{document.getElementById('loginError').style.display='block';}
-        }
+        function checkPass(){if(document.getElementById('driverPass').value==='1234'){document.getElementById('loginScreen').style.display='none';document.getElementById('driverMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
         function apiGet(table){
             return new Promise(function(resolve){
-                var selectFields = '*';
-                if(table === 'reports') selectFields = 'id,type,lat,lng,status,created_at';
-                if(table === 'pickups') selectFields = 'id,material,weight,points,lat,lng,status,created_at';
-                if(table === 'completed') selectFields = 'id,task_id,proof_photo,created_at';
-                
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', SUPABASE_URL + '/rest/v1/' + table + '?select=' + selectFields + '&apikey=' + SUPABASE_KEY, true);
-                xhr.timeout = 25000;
-                xhr.onload = function(){ if(xhr.status === 200) resolve(JSON.parse(xhr.responseText)); else resolve([]); };
-                xhr.onerror = function(){ resolve([]); };
-                xhr.ontimeout = function(){ resolve([]); };
-                xhr.send();
+                var fields='*';
+                if(table==='reports')fields='id,type,lat,lng,status,created_at';
+                if(table==='pickups')fields='id,material,weight,lat,lng,status,created_at';
+                if(table==='completed')fields='id,task_id,created_at';
+                var x=new XMLHttpRequest();
+                x.open('GET',SUPABASE_URL+'/rest/v1/'+table+'?select='+fields+'&apikey='+SUPABASE_KEY,true);
+                x.timeout=25000;x.onload=function(){if(x.status===200)resolve(JSON.parse(x.responseText));else resolve([]);};x.onerror=function(){resolve([]);};x.ontimeout=function(){resolve([]);};x.send();
             });
         }
 
         function loadAll(){
-            var btn = document.getElementById('refreshBtn');
-            btn.disabled = true; btn.innerHTML = '⏳';
-            Promise.all([apiGet('reports'), apiGet('pickups'), apiGet('completed')])
-            .then(function(results){
-                supabaseReports = results[0]; supabasePickups = results[1];
-                completedTasks = results[2].map(function(x){return x.task_id;});
-                var localDone = JSON.parse(localStorage.getItem('completedTasks')||'[]');
-                localDone.forEach(function(x){if(completedTasks.indexOf(x)===-1) completedTasks.push(x);});
-                showAllTasks();
-                btn.disabled = false; btn.innerHTML = '🔄 تحديث';
-            }).catch(function(){ showAllTasks(); btn.disabled = false; btn.innerHTML = '🔄 تحديث'; });
+            var b=document.getElementById('refreshBtn');b.disabled=true;b.innerHTML='⏳';
+            Promise.all([apiGet('reports'),apiGet('pickups'),apiGet('completed')]).then(function(r){
+                supabaseReports=r[0];supabasePickups=r[1];completedTasks=r[2].map(function(x){return x.task_id;});
+                var ld=JSON.parse(localStorage.getItem('completedTasks')||'[]');ld.forEach(function(x){if(completedTasks.indexOf(x)===-1)completedTasks.push(x);});
+                showAllTasks();b.disabled=false;b.innerHTML='🔄 تحديث';
+            }).catch(function(){showAllTasks();b.disabled=false;b.innerHTML='🔄 تحديث';});
         }
 
         function showAllTasks(){
-            allTasksFlat = [];
-            supabaseReports.forEach(function(r){if(completedTasks.indexOf('report_'+r.id)===-1) allTasksFlat.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'});});
-            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)===-1) allTasksFlat.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material});});
-
-            document.getElementById('pendingCount').textContent = allTasksFlat.length.toLocaleString('en-US');
-            document.getElementById('doneCount').textContent = completedTasks.length.toLocaleString('en-US');
-            document.getElementById('pendingBadge').textContent = allTasksFlat.length;
-            document.getElementById('doneBadge').textContent = completedTasks.length;
-
-            var totalKg=0;
-            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1) totalKg+=(r.weight||0);});
-            document.getElementById('totalKg').textContent = totalKg.toLocaleString('en-US');
-
-            var pc = document.getElementById('pendingTasks');
-            if(allTasksFlat.length===0){
-                pc.innerHTML = '<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';
-            } else {
-                pc.innerHTML = allTasksFlat.map(function(t){
-                    var catNames = {menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'};
-                    var matNames = {carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
-                    var categoryText = t.type==='report' ? (catNames[t.category]||t.category||'') : (matNames[t.material]||t.material||'');
-                    return '<div class="task-item" id="task_'+t.id+'">'+
-                        '<div class="task-header">'+
-                            '<span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span>'+
-                            '<span class="task-category">'+categoryText+'</span>'+
-                            '<span class="task-time">'+formatDateDZ(t.time)+' | '+formatTimeDZ(t.time)+'</span>'+
-                        '</div>'+
-                        '<div class="task-address">📍 '+ (t.lat?t.lat.toFixed(5):'--') +', '+ (t.lng?t.lng.toFixed(5):'--') +'</div>'+
-                        '<div class="task-actions">'+
-                            '<button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button>'+
-                            '<button class="btn-task btn-qr" onclick="openQRScan()" title="مسح QR Code">📱</button>'+
-                            '<button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button>'+
-                        '</div>'+
-                    '</div>';
-                }).join('');
-            }
+            allTasksFlat=[];
+            supabaseReports.forEach(function(r){if(completedTasks.indexOf('report_'+r.id)===-1)allTasksFlat.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد'});});
+            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)===-1)allTasksFlat.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material});});
+            document.getElementById('pendingCount').textContent=allTasksFlat.length.toLocaleString('en-US');
+            document.getElementById('doneCount').textContent=completedTasks.length.toLocaleString('en-US');
+            document.getElementById('pendingBadge').textContent=allTasksFlat.length;
+            document.getElementById('doneBadge').textContent=completedTasks.length;
+            var tk=0;supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1)tk+=(r.weight||0);});
+            document.getElementById('totalKg').textContent=tk.toLocaleString('en-US');
+            var pc=document.getElementById('pendingTasks');
+            if(allTasksFlat.length===0){pc.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';}
+            else{pc.innerHTML=allTasksFlat.map(function(t){var cn={menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'},mn={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'},ct=t.type==='report'?(cn[t.category]||t.category||''):(mn[t.material]||t.material||'');return'<div class="task-item" id="task_'+t.id+'"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-category">'+ct+'</span><span class="task-time">'+formatDateDZ(t.time)+' | '+formatTimeDZ(t.time)+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-qr" onclick="openQRScan()" title="مسح QR Code">📱</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\')">✅ تأكيد</button></div></div>';}).join('');}
         }
 
-        function navigateTo(lat,lng){window.open('https://www.google.com/maps/dir/?api=1&destination='+lat+','+lng,'_blank');}
-
+        function navigateTo(la,ln){window.open('https://www.google.com/maps/dir/?api=1&destination='+la+','+ln,'_blank');}
         function openQRScan(){document.getElementById('qrManualInput').value='';document.getElementById('qrOverlay').classList.add('show');}
-        function openConfirm(taskId){currentTaskId=taskId;proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('confirmOverlay').classList.add('show');}
+        function openConfirm(tid){currentTaskId=tid;proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('confirmOverlay').classList.add('show');}
+        function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('show');}
         function closeQROverlay(){document.getElementById('qrOverlay').classList.remove('show');stopQRScanner();}
-
-        function scanQRWithCamera(){
-            var video = document.getElementById('qrVideo'), canvas = document.getElementById('qrCanvas'), ctx = canvas.getContext('2d');
-            video.style.display = 'block';
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
-                navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(stream){
-                    qrStream=stream;video.srcObject=stream;video.play();
-                    function scanLoop(){
-                        if(video.readyState===video.HAVE_ENOUGH_DATA){
-                            canvas.width=video.videoWidth;canvas.height=video.videoHeight;
-                            ctx.drawImage(video,0,0,canvas.width,canvas.height);
-                            var code=jsQR(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height);
-                            if(code){stopQRScanner();video.style.display='none';document.getElementById('qrOverlay').classList.remove('show');processQRResult(code.data);return;}
-                        }
-                        if(qrStream)requestAnimationFrame(scanLoop);
-                    }
-                    scanLoop();
-                    video.onclick=function(){stopQRScanner();video.style.display='none';};
-                }).catch(function(){alert('❌ تعذر فتح الكاميرا. تأكد من منح الإذن.');video.style.display='none';});
-            }else{alert('❌ متصفحك لا يدعم الكاميرا.');}
-        }
-
-        function stopQRScanner(){if(qrStream){qrStream.getTracks().forEach(function(t){t.stop();});qrStream=null;}document.getElementById('qrVideo').style.display='none';}
-
-        function processQRResult(codeText){
-            var taskId=codeText.trim();
-            if(taskId.indexOf('MISSION:')===0)taskId=taskId.replace('MISSION:','').trim();
-            var found=null;
-            for(var i=0;i<allTasksFlat.length;i++){if(allTasksFlat[i].id===taskId||allTasksFlat[i].id.indexOf(taskId)!==-1){found=allTasksFlat[i];break;}}
-            if(!found){for(var j=0;j<allTasksFlat.length;j++){if(allTasksFlat[j].id==='report_'+taskId||allTasksFlat[j].id==='pickup_'+taskId){found=allTasksFlat[j];break;}}}
-            if(found)openConfirm(found.id);else alert('❌ لم يتم العثور على مهمة: '+taskId);
-        }
-
-        function applyManualQR(){var val=document.getElementById('qrManualInput').value.trim();if(!val){alert('⚠️ الرجاء إدخال كود المهمة');return;}processQRResult(val);document.getElementById('qrOverlay').classList.remove('show');}
-        function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('show');currentTaskId=null;proofPhoto=null;}
         function takeProofPhoto(){if(!proofPhoto)document.getElementById('proofCamera').click();}
         function openProofGallery(){if(!proofPhoto)document.getElementById('proofGallery').click();}
 
         function handleProofPhoto(e){
-            var f=e.target.files[0];if(!f)return;
-            var r=new FileReader();
-            r.onload=function(ev){proofPhoto=ev.target.result;document.getElementById('proofPreview').src=proofPhoto;document.getElementById('proofPreview').style.display='block';document.getElementById('proofInner').style.display='none';document.getElementById('proofZone').classList.add('filled');document.getElementById('btnProofGallery').style.display='none';document.getElementById('btnProofDelete').style.display='flex';};
-            r.readAsDataURL(f);
+            var f=e.target.files[0];if(!f)return;var r=new FileReader();
+            r.onload=function(ev){proofPhoto=ev.target.result;document.getElementById('proofPreview').src=proofPhoto;document.getElementById('proofPreview').style.display='block';document.getElementById('proofInner').style.display='none';document.getElementById('proofZone').classList.add('filled');document.getElementById('btnProofGallery').style.display='none';document.getElementById('btnProofDelete').style.display='flex';};r.readAsDataURL(f);
         }
-
         function deleteProofPhoto(){proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('proofCamera').value='';document.getElementById('proofGallery').value='';}
 
         function finalConfirm(){
             if(!proofPhoto){alert('الرجاء التقاط صورة إثبات أولاً');return;}
+            if(!currentTaskId){alert('خطأ: لا توجد مهمة');return;}
             if(completedTasks.indexOf(currentTaskId)===-1)completedTasks.push(currentTaskId);
-            
-            var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');
-            proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};
-            localStorage.setItem('taskProofs',JSON.stringify(proofs));
-            localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
-
-            var taskEl = document.getElementById('task_'+currentTaskId);
-            if(taskEl) taskEl.style.opacity = '0.5';
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', SUPABASE_URL + '/rest/v1/completed?apikey=' + SUPABASE_KEY, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Prefer', 'return=minimal');
-            xhr.timeout = 20000;
-
-            xhr.onload = function(){
-                if(xhr.status === 201){
-                    playSuccessSound();
-                    closeConfirm();
-                    document.getElementById('successOverlay').classList.add('show');
-                    var nxhr = new XMLHttpRequest();
-                    nxhr.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
-                    nxhr.setRequestHeader('Content-Type', 'application/json');
-                    nxhr.setRequestHeader('Prefer', 'return=minimal');
-                    nxhr.send(JSON.stringify({title:'مهمة مكتملة',message:'تم تأكيد إكمال المهمة: '+currentTaskId,type:'success',is_read:false}));
-                } else {
-                    pendingSync.push({task_id:currentTaskId, proof_photo:proofPhoto});
-                    localStorage.setItem('pendingSync',JSON.stringify(pendingSync));
-                    closeConfirm();
-                    document.getElementById('successOverlay').classList.add('show');
-                }
-            };
-
-            xhr.onerror = function(){
-                pendingSync.push({task_id:currentTaskId, proof_photo:proofPhoto});
-                localStorage.setItem('pendingSync',JSON.stringify(pendingSync));
-                closeConfirm();
-                document.getElementById('successOverlay').classList.add('show');
-            };
-
-            xhr.send(JSON.stringify({task_id:currentTaskId, proof_photo:proofPhoto}));
+            var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};localStorage.setItem('taskProofs',JSON.stringify(proofs));localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
+            var el=document.getElementById('task_'+currentTaskId);if(el)el.style.opacity='0.4';
+            document.getElementById('confirmOverlay').classList.remove('show');
+            document.getElementById('successOverlay').classList.add('show');
+            var xhr=new XMLHttpRequest();xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');xhr.timeout=20000;
+            xhr.send(JSON.stringify({task_id:currentTaskId,proof_photo:proofPhoto}));
+            currentTaskId=null;proofPhoto=null;
         }
 
-        function syncPending(){
-            pendingSync = JSON.parse(localStorage.getItem('pendingSync')||'[]');
-            if(pendingSync.length === 0) return;
-            pendingSync.forEach(function(item){
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', SUPABASE_URL + '/rest/v1/completed?apikey=' + SUPABASE_KEY, true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.setRequestHeader('Prefer', 'return=minimal');
-                xhr.timeout = 20000;
-                xhr.onload = function(){
-                    if(xhr.status === 201){
-                        pendingSync = pendingSync.filter(function(p){return p.task_id !== item.task_id;});
-                        localStorage.setItem('pendingSync',JSON.stringify(pendingSync));
-                    }
-                };
-                xhr.send(JSON.stringify(item));
-            });
+        function scanQRWithCamera(){
+            var v=document.getElementById('qrVideo'),cn=document.getElementById('qrCanvas'),ctx=cn.getContext('2d');v.style.display='block';
+            if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(s){qrStream=s;v.srcObject=s;v.play();function sl(){if(v.readyState===v.HAVE_ENOUGH_DATA){cn.width=v.videoWidth;cn.height=v.videoHeight;ctx.drawImage(v,0,0,cn.width,cn.height);var cd=jsQR(ctx.getImageData(0,0,cn.width,cn.height).data,cn.width,cn.height);if(cd){stopQRScanner();v.style.display='none';document.getElementById('qrOverlay').classList.remove('show');processQRResult(cd.data);return;}}if(qrStream)requestAnimationFrame(sl);}sl();v.onclick=function(){stopQRScanner();v.style.display='none';};}).catch(function(){alert('❌ تعذر فتح الكاميرا');v.style.display='none';});}else{alert('❌ متصفحك لا يدعم الكاميرا');}
         }
+        function stopQRScanner(){if(qrStream){qrStream.getTracks().forEach(function(t){t.stop();});qrStream=null;}document.getElementById('qrVideo').style.display='none';}
+        function processQRResult(t){var tid=t.trim();if(tid.indexOf('MISSION:')===0)tid=tid.replace('MISSION:','').trim();var f=null;for(var i=0;i<allTasksFlat.length;i++){if(allTasksFlat[i].id===tid||allTasksFlat[i].id.indexOf(tid)!==-1){f=allTasksFlat[i];break;}}if(!f){for(var j=0;j<allTasksFlat.length;j++){if(allTasksFlat[j].id==='report_'+tid||allTasksFlat[j].id==='pickup_'+tid){f=allTasksFlat[j];break;}}}if(f)openConfirm(f.id);else alert('❌ لم يتم العثور على مهمة: '+tid);}
+        function applyManualQR(){var v=document.getElementById('qrManualInput').value.trim();if(!v){alert('⚠️ الرجاء إدخال كود المهمة');return;}processQRResult(v);document.getElementById('qrOverlay').classList.remove('show');}
 
-        (function(){
-            var startY = 0, main = document.getElementById('driverMain');
-            if(!main) return;
-            main.addEventListener('touchstart', function(e){ startY = e.touches[0].clientY; });
-            main.addEventListener('touchmove', function(e){
-                var dy = e.touches[0].clientY - startY;
-                if(dy > 60 && window.scrollY === 0) document.getElementById('pullIndicator').style.display = 'block';
-            });
-            main.addEventListener('touchend', function(e){
-                var dy = e.changedTouches[0].clientY - startY;
-                if(dy > 80 && window.scrollY === 0) loadAll();
-                document.getElementById('pullIndicator').style.display = 'none';
-            });
-        })();
+        // سحب للتحديث
+        (function(){var sy=0,m=document.getElementById('driverMain');if(!m)return;m.addEventListener('touchstart',function(e){sy=e.touches[0].clientY;});m.addEventListener('touchmove',function(e){if(e.touches[0].clientY-sy>60&&window.scrollY===0)document.getElementById('pullIndicator').style.display='block';});m.addEventListener('touchend',function(e){if(e.changedTouches[0].clientY-sy>80&&window.scrollY===0)loadAll();document.getElementById('pullIndicator').style.display='none';});})();
     </script>
 </body>
 </html>
