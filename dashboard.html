@@ -10,12 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <style>
         :root {
             --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
             --accent: #FF6F00; --accent-light: #FFA726;
-            --danger: #E53935; --info: #1E88E5; --teal: #009688; --gold: #FFD700;
+            --danger: #E53935; --info: #1E88E5; --teal: #009688; --gold: #FFD700; --purple: #7B1FA2;
             --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
             --radius: 24px; --radius-sm: 14px; --radius-xs: 8px;
             --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
@@ -31,9 +32,9 @@
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 350px; height: 350px; background: rgba(46,125,50,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 300px; height: 300px; background: rgba(0,150,136,0.08); bottom: -12%; left: -6%; animation-delay: -4s; }
-        .orb-3 { width: 250px; height: 250px; background: rgba(255,111,0,0.06); top: 40%; left: 50%; animation-delay: -6s; }
+        .orb-3 { width: 250px; height: 250px; background: rgba(123,31,162,0.06); top: 40%; left: 50%; animation-delay: -6s; }
         @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
-        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
         .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
         .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
@@ -50,10 +51,10 @@
         .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-        .ci-reports { background: #FFEBEE; } .ci-trucks { background: #E3F2FD; } .ci-co2 { background: #E0F2F1; } .ci-map { background: #FFF3E0; } .ci-sorting { background: #F3E5F5; } .ci-sales { background: #FFF8E1; }
+        .ci-reports { background: #FFEBEE; } .ci-trucks { background: #E3F2FD; } .ci-co2 { background: #E0F2F1; } .ci-map { background: #FFF3E0; } .ci-sorting { background: #F3E5F5; } .ci-sales { background: #FFF8E1; } .ci-analytics { background: #EDE7F6; }
         .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
         .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
-        .badge-new { background: #FFEBEE; color: var(--danger); } .badge-ok { background: #E8F5E9; color: var(--primary); } .badge-warn { background: #FFF3E0; color: var(--accent); } .badge-teal { background: #E0F2F1; color: #00695C; } .badge-gold { background: #FFF8E1; color: #F57F17; }
+        .badge-new { background: #FFEBEE; color: var(--danger); } .badge-ok { background: #E8F5E9; color: var(--primary); } .badge-warn { background: #FFF3E0; color: var(--accent); } .badge-teal { background: #E0F2F1; color: #00695C; } .badge-gold { background: #FFF8E1; color: #F57F17; } .badge-purple { background: #EDE7F6; color: #6A1B9A; }
         #mapContainer { width: 100%; height: 300px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid rgba(0,0,0,0.06); z-index: 1; }
         .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; min-width: 650px; }
@@ -73,6 +74,7 @@
         .co2-fill { height: 100%; background: linear-gradient(90deg, #E53935, #FF9800, #4CAF50); border-radius: 8px; transition: width 1s ease; width: 0%; }
         .truck-list { display: flex; flex-direction: column; gap: 8px; }
         .truck-item { display: flex; align-items: center; gap: 10px; padding: 14px; border-radius: var(--radius-sm); background: white; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
+        .truck-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
         .truck-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         .truck-free { background: #E8F5E9; } .truck-busy { background: #FFF3E0; }
         .truck-info { flex: 1; } .truck-name { font-size: 13px; font-weight: 700; } .truck-plate { font-size: 10px; color: var(--text-gray); direction: ltr; }
@@ -85,11 +87,15 @@
         .ld-report { background: #E53935; } .ld-pickup { background: #FF9800; }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
         .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
-        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
-        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
+        .login-card input:focus { outline: none; border-color: var(--primary); }
+        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #2E7D32, #4CAF50); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); }
+        .login-btn:hover { background: #1B5E20; transform: translateY(-2px); }
         .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
         .btn-action-sm { padding: 6px 12px; border: none; border-radius: 15px; font-size: 10px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; color: white; margin: 1px; transition: var(--transition); }
         .btn-accept { background: var(--primary); } .btn-reject { background: var(--danger); } .btn-paid { background: var(--teal); }
+        .chart-box { background: white; border-radius: var(--radius-sm); padding: 16px; margin-bottom: 10px; box-shadow: var(--shadow); }
+        .chart-box canvas { max-height: 250px; }
     </style>
 </head>
 <body>
@@ -122,6 +128,7 @@
             <button class="tab-btn" onclick="switchTab('sorting', this)">📦 الفرز</button>
             <button class="tab-btn" onclick="switchTab('fleet', this)">🚛 الأسطول</button>
             <button class="tab-btn" onclick="switchTab('sales', this)">🏭 المبيعات</button>
+            <button class="tab-btn" onclick="switchTab('analytics', this)">📈 تحليلات</button>
         </div>
         <div id="tabContent"></div>
     </main>
@@ -133,8 +140,9 @@
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
         var supabaseReports=[],supabasePickups=[],supabasePurchases=[];
+        var analyticsCharts=[];
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#009688','#FFCC02','#CE93D8'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
+        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#009688','#7B1FA2','#FFCC02'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
 
         function checkPass(){if(document.getElementById('adminPass').value==='admin2026'){document.getElementById('loginScreen').style.display='none';document.getElementById('dashMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
@@ -143,17 +151,30 @@
         function getSortingRequests(){return supabasePickups;}
         function getCompletedTasks(){return JSON.parse(localStorage.getItem('completedTasks')||'[]');}
 
-        async function loadAll(){
-            try{
-                var r1=await sb.from('reports').select('*');if(!r1.error) supabaseReports=r1.data;
-                var r2=await sb.from('pickups').select('*');if(!r2.error) supabasePickups=r2.data;
-                var r3=await sb.from('purchases').select('*').order('created_at',{ascending:false});if(!r3.error) supabasePurchases=r3.data;
-            }catch(e){}
-            renderTab();if(currentTab==='overview') setTimeout(initMap,400);
-            var btn=document.querySelector('.btn-refresh');btn.textContent='✅ تم';setTimeout(function(){btn.textContent='🔄 تحديث';},800);
+        function loadAll(){
+            Promise.all([
+                sb.from('reports').select('*'),
+                sb.from('pickups').select('*'),
+                sb.from('purchases').select('*').order('created_at',{ascending:false})
+            ]).then(function(results){
+                if(!results[0].error) supabaseReports=results[0].data;
+                if(!results[1].error) supabasePickups=results[1].data;
+                if(!results[2].error) supabasePurchases=results[2].data;
+                renderTab();
+                if(currentTab==='overview') setTimeout(initMap,400);
+                if(currentTab==='analytics') setTimeout(renderAnalytics,500);
+                var btn=document.querySelector('.btn-refresh');btn.textContent='✅ تم';
+                setTimeout(function(){btn.textContent='🔄 تحديث';},800);
+            }).catch(function(e){
+                console.log('خطأ:',e);
+                renderTab();
+            });
         }
 
-        function switchTab(tab,btn){currentTab=tab;document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});if(btn) btn.classList.add('active');renderTab();if(tab==='overview') setTimeout(initMap,400);}
+        function switchTab(tab,btn){
+            currentTab=tab;document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});if(btn) btn.classList.add('active');
+            renderTab();if(tab==='overview') setTimeout(initMap,400);if(tab==='analytics') setTimeout(renderAnalytics,500);
+        }
 
         function formatTime(isoString){if(!isoString) return'—';var d=new Date(isoString);return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0')+' · '+d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
         function getTypeName(type){var n={menagere:'منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض',autre:'أخرى'};return n[type]||type||'—';}
@@ -163,13 +184,22 @@
             var reports=getReports(),sorting=getSortingRequests();var allPoints=reports.concat(sorting).filter(function(r){return r.lat&&r.lng;});
             if(mainMap){mainMap.remove();mainMap=null;}var mapEl=document.getElementById('mapContainer');if(!mapEl) return;
             var clat=allPoints.length>0?allPoints[0].lat:36.0736,clng=allPoints.length>0?allPoints[0].lng:4.7631;
-            mainMap=L.map('mapContainer').setView([clat,clng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(mainMap);
+            mainMap=L.map('mapContainer').setView([clat,clng],13);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(mainMap);
             var ri=L.divIcon({html:'<div style="background:#E53935;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(229,57,53,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">🗑️</span></div>',iconSize:[28,28],iconAnchor:[14,28]});
             var pi=L.divIcon({html:'<div style="background:#FF9800;width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(255,152,0,0.5);border:2px solid white;"><span style="transform:rotate(45deg);font-size:14px;">📦</span></div>',iconSize:[28,28],iconAnchor:[14,28]});
-            reports.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:ri}).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>🚨 بلاغ</strong><br>'+getTypeName(r.type)+'</div>');});
-            sorting.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:pi}).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>📦 جمع</strong><br>'+getMaterialName(r.material)+'</div>');});
-            if(allPoints.length===0) L.marker([36.0736,4.7631]).addTo(mainMap).bindPopup('<div style="font-family:Cairo;text-align:right"><strong>📍 برج بوعريريج</strong></div>').openPopup();
+            reports.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:ri}).addTo(mainMap);});
+            sorting.forEach(function(r){if(r.lat) L.marker([r.lat,r.lng],{icon:pi}).addTo(mainMap);});
+            if(allPoints.length===0) L.marker([36.0736,4.7631]).addTo(mainMap);
             setTimeout(function(){if(mainMap)mainMap.invalidateSize();},200);
+        }
+
+        function renderAnalytics(){
+            analyticsCharts.forEach(function(ch){ch.destroy();});analyticsCharts=[];
+            var r=getReports(),s=getSortingRequests();
+            var types={};r.forEach(function(x){var t=getTypeName(x.type);types[t]=(types[t]||0)+1;});
+            var materials={};s.forEach(function(x){var m=getMaterialName(x.material);materials[m]=(materials[m]||0)+1;});
+            var ctx1=document.getElementById('chartPie');if(ctx1){var c1=new Chart(ctx1,{type:'doughnut',data:{labels:Object.keys(types),datasets:[{data:Object.values(types),backgroundColor:['#E53935','#FF9800','#1E88E5','#4CAF50','#9C27B0','#009688']}]}});analyticsCharts.push(c1);}
+            var ctx2=document.getElementById('chartBar');if(ctx2){var c2=new Chart(ctx2,{type:'bar',data:{labels:Object.keys(materials),datasets:[{label:'كغ',data:Object.values(materials),backgroundColor:['#FFA726','#42A5F5','#66BB6A']}]}});analyticsCharts.push(c2);}
         }
 
         function renderOverview(){
@@ -180,67 +210,36 @@
                 '<div class="stat-card"><span class="stat-icon">✅</span><div class="stat-value">'+c.length.toLocaleString('en-US')+'</div><div class="stat-label">مكتمل</div></div>'+
                 '<div class="stat-card"><span class="stat-icon">🌱</span><div class="stat-value">'+co2.toLocaleString('en-US')+'</div><div class="stat-label">كغ CO₂</div></div></div>'+
                 (r.length===0&&s.length===0?'<div class="highlight-box warning"><span style="font-size:20px">ℹ️</span><br><strong>في انتظار البلاغات</strong></div>':'')+
-                '<div class="card"><div class="card-header"><div class="card-icon ci-map">🗺️</div><span class="card-label">خريطة — '+all.length+' نقطة</span></div><div id="mapContainer"></div>'+
-                '<div class="map-legend"><span><span class="legend-dot ld-report"></span> بلاغ</span><span><span class="legend-dot ld-pickup"></span> طلب جمع</span></div></div>'+
-                '<div class="card"><div class="card-header"><div class="card-icon ci-co2">🌱</div><span class="card-label">البصمة الكربونية</span></div>'+
-                '<div style="display:flex;justify-content:space-between;font-size:11px"><span>'+co2+' كغ CO₂</span><span>الهدف: 1,000</span></div><div class="co2-bar"><div class="co2-fill" style="width:'+Math.min((co2/1000)*100,100)+'%"></div></div></div>';
+                '<div class="card"><div class="card-header"><div class="card-icon ci-map">🗺️</div><span class="card-label">خريطة — '+all.length+' نقطة</span></div><div id="mapContainer"></div></div>';
         }
 
         function renderReports(){
             var r=getReports();if(r.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد بلاغات</span></div></div>';
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-reports">📋</div><span class="card-label">بلاغات المفرغات</span><span class="badge badge-new">'+r.length+'</span></div>'+
-                '<div class="table-wrap"><table><thead><tr><th>#</th><th>النوع</th><th>الإحداثيات</th><th>الوقت</th></tr></thead><tbody>'+
-                r.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getTypeName(x.type)+'</td><td style="direction:ltr;font-size:10px">'+(x.lat?x.lat.toFixed(4):'--')+', '+(x.lng?x.lng.toFixed(4):'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.time||x.created_at)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-reports">📋</div><span class="card-label">بلاغات المفرغات</span><span class="badge badge-new">'+r.length+'</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>النوع</th><th>الإحداثيات</th><th>الوقت</th></tr></thead><tbody>'+r.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getTypeName(x.type)+'</td><td style="direction:ltr;font-size:10px">'+(x.lat||'--')+', '+(x.lng||'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
         }
 
         function renderSorting(){
             var s=getSortingRequests();if(s.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد طلبات</span></div></div>';
             var tw=s.reduce(function(a,b){return a+(b.weight||0);},0);
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-sorting">📦</div><span class="card-label">طلبات الفرز</span><span class="badge badge-warn">'+s.length+'</span></div>'+
-                '<div style="font-size:12px;margin-bottom:12px;color:var(--primary-dark)">⚖️ '+tw+' كغ</div>'+
-                '<div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الوزن</th><th>الموقع</th><th>الوقت</th></tr></thead><tbody>'+
-                s.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getMaterialName(x.material)+'</td><td style="direction:ltr">'+(x.weight||0)+' كغ</td><td style="direction:ltr;font-size:10px">'+(x.lat?x.lat.toFixed(4):'--')+', '+(x.lng?x.lng.toFixed(4):'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.time||x.created_at)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-sorting">📦</div><span class="card-label">طلبات الفرز</span><span class="badge badge-warn">'+s.length+'</span></div><div style="font-size:12px;margin-bottom:12px;color:var(--primary-dark)">⚖️ '+tw+' كغ</div><div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الوزن</th><th>الموقع</th><th>الوقت</th></tr></thead><tbody>'+s.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+getMaterialName(x.material)+'</td><td style="direction:ltr">'+(x.weight||0)+' كغ</td><td style="direction:ltr;font-size:10px">'+(x.lat||'--')+', '+(x.lng||'--')+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td></tr>';}).join('')+'</tbody></table></div></div>';
         }
 
         function renderFleet(){
             var t=[{id:1,driver:'كريم حداد',plate:'12345-16-01',status:'free'},{id:2,driver:'نور الدين بلقاسم',plate:'12346-16-01',status:'busy'},{id:3,driver:'عبد الله مرزوق',plate:'12347-16-01',status:'free'}];
-            return '<div class="card"><div class="card-header"><div class="card-icon ci-trucks">🚛</div><span class="card-label">أسطول الشاحنات</span><span class="badge badge-ok">'+t.length+' شاحنة</span></div><div class="truck-list">'+
-                t.map(function(x){return '<div class="truck-item"><div class="truck-icon '+(x.status==='free'?'truck-free':'truck-busy')+'">🚛</div><div class="truck-info"><div class="truck-name">'+x.driver+'</div><div class="truck-plate">'+x.plate+'</div></div><span class="truck-status '+(x.status==='free'?'status-free':'status-busy')+'">'+(x.status==='free'?'🟢 متاح':'🟠 مهمة')+'</span></div>';}).join('')+'</div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-trucks">🚛</div><span class="card-label">أسطول الشاحنات</span><span class="badge badge-ok">'+t.length+' شاحنة</span></div><div class="truck-list">'+t.map(function(x){return '<div class="truck-item"><div class="truck-icon '+(x.status==='free'?'truck-free':'truck-busy')+'">🚛</div><div class="truck-info"><div class="truck-name">'+x.driver+'</div><div class="truck-plate">'+x.plate+'</div></div><span class="truck-status '+(x.status==='free'?'status-free':'status-busy')+'">'+(x.status==='free'?'🟢 متاح':'🟠 مهمة')+'</span></div>';}).join('')+'</div></div>';
         }
 
         function updatePurchaseStatus(id,status){sb.from('purchases').update({status:status}).eq('id',id).then(function(){loadAll();});}
 
         function renderSales(){
-            var p=supabasePurchases;
-            if(p.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">💰</span><span class="empty-text">لا توجد عروض شراء حتى الآن</span></div></div>';
+            var p=supabasePurchases;if(p.length===0) return '<div class="card"><div class="empty-state"><span class="empty-emoji">💰</span><span class="empty-text">لا توجد عروض</span></div></div>';
             var names={carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
-            var pendingCount = p.filter(function(x){return x.status==='pending';}).length;
-            var acceptedCount = p.filter(function(x){return x.status==='accepted';}).length;
-            var paidCount = p.filter(function(x){return x.status==='paid';}).length;
-            return '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;">'+
-                '<div class="stat-card" style="padding:12px 8px;"><span class="stat-icon">⏳</span><div class="stat-value">'+pendingCount+'</div><div class="stat-label">معلق</div></div>'+
-                '<div class="stat-card" style="padding:12px 8px;"><span class="stat-icon">✅</span><div class="stat-value">'+acceptedCount+'</div><div class="stat-label">مقبول</div></div>'+
-                '<div class="stat-card" style="padding:12px 8px;"><span class="stat-icon">💰</span><div class="stat-value">'+paidCount+'</div><div class="stat-label">مدفوع</div></div></div>'+
-                '<div class="card"><div class="card-header"><div class="card-icon ci-sales">🏭</div><span class="card-label">عروض شراء الشركات</span><span class="badge badge-gold">'+p.length+' عرض</span></div>'+
-                '<div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر/كغ</th><th>الإجمالي</th><th>الحالة</th><th>الإجراء</th><th>الوقت</th></tr></thead><tbody>'+
-                p.map(function(x,i){
-                    var qty = x.quantity||0;
-                    var price = x.price_per_kg||0;
-                    var total = qty * price;
-                    var actionBtns = '';
-                    if(x.status==='pending'){
-                        actionBtns = '<button class="btn-action-sm btn-accept" onclick="updatePurchaseStatus('+x.id+',\'accepted\')">✅ قبول</button> <button class="btn-action-sm btn-reject" onclick="updatePurchaseStatus('+x.id+',\'rejected\')">❌ رفض</button>';
-                    } else if(x.status==='accepted'){
-                        actionBtns = '<button class="btn-action-sm btn-paid" onclick="updatePurchaseStatus('+x.id+',\'paid\')">💰 تأكيد الدفع</button>';
-                    } else if(x.status==='paid'){
-                        actionBtns = '<span class="pill pill-paid">✅ مكتمل</span>';
-                    } else {
-                        actionBtns = '<span class="pill pill-new">❌ مرفوض</span>';
-                    }
-                    var statusPill = x.status==='pending'?'pill-pending':(x.status==='accepted'?'pill-done':(x.status==='paid'?'pill-paid':'pill-new'));
-                    var statusText = x.status==='pending'?'⏳ معلق':(x.status==='accepted'?'✅ مقبول':(x.status==='paid'?'💰 مدفوع':'❌ مرفوض'));
-                    return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+qty+' كغ</td><td style="direction:ltr;color:var(--accent);font-weight:700;">'+price+' دج</td><td style="direction:ltr;color:var(--teal);font-weight:700;">'+total.toLocaleString('en-US')+' دج</td><td><span class="pill '+statusPill+'">'+statusText+'</span></td><td>'+actionBtns+'</td><td style="direction:ltr;font-size:10px">'+formatTime(x.created_at)+'</td></tr>';
-                }).join('')+'</tbody></table></div></div>';
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-sales">🏭</div><span class="card-label">عروض شراء الشركات</span><span class="badge badge-teal">'+p.length+' عرض</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>المادة</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th>الحالة</th><th>الإجراء</th></tr></thead><tbody>'+p.map(function(x,i){var q=x.quantity||0,pr=x.price_per_kg||0,tot=q*pr,a='';if(x.status==='pending')a='<button class="btn-action-sm btn-accept" onclick="updatePurchaseStatus('+x.id+',\'accepted\')">✅</button> <button class="btn-action-sm btn-reject" onclick="updatePurchaseStatus('+x.id+',\'rejected\')">❌</button>';else if(x.status==='accepted')a='<button class="btn-action-sm btn-paid" onclick="updatePurchaseStatus('+x.id+',\'paid\')">💰</button>';else if(x.status==='paid')a='<span class="pill pill-paid">✅</span>';else a='<span class="pill pill-new">❌</span>';var sp=x.status==='pending'?'pill-pending':(x.status==='accepted'?'pill-done':(x.status==='paid'?'pill-paid':'pill-new'));var st=x.status==='pending'?'⏳':(x.status==='accepted'?'✅':(x.status==='paid'?'💰':'❌'));return '<tr><td>'+(i+1)+'</td><td>'+(names[x.material]||x.material)+'</td><td style="direction:ltr;">'+q+' كغ</td><td style="direction:ltr;">'+pr+' دج</td><td style="direction:ltr;color:var(--teal);">'+tot.toLocaleString('en-US')+' دج</td><td><span class="pill '+sp+'">'+st+'</span></td><td>'+a+'</td></tr>';}).join('')+'</tbody></table></div></div>';
+        }
+
+        function renderAnalyticsHTML(){
+            return '<div class="card"><div class="card-header"><div class="card-icon ci-analytics">📊</div><span class="card-label">توزيع أنواع النفايات</span></div><div class="chart-box"><canvas id="chartPie"></canvas></div></div>'+
+                '<div class="card"><div class="card-header"><div class="card-icon ci-analytics">📈</div><span class="card-label">كميات المواد المجمعة</span></div><div class="chart-box"><canvas id="chartBar"></canvas></div></div>';
         }
 
         function renderTab(){
@@ -250,6 +249,7 @@
             else if(currentTab==='sorting') c.innerHTML=renderSorting();
             else if(currentTab==='fleet') c.innerHTML=renderFleet();
             else if(currentTab==='sales') c.innerHTML=renderSales();
+            else if(currentTab==='analytics'){c.innerHTML=renderAnalyticsHTML();setTimeout(renderAnalytics,500);}
         }
     </script>
 </body>
