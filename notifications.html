@@ -38,17 +38,14 @@
         .card-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 19px; background: #E3F2FD; }
         .card-label { flex: 1; font-size: 15px; font-weight: 800; color: var(--text-dark); }
         .notif-list { display: flex; flex-direction: column; gap: 10px; }
-        .notif-item {
-            display: flex; gap: 12px; padding: 14px; border-radius: var(--radius-sm);
-            background: rgba(0,0,0,0.02); border-right: 4px solid var(--info);
-            transition: var(--transition);
-        }
+        .notif-item { display: flex; gap: 12px; padding: 14px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.02); border-right: 4px solid var(--info); transition: var(--transition); cursor: pointer; }
         .notif-item.unread { background: rgba(30,136,229,0.04); border-right-color: var(--info); }
         .notif-item.warning { border-right-color: var(--accent); }
         .notif-item.success { border-right-color: var(--primary); }
         .notif-item.danger { border-right-color: var(--danger); }
         .notif-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-        .dot-unread { background: var(--info); }
+        .dot-unread { background: var(--info); animation: dotPulse 1.5s ease-in-out infinite; }
+        @keyframes dotPulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
         .dot-read { background: #ccc; }
         .notif-content { flex: 1; }
         .notif-title { font-size: 13px; font-weight: 700; color: var(--text-dark); }
@@ -88,6 +85,17 @@
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50'];for(var i=0;i<20;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
 
+        // ============ تحديد جميع الإشعارات كمقروءة ============
+        function markAllAsRead(){
+            // تحديث كل الإشعارات غير المقروءة إلى مقروءة
+            var xhr = new XMLHttpRequest();
+            xhr.open('PATCH', 'https://ctkkkpcjwebkrcbzsvpf.supabase.co/rest/v1/notifications?is_read=eq.false');
+            xhr.setRequestHeader('apikey', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Prefer', 'return=minimal');
+            xhr.send(JSON.stringify({is_read: true}));
+        }
+
         async function loadNotifications(){
             var container = document.getElementById('notifList');
             try{
@@ -107,6 +115,9 @@
                             '</div>'+
                         '</div>';
                     }).join('');
+
+                    // تحديد كل الإشعارات كمقروءة بعد عرضها
+                    markAllAsRead();
                 } else {
                     container.innerHTML = '<div class="empty-state"><span class="empty-emoji">📭</span><span class="empty-text">لا توجد إشعارات حالياً</span></div>';
                 }
