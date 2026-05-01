@@ -36,10 +36,8 @@
         @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
         .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
         .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
-        .btn-back:hover { background: rgba(255,255,255,0.12); }
         .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
-        .btn-refresh:hover { background: rgba(255,255,255,0.14); }
+        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; }
         .main-container { position: relative; z-index: 1; flex: 1; padding: 78px 16px 20px; max-width: 750px; margin: 0 auto; width: 100%; }
         .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
         @media (min-width: 500px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -125,8 +123,8 @@
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
         var supabaseReports=[],supabasePickups=[],supabasePurchases=[],supabaseInvoices=[];
         var analyticsCharts=[];
-        var API_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
-        var API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
+        var API_URL='https://ctkkkpcjwebkrcbzsvpf.supabase.co';
+        var API_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#009688','#7B1FA2','#FFCC02'];for(var i=0;i<35;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
 
@@ -224,32 +222,29 @@
             if(!purchase){alert('لم يتم العثور على العرض'); return;}
             var qty = purchase.quantity||0, price = purchase.price_per_kg||0, total = qty*price;
 
-            fetch(API_URL+'/rest/v1/invoices', {
-                method: 'POST',
-                headers: {
-                    'apikey': API_KEY,
-                    'Content-Type': 'application/json',
-                    'Prefer': 'return=minimal'
-                },
-                body: JSON.stringify({
-                    purchase_id: purchaseId,
-                    material: purchase.material,
-                    quantity: qty,
-                    price_per_kg: price,
-                    total: total,
-                    company_name: 'شركة التدوير',
-                    status: 'issued'
-                })
-            }).then(function(response){
-                if(response.ok){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', API_URL+'/rest/v1/invoices');
+            xhr.setRequestHeader('apikey', API_KEY);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Prefer', 'return=minimal');
+            xhr.onload = function(){
+                if(xhr.status === 201){
                     alert('✅ تم إصدار الفاتورة بنجاح!');
                     loadAll();
                 } else {
-                    alert('❌ خطأ في الإصدار');
+                    alert('❌ خطأ: ' + xhr.status + ' - ' + xhr.responseText);
                 }
-            }).catch(function(err){
-                alert('❌ خطأ: ' + err.message);
-            });
+            };
+            xhr.onerror = function(){alert('❌ خطأ في الاتصال');};
+            xhr.send(JSON.stringify({
+                purchase_id: purchaseId,
+                material: purchase.material,
+                quantity: qty,
+                price_per_kg: price,
+                total: total,
+                company_name: 'شركة التدوير',
+                status: 'issued'
+            }));
         }
 
         function printInvoice(invId){window.open('invoice.html?id='+invId,'_blank');}
