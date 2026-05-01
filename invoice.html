@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاتورة | مدينتنا نظيفة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #f5f5f5; display: flex; justify-content: center; padding: 20px; }
+        .invoice { width: 100%; max-width: 600px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 16px; margin-bottom: 20px; }
+        .header h1 { font-size: 24px; font-weight: 900; color: #1B5E20; }
+        .header p { font-size: 12px; color: #666; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+        .row strong { color: #1B5E20; }
+        .divider { border-top: 2px dashed #e0e0e0; margin: 16px 0; }
+        .total { font-size: 20px; font-weight: 900; color: #1B5E20; text-align: left; direction: ltr; }
+        .footer { text-align: center; font-size: 11px; color: #999; margin-top: 24px; border-top: 1px solid #e0e0e0; padding-top: 12px; }
+        .btn-print { display: block; width: 100%; padding: 12px; background: #2E7D32; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; margin-top: 20px; }
+        .btn-print:hover { background: #1B5E20; }
+        @media print { body { background: white; } .btn-print { display: none; } }
+        .material-icon { font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="invoice" id="invoice">
+        <div class="header">
+            <h1>🧾 فاتورة رسمية</h1>
+            <p>مدينتنا نظيفة — منصة وطنية للاقتصاد الأخضر</p>
+            <p>🇩🇿 ولاية برج بوعريريج</p>
+        </div>
+
+        <div class="row"><span>رقم الفاتورة:</span> <strong id="invId">—</strong></div>
+        <div class="row"><span>التاريخ:</span> <strong id="invDate">—</strong></div>
+        <div class="divider"></div>
+        <div class="row"><span>المادة:</span> <strong id="invMaterial">—</strong></div>
+        <div class="row"><span>الكمية:</span> <strong id="invQty" style="direction:ltr;">—</strong></div>
+        <div class="row"><span>السعر/كغ:</span> <strong id="invPrice" style="direction:ltr;">—</strong></div>
+        <div class="divider"></div>
+        <div class="total">الإجمالي: <span id="invTotal">—</span> دج</div>
+        <div class="footer">شكراً لتعاملكم مع مدينتنا نظيفة — معاً نحو جزائر أنظف ♻️</div>
+        <button class="btn-print" onclick="window.print()">🖨️ طباعة الفاتورة</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var invoiceId = urlParams.get('id');
+
+        if(invoiceId){
+            sb.from('invoices').select('*').eq('id',invoiceId).single().then(function(r){
+                if(r.data){
+                    var d = r.data;
+                    var names = {carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
+                    document.getElementById('invId').textContent = 'F-' + d.id;
+                    document.getElementById('invDate').textContent = new Date(d.created_at).toLocaleDateString('ar-DZ');
+                    document.getElementById('invMaterial').textContent = names[d.material] || d.material;
+                    document.getElementById('invQty').textContent = (d.quantity||0).toLocaleString('en-US') + ' كغ';
+                    document.getElementById('invPrice').textContent = (d.price_per_kg||0).toLocaleString('en-US') + ' دج/كغ';
+                    document.getElementById('invTotal').textContent = (d.total||0).toLocaleString('en-US');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
