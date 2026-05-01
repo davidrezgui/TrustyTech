@@ -59,18 +59,17 @@
         .type-item.selected .type-check { display: flex; }
         .type-emoji { font-size: 26px; display: block; margin-bottom: 3px; }
         .type-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
-        .map-box { width: 100%; border-radius: var(--radius-sm); border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden; transition: var(--transition); padding: 14px; text-align: center; }
+        .map-box { width: 100%; border-radius: var(--radius-sm); border: 2.5px solid rgba(0,0,0,0.06); overflow: hidden; transition: var(--transition); padding: 16px; text-align: center; }
         .map-box.located { border-color: var(--primary-light); }
-        .map-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; padding: 10px; }
+        .map-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .map-emoji { font-size: 36px; margin-bottom: 4px; animation: bounce 2s ease-in-out infinite; }
         @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        .coords { display: none; gap: 6px; margin-top: 8px; font-size: 11px; font-weight: 600; color: var(--text-gray); background: rgba(0,0,0,0.02); padding: 8px 12px; border-radius: 16px; justify-content: center; flex-wrap: wrap; }
-        .coords.show { display: flex; }
-        .coord-val { color: var(--primary-dark); font-weight: 800; direction: ltr; display: inline-block; }
-        .coord-input { width: 100px; padding: 4px 8px; border: 1.5px solid #e0e0e0; border-radius: 8px; text-align: center; font-size: 11px; font-family: 'Cairo', sans-serif; direction: ltr; }
-        .coord-label { font-size: 10px; color: var(--text-gray); margin: 0 2px; }
-        .btn-locate { width: 100%; padding: 10px; border-radius: 20px; border: 1.5px solid var(--info); background: white; color: var(--info); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700; transition: var(--transition); margin-top: 8px; }
+        .coords { display: none; margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--primary-dark); background: rgba(0,0,0,0.02); padding: 10px 14px; border-radius: 16px; text-align: center; direction: ltr; }
+        .coords.show { display: block; }
+        .btn-locate { width: 100%; padding: 12px; border-radius: 20px; border: 2px solid var(--info); background: white; color: var(--info); cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; transition: var(--transition); margin-top: 10px; }
         .btn-locate:hover { background: #E3F2FD; }
+        .btn-locate:active { transform: scale(0.97); }
+        .btn-locate.loading { opacity: 0.7; pointer-events: none; }
         .submit-btn { width: 100%; padding: 15px; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 800; cursor: pointer; transition: var(--transition); color: white; font-family: 'Cairo', sans-serif; background: rgba(255,255,255,0.1); opacity: 0.4; pointer-events: none; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; border: 1px solid rgba(255,255,255,0.08); }
         .submit-btn.ready { background: linear-gradient(135deg, var(--primary), var(--primary-light)); box-shadow: 0 8px 30px rgba(46,125,50,0.4); opacity: 1; pointer-events: auto; border: none; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -123,11 +122,11 @@
         <div class="card" id="c2" style="animation-delay:0.1s">
             <div class="card-header"><div class="card-icon ci-type">🏷️</div><span class="card-label">اختر نوع النفايات</span><span class="tag tag-req" id="t2">مطلوب</span></div>
             <div class="type-grid">
-                <div class="type-item" onclick="pickType(this,'menagere')"><span class="type-check">✓</span><span class="type-emoji">🗑️</span><span class="type-name">نفايات منزلية</span></div>
+                <div class="type-item" onclick="pickType(this,'menagere')"><span class="type-check">✓</span><span class="type-emoji">🗑️</span><span class="type-name">منزلية</span></div>
                 <div class="type-item" onclick="pickType(this,'plastique')"><span class="type-check">✓</span><span class="type-emoji">🫙</span><span class="type-name">بلاستيك</span></div>
                 <div class="type-item" onclick="pickType(this,'carton')"><span class="type-check">✓</span><span class="type-emoji">📦</span><span class="type-name">كرتون</span></div>
                 <div class="type-item" onclick="pickType(this,'verre')"><span class="type-check">✓</span><span class="type-emoji">🫗</span><span class="type-name">زجاج</span></div>
-                <div class="type-item" onclick="pickType(this,'decombres')"><span class="type-check">✓</span><span class="type-emoji">🧱</span><span class="type-name">أنقاض بناء</span></div>
+                <div class="type-item" onclick="pickType(this,'decombres')"><span class="type-check">✓</span><span class="type-emoji">🧱</span><span class="type-name">أنقاض</span></div>
                 <div class="type-item" onclick="pickType(this,'autre')"><span class="type-check">✓</span><span class="type-emoji">❓</span><span class="type-name">أخرى</span></div>
             </div>
         </div>
@@ -136,17 +135,11 @@
             <div class="card-header"><div class="card-icon ci-loc">📍</div><span class="card-label">تأكيد الموقع الجغرافي</span><span class="tag tag-req" id="t3">مطلوب</span></div>
             <div class="map-box" id="mapBox">
                 <div class="map-inner">
-                    <span class="map-emoji">📍</span>
-                    <span style="font-weight:700;font-size:13px;color:#616161;">اضغط الزر لتحديد موقعك تلقائياً</span>
-                    <button class="btn-locate" onclick="getLocation()">📍 تحديد موقعي الحالي</button>
+                    <span class="map-emoji" id="mapEmoji">📍</span>
+                    <span style="font-weight:700;font-size:13px;color:#616161;" id="mapText">اضغط الزر لتحديد موقعك</span>
+                    <button class="btn-locate" id="btnLocate" onclick="getLocation()">📍 تحديد موقعي الحالي</button>
                 </div>
-                <div class="coords" id="coords">
-                    <span>✅ الإحداثيات: </span>
-                    <span class="coord-label">خط العرض:</span>
-                    <input type="text" class="coord-input" id="vLat" placeholder="36.0736" onchange="updateCoords()" dir="ltr">
-                    <span class="coord-label">خط الطول:</span>
-                    <input type="text" class="coord-input" id="vLng" placeholder="4.7631" onchange="updateCoords()" dir="ltr">
-                </div>
+                <div class="coords" id="coords"></div>
             </div>
         </div>
 
@@ -168,9 +161,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
         var API_URL='https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var API_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
@@ -179,16 +170,26 @@
         var S={photo:null,type:null,lat:null,lng:null};
         var currentUserId = null;
 
-        // زر الرجوع الذكي
-        sb.auth.getSession().then(function(r){
-            var backBtn = document.getElementById('backBtn');
-            if(r.data.session){ 
-                backBtn.href = 'home.html'; 
-                currentUserId = r.data.session.user.id;
-            } else { 
-                backBtn.href = 'index.html'; 
-            }
-        });
+        // زر الرجوع الذكي + معرفة المستخدم
+        (function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', API_URL + '/auth/v1/user', true);
+            xhr.setRequestHeader('apikey', API_KEY);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + API_KEY);
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    var user = JSON.parse(xhr.responseText);
+                    if(user && user.id){
+                        currentUserId = user.id;
+                        document.getElementById('backBtn').href = 'home.html';
+                        return;
+                    }
+                }
+                document.getElementById('backBtn').href = 'index.html';
+            };
+            xhr.onerror = function(){ document.getElementById('backBtn').href = 'index.html'; };
+            xhr.send();
+        })();
 
         function takePicture(){if(!S.photo)document.getElementById('cameraInput').click();}
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
@@ -233,39 +234,59 @@
         }
 
         function getLocation(){
+            var btn = document.getElementById('btnLocate');
+            var mapText = document.getElementById('mapText');
+            
             if(!navigator.geolocation){
-                document.getElementById('coords').classList.add('show');
+                alert('⚠️ متصفحك لا يدعم تحديد الموقع.');
                 return;
             }
-            
+
+            btn.textContent = '📡 جاري التحديد...';
+            btn.classList.add('loading');
+            mapText.textContent = 'جاري البحث عن موقعك...';
+
             navigator.geolocation.getCurrentPosition(
                 function(pos){
-                    S.lat=pos.coords.latitude;S.lng=pos.coords.longitude;
-                    document.getElementById('vLat').value=S.lat.toFixed(6);
-                    document.getElementById('vLng').value=S.lng.toFixed(6);
+                    S.lat = pos.coords.latitude;
+                    S.lng = pos.coords.longitude;
+                    
+                    document.getElementById('coords').textContent = S.lat.toFixed(6) + ', ' + S.lng.toFixed(6);
                     document.getElementById('coords').classList.add('show');
                     document.getElementById('mapBox').classList.add('located');
-                    document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
-                    document.getElementById('c3').classList.add('done');update();
+                    document.getElementById('mapEmoji').textContent = '✅';
+                    mapText.textContent = 'تم تحديد الموقع بنجاح';
+                    btn.textContent = '📍 إعادة التحديد';
+                    btn.classList.remove('loading');
+                    
+                    document.getElementById('t3').className='tag tag-ok';
+                    document.getElementById('t3').textContent='✓ تم';
+                    document.getElementById('c3').classList.add('done');
+                    update();
                 },
-                function(){
-                    // عند الفشل، يظهر الإدخال اليدوي
-                    document.getElementById('coords').classList.add('show');
-                    alert('⚠️ تعذر تحديد الموقع تلقائياً. يمكنك إدخال الإحداثيات يدوياً.');
+                function(err){
+                    btn.classList.remove('loading');
+                    btn.textContent = '📍 حاول مرة أخرى';
+                    
+                    // رسائل واضحة حسب نوع الخطأ
+                    if(err.code === 1){
+                        // PERMISSION_DENIED - GPS غير مفعل أو تم رفض الإذن
+                        mapText.textContent = '⚠️ GPS غير مفعل. الرجاء تشغيله من إعدادات الهاتف ثم حاول مرة أخرى.';
+                        alert('⚠️ لتحديد موقعك، يرجى:\n\n1. فتح إعدادات الهاتف\n2. تشغيل "الموقع" أو "GPS"\n3. العودة لهذه الصفحة والضغط مرة أخرى');
+                    } else if(err.code === 2){
+                        // POSITION_UNAVAILABLE
+                        mapText.textContent = '⚠️ تعذر الحصول على الموقع. تأكد من أنك في منطقة مفتوحة.';
+                    } else {
+                        // TIMEOUT
+                        mapText.textContent = '⏰ انتهت المهلة. الرجاء المحاولة مرة أخرى.';
+                    }
                 },
-                {enableHighAccuracy:true,timeout:15000}
+                {
+                    enableHighAccuracy: true,
+                    timeout: 20000,
+                    maximumAge: 0
+                }
             );
-        }
-
-        function updateCoords(){
-            var latVal = parseFloat(document.getElementById('vLat').value);
-            var lngVal = parseFloat(document.getElementById('vLng').value);
-            if(!isNaN(latVal) && !isNaN(lngVal)){
-                S.lat = latVal; S.lng = lngVal;
-                document.getElementById('mapBox').classList.add('located');
-                document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
-                document.getElementById('c3').classList.add('done');update();
-            }
         }
 
         function update(){
@@ -283,88 +304,56 @@
             var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
 
-            var reportData = {
-                photo_url: S.photo,
-                type: S.type,
-                lat: S.lat,
-                lng: S.lng,
-                status: 'new'
-            };
+            // استعمال fetch مع credentials: 'omit' لتجاهل الكوكيز تماماً
+            fetch(API_URL + '/rest/v1/reports', {
+                method: 'POST',
+                headers: {
+                    'apikey': API_KEY,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation'
+                },
+                credentials: 'omit',
+                body: JSON.stringify({
+                    photo_url: S.photo,
+                    type: S.type,
+                    lat: S.lat,
+                    lng: S.lng,
+                    status: 'new'
+                })
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                return response.json();
+            })
+            .then(function(result) {
+                var reportId = result[0] ? result[0].id : '—';
+                
+                // تحديث localStorage
+                var reports=JSON.parse(localStorage.getItem('reports')||'[]');
+                reports.push({id:reportId,photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
+                localStorage.setItem('reports',JSON.stringify(reports));
 
-            // استعمال XMLHttpRequest بدل sb.from() لتجنب مشاكل الكوكيز
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', API_URL + '/rest/v1/reports');
-            xhr.setRequestHeader('apikey', API_KEY);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Prefer', 'return=representation');
-
-            xhr.onload = function(){
-                if(xhr.status === 201){
-                    var result = JSON.parse(xhr.responseText);
-                    var reportId = result[0] ? result[0].id : '—';
-                    
-                    // تحديث localStorage
-                    var reports=JSON.parse(localStorage.getItem('reports')||'[]');
-                    reports.push({id:reportId,photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
-                    localStorage.setItem('reports',JSON.stringify(reports));
-
-                    // إعطاء نقاط إذا كان المستخدم مسجلاً
-                    var pointsEarned = 0;
-                    if(currentUserId){
-                        pointsEarned = 5; // 5 نقاط على البلاغ
-                        var points=parseInt(localStorage.getItem('greenPoints')||'0');
-                        points += pointsEarned;
-                        localStorage.setItem('greenPoints', points.toString());
-                    }
-
-                    // إظهار النجاح
-                    document.getElementById('reportIdDisplay').textContent = 'رقم البلاغ: #' + reportId;
-                    var ptsMsg = currentUserId ? '✨ لقد كسبت ' + pointsEarned + ' نقاط خضراء' : '';
-                    document.getElementById('pointsDisplay').textContent = ptsMsg;
-                    document.getElementById('overlay').classList.add('show');
-                    
-                    b.innerHTML='🚀 إرسال البلاغ';
-                } else {
-                    alert('❌ خطأ في الإرسال. الرجاء المحاولة مرة أخرى.');
-                    b.innerHTML='🚀 إرسال البلاغ';
-                    b.classList.add('ready');b.disabled=false;
+                // نقاط للمستخدم المسجل
+                var pointsEarned = 0;
+                if(currentUserId){
+                    pointsEarned = 5;
+                    var points=parseInt(localStorage.getItem('greenPoints')||'0');
+                    points += pointsEarned;
+                    localStorage.setItem('greenPoints', points.toString());
                 }
-            };
 
-            xhr.onerror = function(){
-                // محاولة احتياطية بـ sb
-                sb.from('reports').insert(reportData).then(function(r){
-                    if(!r.error){
-                        var reports=JSON.parse(localStorage.getItem('reports')||'[]');
-                        reports.push({photo:S.photo,type:S.type,lat:S.lat,lng:S.lng,time:new Date().toISOString(),status:'new'});
-                        localStorage.setItem('reports',JSON.stringify(reports));
-
-                        if(currentUserId){
-                            var points=parseInt(localStorage.getItem('greenPoints')||'0');
-                            points += 5;
-                            localStorage.setItem('greenPoints', points.toString());
-                            document.getElementById('pointsDisplay').textContent = '✨ لقد كسبت 5 نقاط خضراء';
-                        }
-
-                        document.getElementById('reportIdDisplay').textContent = '';
-                        document.getElementById('overlay').classList.add('show');
-                        b.innerHTML='🚀 إرسال البلاغ';
-                    } else {
-                        alert('❌ خطأ في الاتصال. الرجاء المحاولة مرة أخرى.');
-                        b.innerHTML='🚀 إرسال البلاغ';
-                        b.classList.add('ready');b.disabled=false;
-                    }
-                });
-            };
-
-            xhr.timeout = 15000;
-            xhr.ontimeout = function(){
-                alert('⏰ انتهت مهلة الاتصال. الرجاء المحاولة مرة أخرى.');
+                document.getElementById('reportIdDisplay').textContent = 'رقم البلاغ: #' + reportId;
+                document.getElementById('pointsDisplay').textContent = currentUserId ? '✨ لقد كسبت ' + pointsEarned + ' نقاط خضراء' : '';
+                document.getElementById('overlay').classList.add('show');
                 b.innerHTML='🚀 إرسال البلاغ';
-                b.classList.add('ready');b.disabled=false;
-            };
-
-            xhr.send(JSON.stringify(reportData));
+            })
+            .catch(function(err) {
+                console.error('Error:', err);
+                alert('❌ خطأ في الإرسال. الرجاء المحاولة مرة أخرى.');
+                b.innerHTML='🚀 إرسال البلاغ';
+                b.classList.add('ready');
+                b.disabled=false;
+            });
         }
 
         function resetAll(){
@@ -374,8 +363,12 @@
             ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
             ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
             document.getElementById('coords').classList.remove('show');
-            document.getElementById('vLat').value='';document.getElementById('vLng').value='';
+            document.getElementById('coords').textContent = '';
             document.getElementById('mapBox').classList.remove('located');
+            document.getElementById('mapEmoji').textContent = '📍';
+            document.getElementById('mapText').textContent = 'اضغط الزر لتحديد موقعك';
+            document.getElementById('btnLocate').textContent = '📍 تحديد موقعي الحالي';
+            document.getElementById('btnLocate').classList.remove('loading');
             update();window.scrollTo({top:0,behavior:'smooth'});
         }
     </script>
