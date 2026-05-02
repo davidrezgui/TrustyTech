@@ -64,7 +64,7 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        var myPoints = parseInt(localStorage.getItem('greenPoints') || '0');
+        var myPoints = 0;
 
         var rewards = [
             { id: 1, icon: '🗑️', name: 'كيس قمامة', desc: 'كيس متين 50 لتر', cost: 100 },
@@ -75,29 +75,60 @@
             { id: 6, icon: '🏆', name: 'شهادة تقدير', desc: 'مواطن بيئي نشط', cost: 3000 }
         ];
 
-        document.getElementById('pointsDisplay').textContent = myPoints.toLocaleString('en-US');
+        // جمع النقاط من localStorage + Supabase (مثل home.html)
+        function loadPoints(){
+            var localPts = parseInt(localStorage.getItem('greenPoints') || '0');
+            myPoints = localPts;
 
-        document.getElementById('rewardsList').innerHTML = rewards.map(function(r){
-            var canRedeem = myPoints >= r.cost;
-            return '<div class="reward-card">' +
-                '<span class="reward-icon">' + r.icon + '</span>' +
-                '<div class="reward-info"><div class="reward-name">' + r.name + '</div><div class="reward-desc">' + r.desc + '</div></div>' +
-                '<div class="reward-cost">' + r.cost.toLocaleString('en-US') + ' نقطة</div>' +
-                '<button class="btn-redeem" ' + (canRedeem ? '' : 'disabled') + ' onclick="redeem(' + r.id + ',' + r.cost + ',\'' + r.name + '\')">' + (canRedeem ? 'استبدال' : 'غير كافٍ') + '</button>' +
-            '</div>';
-        }).join('');
+            var x = new XMLHttpRequest();
+            x.open('GET', SUPABASE_URL + '/rest/v1/pickups?select=points&apikey=' + SUPABASE_KEY, true);
+            x.timeout = 15000;
+            x.onload = function(){
+                if(x.status === 200){
+                    var data = JSON.parse(x.responseText);
+                    myPoints += data.reduce(function(s, r){ return s + (r.points || 0); }, 0);
+                }
+                showPointsAndRewards();
+            };
+            x.onerror = function(){ showPointsAndRewards(); };
+            x.send();
+        }
+
+        function showPointsAndRewards(){
+            document.getElementById('pointsDisplay').textContent = myPoints.toLocaleString('en-US');
+
+            document.getElementById('rewardsList').innerHTML = rewards.map(function(r){
+                var canRedeem = myPoints >= r.cost;
+                return '<div class="reward-card">' +
+                    '<span class="reward-icon">' + r.icon + '</span>' +
+                    '<div class="reward-info"><div class="reward-name">' + r.name + '</div><div class="reward-desc">' + r.desc + '</div></div>' +
+                    '<div class="reward-cost">' + r.cost.toLocaleString('en-US') + ' نقطة</div>' +
+                    '<button class="btn-redeem" ' + (canRedeem ? '' : 'disabled') + ' onclick="redeem(' + r.id + ',' + r.cost + ',\'' + r.name + '\')">' + (canRedeem ? 'استبدال' : 'غير كافٍ') + '</button>' +
+                '</div>';
+            }).join('');
+        }
 
         function redeem(id, cost, name){
             if(myPoints < cost) return;
             if(!confirm('استبدال ' + name + ' بـ ' + cost + ' نقطة؟')) return;
+
+            // نخصم من localStorage أولاً
+            var localPts = parseInt(localStorage.getItem('greenPoints') || '0');
+            var remaining = localPts - cost;
+            if(remaining >= 0){
+                localStorage.setItem('greenPoints', remaining.toString());
+            } else {
+                // النقاط المحلية لا تكفي، نخصم منها كلها والباقي من Supabase
+                localStorage.setItem('greenPoints', '0');
+            }
+
             myPoints -= cost;
-            localStorage.setItem('greenPoints', myPoints.toString());
             document.getElementById('pointsDisplay').textContent = myPoints.toLocaleString('en-US');
             document.getElementById('successMsg').style.display = 'block';
-            setTimeout(function(){ document.getElementById('successMsg').style.display = 'none'; }, 2500);
-            // تحديث الأزرار
-            location.reload();
+            setTimeout(function(){ document.getElementById('successMsg').style.display = 'none'; location.reload(); }, 2000);
         }
+
+        loadPoints();
     </script>
 </body>
 </html>
