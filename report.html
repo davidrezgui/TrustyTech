@@ -88,41 +88,23 @@
     </style>
 </head>
 <body>
-
     <div class="particles-bg" id="particlesBg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-
     <header class="top-nav">
         <a href="index.html" class="btn-back" id="backBtn">←</a>
         <span class="nav-title">📸 تبليغ عن مفرغة</span>
-        <div class="step-dots">
-            <span class="step-dot active" id="s1"></span>
-            <span class="step-dot" id="s2"></span>
-            <span class="step-dot" id="s3"></span>
-        </div>
+        <div class="step-dots"><span class="step-dot active" id="s1"></span><span class="step-dot" id="s2"></span><span class="step-dot" id="s3"></span></div>
     </header>
-
     <main class="main-container">
-        <div class="progress-bar-wrap">
-            <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
-            <div class="progress-text" id="pText">0 من 3 خطوات</div>
-        </div>
-
+        <div class="progress-bar-wrap"><div class="progress-bar"><div class="progress-fill" id="pFill"></div></div><div class="progress-text" id="pText">0 من 3 خطوات</div></div>
         <div class="card" id="c1" style="animation-delay:0.05s">
             <div class="card-header"><div class="card-icon ci-cam">📷</div><span class="card-label">التقط صورة للمفرغة</span><span class="tag tag-req" id="t1">مطلوب</span></div>
-            <div class="cam-zone" id="camZone" onclick="takePicture()">
-                <div class="flash" id="flash"></div><img id="preview" alt="معاينة">
-                <div class="cam-inner" id="camInner"><span class="cam-emoji">📸</span><span class="cam-text">اضغط لفتح الكاميرا</span><span class="cam-hint">التقط صورة للمفرغة</span></div>
-            </div>
+            <div class="cam-zone" id="camZone" onclick="takePicture()"><div class="flash" id="flash"></div><img id="preview" alt="معاينة"><div class="cam-inner" id="camInner"><span class="cam-emoji">📸</span><span class="cam-text">اضغط لفتح الكاميرا</span><span class="cam-hint">التقط صورة للمفرغة</span></div></div>
             <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(event)">
             <input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
-            <div class="cam-btns">
-                <button class="btn-gallery" id="btnGallery" onclick="openGallery()">🖼️ اختر من المعرض</button>
-                <button class="btn-delete" id="btnDelete" onclick="deletePhoto()">🗑️ حذف وإعادة تصوير</button>
-            </div>
+            <div class="cam-btns"><button class="btn-gallery" id="btnGallery" onclick="openGallery()">🖼️ اختر من المعرض</button><button class="btn-delete" id="btnDelete" onclick="deletePhoto()">🗑️ حذف وإعادة تصوير</button></div>
         </div>
-
         <div class="card" id="c2" style="animation-delay:0.1s">
             <div class="card-header"><div class="card-icon ci-type">🏷️</div><span class="card-label">اختر نوع النفايات</span><span class="tag tag-req" id="t2">مطلوب</span></div>
             <div class="type-grid">
@@ -134,59 +116,27 @@
                 <div class="type-item" onclick="pickType(this,'autre')"><span class="type-check">✓</span><span class="type-emoji">❓</span><span class="type-name">أخرى</span></div>
             </div>
         </div>
-
         <div class="card" id="c3" style="animation-delay:0.15s">
             <div class="card-header"><div class="card-icon ci-loc">📍</div><span class="card-label">تأكيد الموقع الجغرافي</span><span class="tag tag-req" id="t3">مطلوب</span></div>
-            <div class="map-box" id="mapBox">
-                <div class="map-inner">
-                    <span class="map-emoji" id="mapEmoji">📍</span>
-                    <span style="font-weight:700;font-size:13px;color:#616161;" id="mapText">اضغط الزر لتحديد موقعك تلقائياً</span>
-                    <button class="btn-locate" id="btnLocate" onclick="getLocation()">📍 تحديد موقعي الحالي</button>
-                </div>
-                <div class="coords" id="coords"></div>
-            </div>
+            <div class="map-box" id="mapBox"><div class="map-inner"><span class="map-emoji" id="mapEmoji">📍</span><span style="font-weight:700;font-size:13px;color:#616161;" id="mapText">اضغط الزر لتحديد موقعك تلقائياً</span><button class="btn-locate" id="btnLocate" onclick="getLocation()">📍 تحديد موقعي الحالي</button></div><div class="coords" id="coords"></div></div>
         </div>
-
         <button class="submit-btn" id="btnSubmit" disabled onclick="send()">🚀 إرسال البلاغ</button>
     </main>
-
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
-
     <div class="overlay" id="overlay">
-        <div class="modal">
-            <div class="modal-icon">✅</div>
-            <div class="modal-title">تم الإرسال بنجاح!</div>
-            <div class="modal-desc">
-                شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️
-                <div class="report-id" id="reportIdDisplay"></div>
-                <span class="points-earned" id="pointsDisplay"></span>
-            </div>
-            <button class="modal-btn" onclick="resetAll()">📸 إبلاغ جديد</button>
-        </div>
+        <div class="modal"><div class="modal-icon">✅</div><div class="modal-title">تم الإرسال بنجاح!</div><div class="modal-desc">شكراً لمساهمتك في جعل مدينتنا أنظف وأجمل 🌍♻️<div class="report-id" id="reportIdDisplay"></div><span class="points-earned" id="pointsDisplay"></span></div><button class="modal-btn" onclick="resetAll()">📸 إبلاغ جديد</button></div>
     </div>
-
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
-
-        var S={photo:null,type:null,lat:null,lng:null};
-        var currentUserId = null;
-        var isLoggedIn = false;
+        var S={photo:null,type:null,lat:null,lng:null},currentUserEmail=null,isLoggedIn=false;
 
         (function(){
-            var backBtn = document.getElementById('backBtn');
-            backBtn.href = 'index.html';
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', SUPABASE_URL + '/auth/v1/user?apikey=' + SUPABASE_KEY, true);
-            xhr.onload = function(){
-                if(xhr.status === 200){
-                    backBtn.href = 'home.html';
-                    isLoggedIn = true;
-                    try { var user = JSON.parse(xhr.responseText); currentUserId = user.id; } catch(e) {}
-                }
-            };
+            var backBtn=document.getElementById('backBtn');backBtn.href='index.html';
+            var xhr=new XMLHttpRequest();
+            xhr.open('GET',SUPABASE_URL+'/auth/v1/user?apikey='+SUPABASE_KEY,true);
+            xhr.onload=function(){if(xhr.status===200){backBtn.href='home.html';isLoggedIn=true;try{var u=JSON.parse(xhr.responseText);currentUserEmail=u.email;}catch(e){}}};
             xhr.send();
         })();
 
@@ -194,149 +144,60 @@
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
 
         function handlePhoto(e){
-            var f=e.target.files[0];if(!f)return;
-            var reader=new FileReader();
-            reader.onload=function(ev){
-                var img=new Image();
-                img.onload=function(){
-                    var canvas=document.createElement('canvas');
-                    var maxW=800,maxH=600,w=img.width,h=img.height;
-                    if(w>maxW){h=h*(maxW/w);w=maxW;}
-                    if(h>maxH){w=w*(maxH/h);h=maxH;}
-                    canvas.width=w;canvas.height=h;
-                    canvas.getContext('2d').drawImage(img,0,0,w,h);
-                    S.photo=canvas.toDataURL('image/jpeg',0.6);
-                    
-                    document.getElementById('preview').src=S.photo;
-                    document.getElementById('preview').style.display='block';
-                    document.getElementById('camInner').style.display='none';
-                    document.getElementById('camZone').classList.add('filled');
-                    document.getElementById('btnGallery').style.display='none';
-                    document.getElementById('btnDelete').style.display='flex';
-                    document.getElementById('t1').className='tag tag-ok';document.getElementById('t1').textContent='✓ تم';
-                    document.getElementById('c1').classList.add('done');
-                    document.getElementById('flash').classList.add('fire');
-                    setTimeout(function(){document.getElementById('flash').classList.remove('fire');},100);
-                    update();
-                };
-                img.src=ev.target.result;
-            };
-            reader.readAsDataURL(f);
+            var f=e.target.files[0];if(!f)return;var reader=new FileReader();
+            reader.onload=function(ev){var img=new Image();
+                img.onload=function(){var canvas=document.createElement('canvas');var maxW=800,maxH=600,w=img.width,h=img.height;if(w>maxW){h=h*(maxW/w);w=maxW;}if(h>maxH){w=w*(maxH/h);h=maxH;}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);S.photo=canvas.toDataURL('image/jpeg',0.6);
+                    document.getElementById('preview').src=S.photo;document.getElementById('preview').style.display='block';document.getElementById('camInner').style.display='none';document.getElementById('camZone').classList.add('filled');document.getElementById('btnGallery').style.display='none';document.getElementById('btnDelete').style.display='flex';document.getElementById('t1').className='tag tag-ok';document.getElementById('t1').textContent='✓ تم';document.getElementById('c1').classList.add('done');document.getElementById('flash').classList.add('fire');setTimeout(function(){document.getElementById('flash').classList.remove('fire');},100);update();};img.src=ev.target.result;};reader.readAsDataURL(f);
         }
 
-        function deletePhoto(){
-            S.photo=null;
-            document.getElementById('preview').style.display='none';
-            document.getElementById('camInner').style.display='block';
-            document.getElementById('camZone').classList.remove('filled');
-            document.getElementById('btnGallery').style.display='flex';
-            document.getElementById('btnDelete').style.display='none';
-            document.getElementById('cameraInput').value='';document.getElementById('galleryInput').value='';
-            document.getElementById('t1').className='tag tag-req';document.getElementById('t1').textContent='مطلوب';
-            document.getElementById('c1').classList.remove('done');update();
-        }
-
-        function pickType(el,type){
-            document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
-            el.classList.add('selected');S.type=type;
-            document.getElementById('t2').className='tag tag-ok';document.getElementById('t2').textContent='✓ تم';
-            document.getElementById('c2').classList.add('done');update();
-        }
+        function deletePhoto(){S.photo=null;document.getElementById('preview').style.display='none';document.getElementById('camInner').style.display='block';document.getElementById('camZone').classList.remove('filled');document.getElementById('btnGallery').style.display='flex';document.getElementById('btnDelete').style.display='none';document.getElementById('cameraInput').value='';document.getElementById('galleryInput').value='';document.getElementById('t1').className='tag tag-req';document.getElementById('t1').textContent='مطلوب';document.getElementById('c1').classList.remove('done');update();}
+        function pickType(el,type){document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});el.classList.add('selected');S.type=type;document.getElementById('t2').className='tag tag-ok';document.getElementById('t2').textContent='✓ تم';document.getElementById('c2').classList.add('done');update();}
 
         function getLocation(){
-            if(S.lat&&S.lng)return;
-            var mapText = document.getElementById('mapText');
-            var btn = document.getElementById('btnLocate');
-            var mapEmoji = document.getElementById('mapEmoji');
-            if(!navigator.geolocation){mapText.textContent = '⚠️ GPS غير مدعوم في متصفحك';return;}
-            btn.textContent = '📡 جاري التحديد...';btn.classList.add('loading');mapText.textContent = 'جاري البحث عن موقعك...';
-            navigator.geolocation.getCurrentPosition(
-                function(pos){
-                    S.lat = pos.coords.latitude;S.lng = pos.coords.longitude;
-                    document.getElementById('coords').textContent = S.lat.toFixed(6) + ', ' + S.lng.toFixed(6);
-                    document.getElementById('coords').classList.add('show');
-                    document.getElementById('mapBox').classList.add('located');
-                    mapEmoji.textContent = '✅';mapText.textContent = 'تم تحديد الموقع بنجاح';
-                    btn.textContent = '📍 إعادة التحديد';btn.classList.remove('loading');
-                    document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
-                    document.getElementById('c3').classList.add('done');update();
-                },
-                function(err){
-                    btn.classList.remove('loading');btn.textContent = '📍 حاول مرة أخرى';
-                    if(err.code === 1){
-                        mapText.textContent = '⚠️ GPS غير مفعل. الرجاء تشغيله من إعدادات الهاتف';
-                        alert('⚠️ لتحديد موقعك:\n\n1. افتح إعدادات الهاتف\n2. ابحث عن "الموقع" أو "GPS"\n3. قم بتشغيله\n4. ارجع لهذه الصفحة واضغط مرة أخرى');
-                    } else if(err.code === 2){mapText.textContent = '⚠️ تعذر الحصول على الموقع. تأكد من أنك في منطقة مفتوحة.';}
-                    else {mapText.textContent = '⏰ انتهت المهلة. الرجاء المحاولة مرة أخرى.';}
-                },
-                {enableHighAccuracy:true,timeout:20000,maximumAge:0}
-            );
+            if(S.lat&&S.lng)return;var mapText=document.getElementById('mapText'),btn=document.getElementById('btnLocate'),mapEmoji=document.getElementById('mapEmoji');
+            if(!navigator.geolocation){mapText.textContent='⚠️ GPS غير مدعوم';return;}
+            btn.textContent='📡 جاري التحديد...';btn.classList.add('loading');mapText.textContent='جاري البحث عن موقعك...';
+            navigator.geolocation.getCurrentPosition(function(pos){
+                S.lat=pos.coords.latitude;S.lng=pos.coords.longitude;
+                document.getElementById('coords').textContent=S.lat.toFixed(6)+', '+S.lng.toFixed(6);document.getElementById('coords').classList.add('show');document.getElementById('mapBox').classList.add('located');
+                mapEmoji.textContent='✅';mapText.textContent='تم تحديد الموقع بنجاح';btn.textContent='📍 إعادة التحديد';btn.classList.remove('loading');
+                document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';document.getElementById('c3').classList.add('done');update();
+            },function(err){btn.classList.remove('loading');btn.textContent='📍 حاول مرة أخرى';
+                if(err.code===1){mapText.textContent='⚠️ GPS غير مفعل. الرجاء تشغيله من إعدادات الهاتف';alert('⚠️ لتحديد موقعك:\n\n1. افتح إعدادات الهاتف\n2. ابحث عن "الموقع" أو "GPS"\n3. قم بتشغيله\n4. ارجع لهذه الصفحة واضغط مرة أخرى');}
+                else if(err.code===2){mapText.textContent='⚠️ تعذر الحصول على الموقع.';}else{mapText.textContent='⏰ انتهت المهلة.';}
+            },{enableHighAccuracy:true,timeout:20000,maximumAge:0});
         }
 
-        function update(){
-            var d=0;if(S.photo)d++;if(S.type)d++;if(S.lat&&S.lng)d++;
-            document.getElementById('pFill').style.width=Math.round((d/3)*100)+'%';
-            document.getElementById('pText').textContent=d+' من 3 خطوات';
-            document.getElementById('s1').className='step-dot'+(S.photo?' done':' active');
-            document.getElementById('s2').className='step-dot'+(S.type?' done':(S.photo?' active':''));
-            document.getElementById('s3').className='step-dot'+((S.lat&&S.lng)?' done':(S.type?' active':''));
-            var b=document.getElementById('btnSubmit');
-            if(d===3){b.classList.add('ready');b.disabled=false;}else{b.classList.remove('ready');b.disabled=true;}
-        }
+        function update(){var d=0;if(S.photo)d++;if(S.type)d++;if(S.lat&&S.lng)d++;document.getElementById('pFill').style.width=Math.round((d/3)*100)+'%';document.getElementById('pText').textContent=d+' من 3 خطوات';document.getElementById('s1').className='step-dot'+(S.photo?'done':'active');document.getElementById('s2').className='step-dot'+(S.type?'done':(S.photo?'active':''));document.getElementById('s3').className='step-dot'+((S.lat&&S.lng)?'done':(S.type?'active':''));var b=document.getElementById('btnSubmit');if(d===3){b.classList.add('ready');b.disabled=false;}else{b.classList.remove('ready');b.disabled=true;}}
 
         function send(){
-            var b=document.getElementById('btnSubmit');
-            b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
-            var url = SUPABASE_URL + '/rest/v1/reports?apikey=' + SUPABASE_KEY;
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('Prefer', 'return=representation');
-            xhr.timeout = 15000;
-            xhr.onload = function(){
-                if(xhr.status === 201){
-                    var result = JSON.parse(xhr.responseText);
-                    var reportId = result[0] ? result[0].id : '—';
-                    document.getElementById('reportIdDisplay').textContent = 'رقم البلاغ: #' + reportId;
-                    if(isLoggedIn && currentUserId){
-                        var points = parseInt(localStorage.getItem('greenPoints') || '0');
-                        points += 5;
-                        localStorage.setItem('greenPoints', points.toString());
-                        document.getElementById('pointsDisplay').textContent = '✨ لقد كسبت 5 نقاط خضراء!';
+            var b=document.getElementById('btnSubmit');b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
+            var url=SUPABASE_URL+'/rest/v1/reports?apikey='+SUPABASE_KEY;
+            var xhr=new XMLHttpRequest();xhr.open('POST',url,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=representation');xhr.timeout=15000;
+            xhr.onload=function(){
+                if(xhr.status===201){
+                    var result=JSON.parse(xhr.responseText);var reportId=result[0]?result[0].id:'—';
+                    document.getElementById('reportIdDisplay').textContent='رقم البلاغ: #'+reportId;
+                    // نقاط في point_transactions إذا كان المستخدم مسجلاً
+                    if(isLoggedIn&&currentUserEmail){
+                        var ptsXhr=new XMLHttpRequest();
+                        ptsXhr.open('POST',SUPABASE_URL+'/rest/v1/point_transactions?apikey='+SUPABASE_KEY,true);
+                        ptsXhr.setRequestHeader('Content-Type','application/json');ptsXhr.setRequestHeader('Prefer','return=minimal');
+                        ptsXhr.send(JSON.stringify({user_email:currentUserEmail,amount:5,description:'بلاغ عن مفرغة #'+reportId}));
+                        document.getElementById('pointsDisplay').textContent='✨ لقد كسبت 5 نقاط خضراء!';
                     }
-                    var notifXhr = new XMLHttpRequest();
-                    notifXhr.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
-                    notifXhr.setRequestHeader('Content-Type', 'application/json');
-                    notifXhr.setRequestHeader('Prefer', 'return=minimal');
-                    notifXhr.send(JSON.stringify({title:'بلاغ جديد',message:'تم تسجيل بلاغ جديد عن مفرغة ('+(S.type||'غير محدد')+') #'+reportId,type:'info',is_read:false}));
+                    // إشعار
+                    var nxhr=new XMLHttpRequest();nxhr.open('POST',SUPABASE_URL+'/rest/v1/notifications?apikey='+SUPABASE_KEY,true);nxhr.setRequestHeader('Content-Type','application/json');nxhr.setRequestHeader('Prefer','return=minimal');
+                    nxhr.send(JSON.stringify({title:'بلاغ جديد',message:'تم تسجيل بلاغ جديد عن مفرغة ('+(S.type||'غير محدد')+') #'+reportId,type:'info',is_read:false}));
                     document.getElementById('overlay').classList.add('show');
-                } else {
-                    alert('❌ خطأ: ' + xhr.status);
-                    b.classList.add('ready');b.disabled=false;
-                }
+                }else{alert('❌ خطأ: '+xhr.status);b.classList.add('ready');b.disabled=false;}
                 b.innerHTML='🚀 إرسال البلاغ';
             };
-            xhr.onerror = function(){alert('❌ فشل الاتصال');b.innerHTML='🚀 إرسال البلاغ';b.classList.add('ready');b.disabled=false;};
+            xhr.onerror=function(){alert('❌ فشل الاتصال');b.innerHTML='🚀 إرسال البلاغ';b.classList.add('ready');b.disabled=false;};
             xhr.send(JSON.stringify({photo_url:S.photo||'',type:S.type,lat:S.lat,lng:S.lng,status:'new'}));
         }
 
-        function resetAll(){
-            document.getElementById('overlay').classList.remove('show');
-            document.getElementById('reportIdDisplay').textContent = '';
-            document.getElementById('pointsDisplay').textContent = '';
-            deletePhoto();S.type=null;S.lat=null;S.lng=null;
-            document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
-            ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
-            ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
-            document.getElementById('coords').classList.remove('show');
-            document.getElementById('coords').textContent = '';
-            document.getElementById('mapBox').classList.remove('located');
-            document.getElementById('mapEmoji').textContent = '📍';
-            document.getElementById('mapText').textContent = 'اضغط الزر لتحديد موقعك تلقائياً';
-            document.getElementById('btnLocate').textContent = '📍 تحديد موقعي الحالي';
-            document.getElementById('btnLocate').classList.remove('loading');
-            update();window.scrollTo({top:0,behavior:'smooth'});
-        }
+        function resetAll(){document.getElementById('overlay').classList.remove('show');document.getElementById('reportIdDisplay').textContent='';document.getElementById('pointsDisplay').textContent='';deletePhoto();S.type=null;S.lat=null;S.lng=null;document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});document.getElementById('coords').classList.remove('show');document.getElementById('coords').textContent='';document.getElementById('mapBox').classList.remove('located');document.getElementById('mapEmoji').textContent='📍';document.getElementById('mapText').textContent='اضغط الزر لتحديد موقعك تلقائياً';document.getElementById('btnLocate').textContent='📍 تحديد موقعي الحالي';document.getElementById('btnLocate').classList.remove('loading');update();window.scrollTo({top:0,behavior:'smooth'});}
     </script>
 </body>
 </html>
