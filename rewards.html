@@ -59,12 +59,11 @@
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        var myPoints = 0, userEmail = '';
+        var myPoints = 0;
+        var userEmail = localStorage.getItem('userEmail'); // البريد من localStorage
 
         var rewards = [
             { id: 1, icon: '🗑️', name: 'كيس قمامة', desc: 'كيس متين 50 لتر', cost: 100 },
@@ -75,12 +74,8 @@
             { id: 6, icon: '🏆', name: 'شهادة تقدير', desc: 'مواطن بيئي نشط', cost: 3000 }
         ];
 
-        sb.auth.getSession().then(function(result){
-            if(result.data.session) userEmail = result.data.session.user.email;
-        });
-
-        // النقاط من point_transactions حسب البريد
         function loadPoints(){
+            if(!userEmail){ showPointsAndRewards(); return; }
             var x = new XMLHttpRequest();
             x.open('GET', SUPABASE_URL + '/rest/v1/point_transactions?select=amount&user_email=eq.' + encodeURIComponent(userEmail) + '&apikey=' + SUPABASE_KEY, true);
             x.timeout = 15000;
@@ -114,28 +109,28 @@
             if(myPoints < cost) return;
             if(!confirm('استبدال ' + name + ' بـ ' + cost + ' نقطة؟')) return;
 
-            // 1. خصم النقاط في point_transactions
+            // خصم النقاط
             var xhr1 = new XMLHttpRequest();
             xhr1.open('POST', SUPABASE_URL + '/rest/v1/point_transactions?apikey=' + SUPABASE_KEY, true);
             xhr1.setRequestHeader('Content-Type', 'application/json');
             xhr1.setRequestHeader('Prefer', 'return=minimal');
             xhr1.send(JSON.stringify({ user_email: userEmail, amount: -cost, description: 'استبدال: ' + name }));
 
-            // 2. تسجيل الطلب في redeems
+            // تسجيل الطلب
             var xhr2 = new XMLHttpRequest();
             xhr2.open('POST', SUPABASE_URL + '/rest/v1/redeems?apikey=' + SUPABASE_KEY, true);
             xhr2.setRequestHeader('Content-Type', 'application/json');
             xhr2.setRequestHeader('Prefer', 'return=minimal');
             xhr2.send(JSON.stringify({ user_email: userEmail, reward_name: name, cost: cost, status: 'pending' }));
 
-            // 3. إشعار للمشرف
+            // إشعار للمشرف
             var xhr3 = new XMLHttpRequest();
             xhr3.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
             xhr3.setRequestHeader('Content-Type', 'application/json');
             xhr3.setRequestHeader('Prefer', 'return=minimal');
             xhr3.send(JSON.stringify({ title: 'طلب مكافأة جديد', message: userEmail + ' استبدل ' + name + ' بـ ' + cost + ' نقطة', type: 'info', is_read: false }));
 
-            // 4. تحديث العرض
+            // تحديث العرض
             myPoints -= cost;
             document.getElementById('pointsDisplay').textContent = myPoints.toLocaleString('en-US');
             document.getElementById('successMsg').style.display = 'block';
