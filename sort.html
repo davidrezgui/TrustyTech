@@ -27,7 +27,6 @@
         @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .points-label { font-size: 11px; opacity: 0.9; }
         .points-value { font-size: 36px; font-weight: 900; direction: ltr; }
-        .points-sub { font-size: 9px; opacity: 0.8; }
         .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 18px 14px; box-shadow: var(--shadow); margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.12); animation: cardIn 0.5s ease both; }
         .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
         .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; background: #FFF8E1; }
@@ -48,10 +47,8 @@
         .estimate-value { font-size: 24px; font-weight: 900; color: var(--primary-dark); direction: ltr; }
         .map-box { width: 100%; border-radius: var(--radius-sm); border: 2px solid rgba(0,0,0,0.06); overflow: hidden; padding: 16px; text-align: center; background: linear-gradient(135deg, #E3F2FD, #F5F5F5); }
         .map-inner { cursor: pointer; }
-        .map-emoji { font-size: 30px; }
         .coords { display: none; margin-top: 6px; font-size: 11px; text-align: center; color: var(--primary-dark); font-weight: 700; direction: ltr; }
         .submit-btn { width: 100%; padding: 14px; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; color: white; background: linear-gradient(135deg, var(--accent), #FFA726); box-shadow: 0 6px 20px rgba(255,111,0,0.3); transition: var(--transition); margin-top: 8px; }
-        .submit-btn:hover { transform: translateY(-2px); }
         .submit-btn:disabled { opacity: 0.6; cursor: wait; }
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .overlay.show { display: flex; }
@@ -75,90 +72,59 @@
         <div class="points-card" style="animation-delay:0.05s">
             <div class="points-label">⭐ رصيد نقاطك الخضراء</div>
             <div class="points-value" id="totalPoints">0</div>
-            <div class="points-sub">نقطة قابلة للاستبدال بمكافآت</div>
         </div>
-        <div class="card" style="animation-delay:0.1s">
-            <div class="card-header"><div class="card-icon">♻️</div><span class="card-label">اختر نوع المادة للتجميع</span></div>
+        <div class="card" style="animation-delay:0.1s"><div class="card-header"><div class="card-icon">♻️</div><span class="card-label">اختر نوع المادة للتجميع</span></div>
             <div class="material-grid">
                 <div class="material-item selected" onclick="selectMaterial(this,'carton')" data-price="10"><span class="material-check">✓</span><span class="material-emoji">📦</span><span class="material-name">كرتون</span><span class="material-price">10 نقاط/كغ</span></div>
                 <div class="material-item" onclick="selectMaterial(this,'plastique')" data-price="15"><span class="material-check">✓</span><span class="material-emoji">🫙</span><span class="material-name">بلاستيك</span><span class="material-price">15 نقاط/كغ</span></div>
                 <div class="material-item" onclick="selectMaterial(this,'verre')" data-price="8"><span class="material-check">✓</span><span class="material-emoji">🫗</span><span class="material-name">زجاج</span><span class="material-price">8 نقاط/كغ</span></div>
             </div>
         </div>
-        <div class="card" style="animation-delay:0.15s">
-            <div class="card-header"><div class="card-icon" style="background:#E8F5E9;">⚖️</div><span class="card-label">أدخل الوزن التقديري</span></div>
-            <div class="weight-row">
-                <input type="number" class="weight-input" id="weightInput" value="5" min="1" max="500" oninput="updateEstimate()">
-                <span class="weight-unit">كغ</span>
-            </div>
+        <div class="card" style="animation-delay:0.15s"><div class="card-header"><div class="card-icon" style="background:#E8F5E9;">⚖️</div><span class="card-label">أدخل الوزن التقديري</span></div>
+            <div class="weight-row"><input type="number" class="weight-input" id="weightInput" value="5" min="1" max="500" oninput="updateEstimate()"><span class="weight-unit">كغ</span></div>
             <div class="estimate"><div class="estimate-label">🗂️ النقاط المقدرة</div><div class="estimate-value" id="estimatedPoints">50</div></div>
         </div>
-        <div class="card" style="animation-delay:0.2s">
-            <div class="card-header"><div class="card-icon" style="background:#E3F2FD;">📍</div><span class="card-label">موقع استلام المواد</span><span style="font-size:10px;color:var(--accent);" id="locStatus">انقر للتحديد</span></div>
-            <div class="map-box">
-                <div class="map-inner" id="mapInner" onclick="getLocation()"><span class="map-emoji">📍</span><br><span style="font-weight:700;font-size:12px;color:#616161;">اضغط لتحديد موقع الاستلام</span></div>
-            </div>
+        <div class="card" style="animation-delay:0.2s"><div class="card-header"><div class="card-icon" style="background:#E3F2FD;">📍</div><span class="card-label">موقع استلام المواد</span><span style="font-size:10px;color:var(--accent);" id="locStatus">انقر للتحديد</span></div>
+            <div class="map-box"><div class="map-inner" id="mapInner" onclick="getLocation()"><span style="font-size:30px;">📍</span><br><span style="font-weight:700;font-size:12px;color:#616161;">اضغط لتحديد موقع الاستلام</span></div></div>
             <div class="coords" id="coords">✅ تم التحديد — <span id="vLat">--</span>, <span id="vLng">--</span></div>
         </div>
         <button class="submit-btn" id="btnSubmit" onclick="send()">🚛 طلب جمع المواد</button>
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
-    <div class="overlay" id="overlay">
-        <div class="modal"><div class="modal-icon">🎉</div><div class="modal-title">تم تقديم الطلب!</div><div class="modal-desc" id="modalMsg"></div><button class="modal-btn" onclick="document.getElementById('overlay').classList.remove('show');window.location.reload();">حسناً</button></div>
-    </div>
+    <div class="overlay" id="overlay"><div class="modal"><div class="modal-icon">🎉</div><div class="modal-title">تم تقديم الطلب!</div><div class="modal-desc" id="modalMsg"></div><button class="modal-btn" onclick="document.getElementById('overlay').classList.remove('show');window.location.reload();">حسناً</button></div></div>
 
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null;
+        var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null,currentUserEmail=null;
 
-        (function(){var backBtn=document.getElementById('backBtn');backBtn.href='home.html';})();
+        (function(){document.getElementById('backBtn').href='home.html';
+            var xhr=new XMLHttpRequest();
+            xhr.open('GET',SUPABASE_URL+'/auth/v1/user?apikey='+SUPABASE_KEY,true);
+            xhr.onload=function(){if(xhr.status===200){try{var u=JSON.parse(xhr.responseText);currentUserEmail=u.email;}catch(e){}}};
+            xhr.send();
+        })();
 
         function loadPoints(){
-            var localPts=parseInt(localStorage.getItem('greenPoints')||'0');
             var x=new XMLHttpRequest();
-            x.open('GET',SUPABASE_URL+'/rest/v1/pickups?select=points&apikey='+SUPABASE_KEY,true);
+            x.open('GET',SUPABASE_URL+'/rest/v1/point_transactions?select=amount&user_email=eq.'+encodeURIComponent(currentUserEmail||'')+'&apikey='+SUPABASE_KEY,true);
             x.timeout=15000;
-            x.onload=function(){
-                var supabasePts=0;
-                if(x.status===200){var d=JSON.parse(x.responseText);supabasePts=d.reduce(function(s,r){return s+(r.points||0);},0);}
-                var total=localPts+supabasePts;
-                document.getElementById('totalPoints').textContent=total.toLocaleString('en-US');
-            };
-            x.onerror=function(){document.getElementById('totalPoints').textContent=localPts.toLocaleString('en-US');};
+            x.onload=function(){var pts=0;if(x.status===200){var d=JSON.parse(x.responseText);pts=d.reduce(function(s,r){return s+(r.amount||0);},0);}document.getElementById('totalPoints').textContent=pts.toLocaleString('en-US');};
+            x.onerror=function(){document.getElementById('totalPoints').textContent='0';};
             x.send();
         }
 
-        function selectMaterial(el,material){
-            document.querySelectorAll('.material-item').forEach(function(i){i.classList.remove('selected');});
-            el.classList.add('selected');selectedMaterial=material;selectedPrice=parseInt(el.getAttribute('data-price'));updateEstimate();
-        }
-
-        function updateEstimate(){
-            var weight=parseInt(document.getElementById('weightInput').value)||0;
-            document.getElementById('estimatedPoints').textContent=(weight*selectedPrice).toLocaleString('en-US');
-        }
+        function selectMaterial(el,material){document.querySelectorAll('.material-item').forEach(function(i){i.classList.remove('selected');});el.classList.add('selected');selectedMaterial=material;selectedPrice=parseInt(el.getAttribute('data-price'));updateEstimate();}
+        function updateEstimate(){var w=parseInt(document.getElementById('weightInput').value)||0;document.getElementById('estimatedPoints').textContent=(w*selectedPrice).toLocaleString('en-US');}
 
         function getLocation(){
-            if(userLat&&userLng)return;
-            var mi=document.getElementById('mapInner');
+            if(userLat&&userLng)return;var mi=document.getElementById('mapInner');
             if(!navigator.geolocation){mi.innerHTML='<span>⚠️ GPS غير مدعوم</span>';return;}
             mi.innerHTML='<span>📡 جاري التحديد...</span>';
-            navigator.geolocation.getCurrentPosition(
-                function(pos){
-                    userLat=pos.coords.latitude;userLng=pos.coords.longitude;
-                    document.getElementById('vLat').textContent=userLat.toFixed(6);
-                    document.getElementById('vLng').textContent=userLng.toFixed(6);
-                    document.getElementById('coords').style.display='block';
-                    document.getElementById('locStatus').textContent='✓ تم';document.getElementById('locStatus').style.color='#4CAF50';
-                    mi.innerHTML='<span style="color:#2E7D32">✅ تم تحديد الموقع</span>';
-                },
-                function(err){
-                    mi.innerHTML='<span style="color:#E53935;">❌ تعذر تحديد الموقع</span>';
-                },
-                {enableHighAccuracy:true,timeout:20000}
-            );
+            navigator.geolocation.getCurrentPosition(function(pos){
+                userLat=pos.coords.latitude;userLng=pos.coords.longitude;document.getElementById('vLat').textContent=userLat.toFixed(6);document.getElementById('vLng').textContent=userLng.toFixed(6);document.getElementById('coords').style.display='block';document.getElementById('locStatus').textContent='✓ تم';document.getElementById('locStatus').style.color='#4CAF50';mi.innerHTML='<span style="color:#2E7D32">✅ تم تحديد الموقع</span>';
+            },function(){mi.innerHTML='<span style="color:#E53935;">❌ تعذر</span>';},{enableHighAccuracy:true,timeout:20000});
         }
 
         function send(){
@@ -168,31 +134,26 @@
             var pointsEarned=weight*selectedPrice;
             document.getElementById('btnSubmit').disabled=true;document.getElementById('btnSubmit').textContent='⏳ جاري الإرسال...';
 
-            // حفظ في localStorage
-            var localPts=parseInt(localStorage.getItem('greenPoints')||'0');
-            localStorage.setItem('greenPoints',(localPts+pointsEarned).toString());
-
-            // إرسال إلى Supabase
+            // 1. إرسال الطلب إلى pickups
             var xhr=new XMLHttpRequest();
             xhr.open('POST',SUPABASE_URL+'/rest/v1/pickups?apikey='+SUPABASE_KEY,true);
-            xhr.setRequestHeader('Content-Type','application/json');
-            xhr.setRequestHeader('Prefer','return=minimal');
-            xhr.timeout=15000;
+            xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');xhr.timeout=15000;
             xhr.onload=function(){
-                document.getElementById('btnSubmit').disabled=false;
-                document.getElementById('btnSubmit').textContent='🚛 طلب جمع المواد';
+                document.getElementById('btnSubmit').disabled=false;document.getElementById('btnSubmit').textContent='🚛 طلب جمع المواد';
                 var names={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
                 document.getElementById('modalMsg').innerHTML='تمت إضافة <strong style="color:#2E7D32">+'+pointsEarned.toLocaleString('en-US')+'</strong> نقطة!<br>استلام <strong>'+weight+' كغ</strong> من <strong>'+names[selectedMaterial]+'</strong>';
                 document.getElementById('overlay').classList.add('show');
             };
-            xhr.onerror=function(){
-                document.getElementById('btnSubmit').disabled=false;
-                document.getElementById('btnSubmit').textContent='🚛 طلب جمع المواد';
-                var names={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
-                document.getElementById('modalMsg').innerHTML='تمت إضافة <strong style="color:#2E7D32">+'+pointsEarned.toLocaleString('en-US')+'</strong> نقطة!<br>استلام <strong>'+weight+' كغ</strong> من <strong>'+names[selectedMaterial]+'</strong>';
-                document.getElementById('overlay').classList.add('show');
-            };
+            xhr.onerror=function(){document.getElementById('btnSubmit').disabled=false;document.getElementById('btnSubmit').textContent='🚛 طلب جمع المواد';document.getElementById('overlay').classList.add('show');};
             xhr.send(JSON.stringify({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,status:'pending'}));
+
+            // 2. تسجيل النقاط في point_transactions
+            if(currentUserEmail){
+                var pxhr=new XMLHttpRequest();
+                pxhr.open('POST',SUPABASE_URL+'/rest/v1/point_transactions?apikey='+SUPABASE_KEY,true);
+                pxhr.setRequestHeader('Content-Type','application/json');pxhr.setRequestHeader('Prefer','return=minimal');
+                pxhr.send(JSON.stringify({user_email:currentUserEmail,amount:pointsEarned,description:'طلب جمع '+selectedMaterial}));
+            }
         }
 
         loadPoints();updateEstimate();
