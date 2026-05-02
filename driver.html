@@ -11,83 +11,81 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 24px; --radius-sm: 14px; --shadow-xl: 0 30px 80px rgba(0,0,0,0.25); --shadow-lg: 0 20px 60px rgba(0,0,0,0.2); --shadow: 0 4px 16px rgba(0,0,0,0.08); --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 20px; --radius-sm: 12px; --shadow: 0 4px 16px rgba(0,0,0,0.08); --shadow-lg: 0 12px 32px rgba(0,0,0,0.15); --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
-        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
-        .particle { position: absolute; border-radius: 50%; pointer-events: none; animation: floatUp linear infinite; opacity: 0; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
-        .orb-1 { width: 350px; height: 350px; background: rgba(30,136,229,0.10); top: -8%; right: -8%; }
-        .orb-2 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); bottom: -12%; left: -6%; animation-delay: -4s; }
-        @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(25px,-25px) scale(1.1); } 66% { transform: translate(-15px,15px) scale(0.9); } }
-        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 10px 16px; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
-        .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--transition); text-decoration: none; }
-        .nav-title { flex: 1; font-size: 16px; font-weight: 700; color: white; }
-        .btn-refresh { font-size: 12px; padding: 7px 14px; border-radius: 18px; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-        .driver-status { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 6px 12px; border-radius: 15px; }
-        .driver-status .dot { width: 7px; height: 7px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+        .orb-1 { width: 300px; height: 300px; background: rgba(30,136,229,0.08); top: -10%; right: -10%; }
+        .orb-2 { width: 250px; height: 250px; background: rgba(46,125,50,0.08); bottom: -10%; left: -8%; animation-delay: -4s; }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,-20px); } }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+        .btn-back { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; }
+        .nav-title { flex: 1; font-size: 15px; font-weight: 700; color: white; }
+        .btn-refresh { font-size: 11px; padding: 6px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .driver-status { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 5px 10px; border-radius: 12px; }
+        .driver-status .dot { width: 6px; height: 6px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .main-container { position: relative; z-index: 1; flex: 1; padding: 78px 16px 20px; max-width: 560px; margin: 0 auto; width: 100%; }
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
-        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); animation: cardIn 0.5s ease both; }
-        @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .stat-value { font-size: 22px; font-weight: 900; color: var(--info); direction: ltr; display: inline-block; }
-        .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
-        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 20px 18px; box-shadow: var(--shadow-lg); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease both; }
-        .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
-        .card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
-        .ci-tasks { background: #E3F2FD; } .ci-done { background: #E8F5E9; }
-        .card-label { flex: 1; font-size: 14px; font-weight: 700; color: var(--text-dark); }
-        .badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
-        .badge-pending { background: #FFF3E0; color: var(--accent); } .badge-done { background: #E8F5E9; color: var(--primary); }
-        .task-list { display: flex; flex-direction: column; gap: 10px; }
-        .task-item { background: white; border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.04); transition: var(--transition); }
-        .task-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-        .task-type { font-size: 11px; padding: 5px 10px; border-radius: 10px; font-weight: 700; }
+        .main-container { position: relative; z-index: 1; flex: 1; padding: 72px 12px 16px; max-width: 520px; margin: 0 auto; width: 100%; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 12px 6px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.12); }
+        .stat-value { font-size: 20px; font-weight: 900; color: var(--info); direction: ltr; }
+        .stat-label { font-size: 9px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
+        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 16px 14px; box-shadow: var(--shadow); margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.15); }
+        .card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+        .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; background: #E3F2FD; }
+        .card-label { flex: 1; font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 700; background: #FFF3E0; color: var(--accent); }
+        .task-list { display: flex; flex-direction: column; gap: 8px; }
+        .task-item { background: white; border-radius: var(--radius-sm); padding: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); }
+        .task-top { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+        .task-qr-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
+        .btn-qr-sm { width: 30px; height: 30px; border-radius: 10px; border: none; background: #F3E5F5; color: var(--purple); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .task-info { flex: 1; min-width: 0; }
+        .task-header { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; flex-wrap: wrap; }
+        .task-type { font-size: 10px; padding: 3px 7px; border-radius: 6px; font-weight: 700; }
         .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
-        .task-id-num { font-size: 10px; color: var(--primary); font-weight: 800; background: #E8F5E9; padding: 3px 8px; border-radius: 8px; direction: ltr; }
-        .task-category { font-size: 11px; color: var(--text-gray); font-weight: 600; }
-        .task-time { font-size: 10px; color: var(--text-gray); margin-right: auto; direction: ltr; white-space: nowrap; }
-        .task-address { font-size: 12px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
-        .task-actions { display: flex; gap: 8px; }
-        .btn-task { flex: 1; padding: 11px; border-radius: 20px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-navigate { background: var(--info); color: white; } .btn-confirm { background: var(--primary); color: white; } .btn-qr { background: var(--purple); color: white; flex: 0.4; font-size: 18px; }
-        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2.5px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin-bottom: 8px; }
-        .proof-zone.filled { border: 2.5px solid var(--primary-light); border-style: solid; }
-        .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
-        .proof-emoji { font-size: 38px; display: block; margin-bottom: 4px; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .proof-text { font-size: 12px; font-weight: 700; }
-        #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
-        .report-photo { width: 100%; max-height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: none; }
-        .report-photo.show { display: block; }
-        .proof-actions { display: flex; gap: 8px; }
-        .btn-proof { flex: 1; padding: 10px; border-radius: 20px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; }
-        .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
-        .empty-state { text-align: center; padding: 30px 20px; } .empty-emoji { font-size: 50px; } .empty-text { font-size: 14px; color: var(--text-gray); }
-        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .task-id-num { font-size: 9px; color: var(--primary); font-weight: 800; background: #E8F5E9; padding: 2px 6px; border-radius: 5px; direction: ltr; }
+        .task-category { font-size: 10px; color: var(--text-gray); font-weight: 600; }
+        .task-time { font-size: 9px; color: #b0bec5; margin-right: auto; direction: ltr; white-space: nowrap; }
+        .task-address { font-size: 10px; color: var(--text-gray); margin-bottom: 8px; }
+        .task-actions { display: flex; gap: 6px; }
+        .btn-task { flex: 1; padding: 9px; border-radius: 14px; border: none; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 4px; color: white; }
+        .btn-navigate { background: var(--info); } .btn-confirm { background: var(--primary); }
+        .empty-state { text-align: center; padding: 24px; } .empty-emoji { font-size: 40px; } .empty-text { font-size: 13px; color: var(--text-gray); }
+        .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .overlay.show { display: flex; }
-        .modal { background: white; border-radius: var(--radius); padding: 28px 22px 24px; text-align: center; max-width: 380px; width: 100%; animation: spring 0.6s ease; box-shadow: var(--shadow-xl); }
-        @keyframes spring { 0% { transform: scale(0.6) translateY(40px); opacity: 0; } 55% { transform: scale(1.03) translateY(-4px); opacity: 1; } 100% { transform: scale(1) translateY(0); } }
-        .modal-icon { font-size: 55px; } .modal-title { font-size: 18px; font-weight: 900; color: var(--primary-dark); margin: 6px 0; }
-        .modal-desc { font-size: 12px; color: var(--text-gray); margin-bottom: 14px; line-height: 1.6; }
-        .modal-btn { padding: 13px; border: none; border-radius: 25px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; width: 100%; display: block; text-align: center; }
-        .btn-cancel { margin-top:8px;width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:25px;background:white;cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px;font-weight:600; }
-        .qr-modal { max-width: 380px; }
-        .qr-input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 14px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
+        .modal { background: white; border-radius: var(--radius); padding: 20px 16px 18px; text-align: center; width: 100%; max-width: 340px; max-height: 85vh; overflow-y: auto; animation: spring 0.5s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        @keyframes spring { 0% { transform: scale(0.7) translateY(30px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        .modal-icon { font-size: 45px; } .modal-title { font-size: 16px; font-weight: 900; color: var(--primary-dark); margin: 4px 0; }
+        .modal-desc { font-size: 11px; color: var(--text-gray); margin-bottom: 10px; line-height: 1.5; }
+        .report-photo { width: 100%; max-height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; display: none; }
+        .report-photo.show { display: block; }
+        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin: 6px 0; }
+        .proof-zone.filled { border-color: var(--primary-light); border-style: solid; }
+        .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
+        .proof-emoji { font-size: 28px; display: block; margin-bottom: 2px; }
+        .proof-text { font-size: 10px; font-weight: 700; }
+        #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
+        .proof-actions { display: flex; gap: 5px; }
+        .btn-proof { flex: 1; padding: 7px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 10px; font-weight: 600; }
+        .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
+        .modal-btn { width: 100%; padding: 11px; border: none; border-radius: 20px; background: var(--primary); color: white; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .btn-cancel { margin-top: 6px; width: 100%; padding: 9px; border: 1.5px solid #e0e0e0; border-radius: 20px; background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-gray); }
+        .task-info-line { font-size: 11px; color: var(--text-dark); font-weight: 700; margin-bottom: 4px; }
+        .qr-modal { max-width: 340px; }
+        .qr-input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 13px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; }
         .qr-input:focus { outline: none; border-color: var(--purple); }
-        .task-info-line { font-size: 12px; color: var(--text-dark); font-weight: 700; margin-bottom: 6px; }
-        .footer { position: relative; z-index: 1; text-align: center; padding: 8px 20px; font-size: 9px; color: rgba(255,255,255,0.45); background: linear-gradient(transparent, rgba(0,0,0,0.3)); }
-        .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 78px 16px 20px; }
-        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 36px 24px; text-align: center; max-width: 380px; width: 100%; box-shadow: var(--shadow-xl); border: 1px solid rgba(255,255,255,0.2); animation: cardIn 0.5s ease; }
-        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 18px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; }
-        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
-        .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; }
+        .footer { position: relative; z-index: 1; text-align: center; padding: 6px 16px; font-size: 8px; color: rgba(255,255,255,0.4); }
+        .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 70px 16px 16px; }
+        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 30px 22px; text-align: center; max-width: 350px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); }
+        .login-card input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 16px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; }
+        .login-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
+        .login-error { color: var(--danger); font-size: 10px; margin-top: 6px; display: none; }
     </style>
 </head>
 <body>
-    <div class="particles-bg" id="particlesBg"></div>
+    <div class="particles-bg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <header class="top-nav">
@@ -98,9 +96,9 @@
     </header>
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
-            <div style="font-size:55px;">🚛</div>
-            <h2 style="font-size:20px;font-weight:900;color:#2E7D32;">دخول السائق</h2>
-            <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">أدخل كلمة المرور للمتابعة</p>
+            <div style="font-size:45px;">🚛</div>
+            <h2 style="font-size:18px;font-weight:900;color:#2E7D32;margin-bottom:4px;">دخول السائق</h2>
+            <p style="font-size:12px;color:#90A4AE;margin-bottom:14px;">أدخل كلمة المرور للمتابعة</p>
             <input type="password" id="driverPass" placeholder="كلمة المرور">
             <button class="login-btn" onclick="checkPass()">🚛 دخول</button>
             <p class="login-error" id="loginError">كلمة المرور غير صحيحة</p>
@@ -113,7 +111,7 @@
             <div class="stat-box"><div class="stat-value" id="totalKg">0</div><div class="stat-label">كغ اليوم</div></div>
         </div>
         <div class="card">
-            <div class="card-header"><div class="card-icon ci-tasks">📋</div><span class="card-label">المهام المعلقة</span><span class="badge badge-pending" id="pendingBadge">0</span></div>
+            <div class="card-header"><div class="card-icon">📋</div><span class="card-label">المهام المعلقة</span><span class="badge" id="pendingBadge">0</span></div>
             <div class="task-list" id="pendingTasks"><div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div></div>
         </div>
     </main>
@@ -125,11 +123,17 @@
             <div class="modal-title">تأكيد إتمام الجمع</div>
             <div class="modal-desc" id="confirmTaskInfo"></div>
             <img id="reportPhoto" class="report-photo" alt="صورة البلاغ">
-            <div class="proof-zone" id="proofZone" onclick="takeProofPhoto()"><img id="proofPreview" alt="إثبات"><div class="proof-inner" id="proofInner"><span class="proof-emoji">📸</span><span class="proof-text">اضغط لالتقاط صورة إثبات</span></div></div>
+            <div class="proof-zone" id="proofZone" onclick="takeProofPhoto()">
+                <img id="proofPreview" alt="إثبات">
+                <div class="proof-inner" id="proofInner"><span class="proof-emoji">📸</span><span class="proof-text">اضغط لالتقاط صورة</span></div>
+            </div>
             <input type="file" id="proofCamera" accept="image/*" capture="environment" style="display:none" onchange="handleProofPhoto(event)">
             <input type="file" id="proofGallery" accept="image/*" style="display:none" onchange="handleProofPhoto(event)">
-            <div class="proof-actions" style="margin-bottom:10px;"><button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button><button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button></div>
-            <button class="modal-btn" onclick="finalConfirm()" style="background:#2E7D32;">✅ تأكيد وإرسال الإثبات</button>
+            <div class="proof-actions" style="margin-bottom:8px;">
+                <button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button>
+                <button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button>
+            </div>
+            <button class="modal-btn" onclick="finalConfirm()">✅ تأكيد وإرسال الإثبات</button>
             <button class="btn-cancel" onclick="closeConfirm()">إلغاء</button>
         </div>
     </div>
@@ -139,7 +143,7 @@
     </div>
 
     <div class="overlay" id="qrOverlay">
-        <div class="modal qr-modal"><div class="modal-icon">📱</div><div class="modal-title">مسح QR Code</div><div class="modal-desc">أدخل الكود يدوياً أو امسح QR</div><input type="text" class="qr-input" id="qrManualInput" placeholder="أدخل كود المهمة يدوياً" dir="ltr"><button class="modal-btn" onclick="scanQRWithCamera()" style="background:#7B1FA2;">📷 فتح الكاميرا للمسح</button><p style="font-size:10px;color:var(--text-gray);margin:8px 0;">— أو —</p><button class="modal-btn" onclick="applyManualQR()" style="background:var(--info);">✅ تطبيق الكود المدخل</button><button class="btn-cancel" onclick="closeQROverlay()">إلغاء</button></div>
+        <div class="modal qr-modal"><div class="modal-icon">📱</div><div class="modal-title">مسح QR Code</div><div class="modal-desc">أدخل الكود يدوياً أو امسح QR</div><input type="text" class="qr-input" id="qrManualInput" placeholder="أدخل كود المهمة يدوياً" dir="ltr"><button class="modal-btn" onclick="scanQRWithCamera()" style="background:#7B1FA2;">📷 فتح الكاميرا للمسح</button><p style="font-size:10px;color:var(--text-gray);margin:6px 0;">— أو —</p><button class="modal-btn" onclick="applyManualQR()" style="background:var(--info);">✅ تطبيق الكود المدخل</button><button class="btn-cancel" onclick="closeQROverlay()">إلغاء</button></div>
     </div>
     <video id="qrVideo" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:3000;background:black;" playsinline></video>
     <canvas id="qrCanvas" style="display:none;"></canvas>
@@ -149,14 +153,11 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
-
         var currentTaskId=null,proofPhoto=null,allTasksFlat=[],completedTasks=[],qrStream=null;
         var supabaseReports=[],supabasePickups=[];
 
         function formatDateDZ(iso){if(!iso)return'--/--/----';var d=new Date(iso);return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
         function formatTimeDZ(iso){if(!iso)return'--:--:--';var d=new Date(iso);return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0');}
-        function extractNum(id){var m=id.match(/\d+/);return m?m[0]:'';}
 
         function checkPass(){if(document.getElementById('driverPass').value==='1234'){document.getElementById('loginScreen').style.display='none';document.getElementById('driverMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
@@ -185,14 +186,14 @@
             allTasksFlat=[];
             supabaseReports.forEach(function(r){if(completedTasks.indexOf('report_'+r.id)===-1)allTasksFlat.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد',num:r.id});});
             supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)===-1)allTasksFlat.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material,num:r.id});});
-            document.getElementById('pendingCount').textContent=allTasksFlat.length.toLocaleString('en-US');
-            document.getElementById('doneCount').textContent=completedTasks.length.toLocaleString('en-US');
+            document.getElementById('pendingCount').textContent=allTasksFlat.length;
+            document.getElementById('doneCount').textContent=completedTasks.length;
             document.getElementById('pendingBadge').textContent=allTasksFlat.length;
             var tk=0;supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1)tk+=(r.weight||0);});
-            document.getElementById('totalKg').textContent=tk.toLocaleString('en-US');
+            document.getElementById('totalKg').textContent=tk;
             var pc=document.getElementById('pendingTasks');
             if(allTasksFlat.length===0){pc.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';}
-            else{pc.innerHTML=allTasksFlat.map(function(t){var cn={menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'},mn={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'},ct=t.type==='report'?(cn[t.category]||t.category||''):(mn[t.material]||t.material||'');return'<div class="task-item" id="task_'+t.id+'"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+ct+'</span><span class="task-time">'+formatDateDZ(t.time)+' | '+formatTimeDZ(t.time)+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-qr" onclick="openQRScan()">📱</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+ct+'\',\''+t.num+'\')">✅ تأكيد</button></div></div>';}).join('');}
+            else{pc.innerHTML=allTasksFlat.map(function(t){var cn={menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'},mn={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'},ct=t.type==='report'?(cn[t.category]||t.category||''):(mn[t.material]||t.material||'');return'<div class="task-item" id="task_'+t.id+'"><div class="task-top"><div class="task-qr-col"><button class="btn-qr-sm" onclick="openQRScan()" title="مسح QR">📱</button></div><div class="task-info"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+ct+'</span><span class="task-time">'+formatDateDZ(t.time)+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div></div></div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+ct+'\',\''+t.num+'\')">✅ تأكيد</button></div></div>';}).join('');}
         }
 
         function navigateTo(la,ln){window.open('https://www.google.com/maps/dir/?api=1&destination='+la+','+ln,'_blank');}
@@ -206,20 +207,15 @@
             document.getElementById('btnProofGallery').style.display='flex';
             document.getElementById('btnProofDelete').style.display='none';
             document.getElementById('reportPhoto').classList.remove('show');
-            
-            // عرض معلومات المهمة
-            document.getElementById('confirmTaskInfo').innerHTML = '<div class="task-info-line">'+typeLabel+' #'+num+' - '+category+'</div>';
-            
-            // جلب صورة البلاغ إذا كانت موجودة
+            document.getElementById('confirmTaskInfo').innerHTML='<div class="task-info-line">'+typeLabel+' #'+num+' - '+category+'</div>';
             if(tid.indexOf('report_')===0){
                 var x=new XMLHttpRequest();
                 x.open('GET',SUPABASE_URL+'/rest/v1/reports?id=eq.'+num+'&select=photo_url&apikey='+SUPABASE_KEY,true);
                 x.timeout=10000;x.onload=function(){if(x.status===200){var d=JSON.parse(x.responseText);if(d.length>0&&d[0].photo_url){document.getElementById('reportPhoto').src=d[0].photo_url;document.getElementById('reportPhoto').classList.add('show');}}};x.send();
             }
-            
             document.getElementById('confirmOverlay').classList.add('show');
         }
-        
+
         function closeConfirm(){document.getElementById('confirmOverlay').classList.remove('show');}
         function closeQROverlay(){document.getElementById('qrOverlay').classList.remove('show');stopQRScanner();}
         function takeProofPhoto(){if(!proofPhoto)document.getElementById('proofCamera').click();}
@@ -250,7 +246,7 @@
             var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};localStorage.setItem('taskProofs',JSON.stringify(proofs));localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
             var el=document.getElementById('task_'+currentTaskId);if(el)el.style.opacity='0.4';
             document.getElementById('confirmOverlay').classList.remove('show');document.getElementById('successOverlay').classList.add('show');
-            var xhr=new XMLHttpRequest();xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');xhr.timeout=30000;
+            var xhr=new XMLHttpRequest();xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');
             xhr.send(JSON.stringify({task_id:currentTaskId,proof_photo:proofPhoto}));
             var nxhr=new XMLHttpRequest();nxhr.open('POST',SUPABASE_URL+'/rest/v1/notifications?apikey='+SUPABASE_KEY,true);nxhr.setRequestHeader('Content-Type','application/json');nxhr.setRequestHeader('Prefer','return=minimal');
             nxhr.send(JSON.stringify({title:'مهمة مكتملة',message:'تم تأكيد إكمال المهمة: '+currentTaskId,type:'success',is_read:false}));
