@@ -14,7 +14,7 @@
         :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 20px; --radius-sm: 12px; --shadow-xl: 0 20px 60px rgba(0,0,0,0.2); --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
-        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 250px; height: 250px; background: rgba(255,111,0,0.06); bottom: -10%; left: -6%; animation-delay: -4s; }
@@ -50,7 +50,6 @@
         <span class="nav-title">🔐 تسجيل الدخول</span>
     </header>
     <main class="main-container">
-        
         <div class="login-card" id="loginForm">
             <div style="font-size:45px;margin-bottom:6px;">🔐</div>
             <h2>تسجيل الدخول</h2>
@@ -62,7 +61,6 @@
             <span class="forgot-link" onclick="goToReset()">نسيت كلمة المرور؟</span>
             <p class="switch-text">ليس لديك حساب؟ <span class="switch-link" onclick="showRegister()">إنشاء حساب</span></p>
         </div>
-
         <div class="login-card" id="registerForm" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">📝</div>
             <h2>إنشاء حساب</h2>
@@ -74,7 +72,6 @@
             <p class="msg msg-success" id="regSuccess">✅ تم إنشاء الحساب بنجاح!</p>
             <p class="switch-text">لديك حساب؟ <span class="switch-link" onclick="showLogin()">تسجيل الدخول</span></p>
         </div>
-
         <div class="login-card" id="resetForm" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">🔑</div>
             <h2>تعيين كلمة مرور جديدة</h2>
@@ -85,7 +82,6 @@
             <p class="msg msg-success" id="updateSuccess">✅ تم تغيير كلمة المرور بنجاح!</p>
             <p class="switch-text" style="margin-top:10px;"><span class="switch-link" onclick="showLogin()">← العودة لتسجيل الدخول</span></p>
         </div>
-
         <div class="login-card" id="loggedIn" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">✅</div>
             <h2>مرحباً!</h2>
@@ -100,39 +96,32 @@
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        // عند فتح الصفحة، نتحقق من الرابط
         (function(){
-            var hash = window.location.hash;
-            if(hash && hash.indexOf('type=recovery') !== -1){
-                // رابط استعادة كلمة المرور
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('resetForm').style.display = 'block';
-                document.getElementById('loggedIn').style.display = 'none';
-                // نخزن أننا في وضع الاستعادة
-                sessionStorage.setItem('recoveryMode', 'true');
+            var hash=window.location.hash;
+            if(hash&&hash.indexOf('type=recovery')!==-1){
+                document.getElementById('loginForm').style.display='none';
+                document.getElementById('registerForm').style.display='none';
+                document.getElementById('resetForm').style.display='block';
+                document.getElementById('loggedIn').style.display='none';
+                sessionStorage.setItem('recoveryMode','true');
             }
         })();
 
-        // مراقبة تغيرات الجلسة
-        sb.auth.onAuthStateChange(function(event, session){
-            var isRecovery = sessionStorage.getItem('recoveryMode') === 'true';
-            
-            if(event === 'PASSWORD_RECOVERY' || isRecovery){
-                // في وضع الاستعادة - نعرض نموذج كلمة المرور الجديدة
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('resetForm').style.display = 'block';
-                document.getElementById('loggedIn').style.display = 'none';
+        sb.auth.onAuthStateChange(function(event,session){
+            var isRecovery=sessionStorage.getItem('recoveryMode')==='true';
+            if(event==='PASSWORD_RECOVERY'||isRecovery){
+                document.getElementById('loginForm').style.display='none';
+                document.getElementById('registerForm').style.display='none';
+                document.getElementById('resetForm').style.display='block';
+                document.getElementById('loggedIn').style.display='none';
                 return;
             }
-            
-            if(session && session.user){
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-                document.getElementById('resetForm').style.display = 'none';
-                document.getElementById('loggedIn').style.display = 'block';
-                document.getElementById('userEmailDisplay').textContent = session.user.email;
+            if(session&&session.user){
+                document.getElementById('loginForm').style.display='none';
+                document.getElementById('registerForm').style.display='none';
+                document.getElementById('resetForm').style.display='none';
+                document.getElementById('loggedIn').style.display='block';
+                document.getElementById('userEmailDisplay').textContent=session.user.email;
             }
         });
 
@@ -147,7 +136,10 @@
             var result=await sb.auth.signUp({email:email,password:pass});
             document.getElementById('regBtn').disabled=false;document.getElementById('regBtn').textContent='إنشاء حساب';
             if(result.error){document.getElementById('regError').textContent=result.error.message;document.getElementById('regError').style.display='block';}
-            else{document.getElementById('regSuccess').style.display='block';setTimeout(function(){window.location.reload();},1500);}
+            else{
+                localStorage.setItem('userEmail',email);
+                document.getElementById('regSuccess').style.display='block';setTimeout(function(){window.location.reload();},1500);
+            }
         }
 
         async function signIn(){
@@ -157,7 +149,10 @@
             var result=await sb.auth.signInWithPassword({email:email,password:pass});
             document.getElementById('loginBtn').disabled=false;document.getElementById('loginBtn').textContent='دخول';
             if(result.error){document.getElementById('loginError').style.display='block';}
-            else{window.location.href='home.html';}
+            else{
+                localStorage.setItem('userEmail',email);
+                window.location.href='home.html';
+            }
         }
 
         async function updatePassword(){
@@ -175,7 +170,11 @@
             }
         }
 
-        async function signOut(){await sb.auth.signOut();window.location.reload();}
+        async function signOut(){
+            localStorage.removeItem('userEmail');
+            await sb.auth.signOut();
+            window.location.reload();
+        }
         function goToProfile(){window.location.href='home.html';}
         function goToReset(){window.location.href='reset.html';}
     </script>
