@@ -14,9 +14,7 @@
         :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 20px; --radius-sm: 12px; --shadow-xl: 0 20px 60px rgba(0,0,0,0.2); --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
-        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
-        .particle { position: absolute; border-radius: 50%; pointer-events: none; animation: floatUp linear infinite; opacity: 0; }
-        @keyframes floatUp { 0% { transform: translateY(110vh) scale(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 250px; height: 250px; background: rgba(255,111,0,0.06); bottom: -10%; left: -6%; animation-delay: -4s; }
@@ -44,7 +42,7 @@
     </style>
 </head>
 <body>
-    <div class="particles-bg" id="particlesBg"></div>
+    <div class="particles-bg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <header class="top-nav">
@@ -53,7 +51,6 @@
     </header>
     <main class="main-container">
         
-        <!-- نموذج تسجيل الدخول -->
         <div class="login-card" id="loginForm">
             <div style="font-size:45px;margin-bottom:6px;">🔐</div>
             <h2>تسجيل الدخول</h2>
@@ -66,7 +63,6 @@
             <p class="switch-text">ليس لديك حساب؟ <span class="switch-link" onclick="showRegister()">إنشاء حساب</span></p>
         </div>
 
-        <!-- نموذج إنشاء حساب -->
         <div class="login-card" id="registerForm" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">📝</div>
             <h2>إنشاء حساب</h2>
@@ -79,7 +75,6 @@
             <p class="switch-text">لديك حساب؟ <span class="switch-link" onclick="showLogin()">تسجيل الدخول</span></p>
         </div>
 
-        <!-- نموذج إعادة تعيين كلمة المرور -->
         <div class="login-card" id="resetForm" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">🔑</div>
             <h2>تعيين كلمة مرور جديدة</h2>
@@ -91,7 +86,6 @@
             <p class="switch-text" style="margin-top:10px;"><span class="switch-link" onclick="showLogin()">← العودة لتسجيل الدخول</span></p>
         </div>
 
-        <!-- المستخدم مسجل -->
         <div class="login-card" id="loggedIn" style="display:none;">
             <div style="font-size:45px;margin-bottom:6px;">✅</div>
             <h2>مرحباً!</h2>
@@ -106,31 +100,44 @@
     <script>
         var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
 
-        (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5'];for(var i=0;i<20;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
-
-        // التحقق من وجود recovery token في الرابط
+        // عند فتح الصفحة، نتحقق من الرابط
         (function(){
             var hash = window.location.hash;
             if(hash && hash.indexOf('type=recovery') !== -1){
+                // رابط استعادة كلمة المرور
                 document.getElementById('loginForm').style.display = 'none';
                 document.getElementById('registerForm').style.display = 'none';
                 document.getElementById('resetForm').style.display = 'block';
                 document.getElementById('loggedIn').style.display = 'none';
+                // نخزن أننا في وضع الاستعادة
+                sessionStorage.setItem('recoveryMode', 'true');
             }
         })();
 
-        sb.auth.onAuthStateChange(function(event,session){
-            if(session && session.user && event !== 'PASSWORD_RECOVERY'){
-                document.getElementById('loginForm').style.display='none';
-                document.getElementById('registerForm').style.display='none';
-                document.getElementById('resetForm').style.display='none';
-                document.getElementById('loggedIn').style.display='block';
+        // مراقبة تغيرات الجلسة
+        sb.auth.onAuthStateChange(function(event, session){
+            var isRecovery = sessionStorage.getItem('recoveryMode') === 'true';
+            
+            if(event === 'PASSWORD_RECOVERY' || isRecovery){
+                // في وضع الاستعادة - نعرض نموذج كلمة المرور الجديدة
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('resetForm').style.display = 'block';
+                document.getElementById('loggedIn').style.display = 'none';
+                return;
+            }
+            
+            if(session && session.user){
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('registerForm').style.display = 'none';
+                document.getElementById('resetForm').style.display = 'none';
+                document.getElementById('loggedIn').style.display = 'block';
                 document.getElementById('userEmailDisplay').textContent = session.user.email;
             }
         });
 
-        function showRegister(){document.getElementById('loginForm').style.display='none';document.getElementById('registerForm').style.display='block';document.getElementById('resetForm').style.display='none';}
-        function showLogin(){document.getElementById('registerForm').style.display='none';document.getElementById('resetForm').style.display='none';document.getElementById('loginForm').style.display='block';}
+        function showRegister(){document.getElementById('loginForm').style.display='none';document.getElementById('registerForm').style.display='block';document.getElementById('resetForm').style.display='none';document.getElementById('loggedIn').style.display='none';}
+        function showLogin(){document.getElementById('registerForm').style.display='none';document.getElementById('resetForm').style.display='none';document.getElementById('loggedIn').style.display='none';document.getElementById('loginForm').style.display='block';}
 
         async function signUp(){
             var email=document.getElementById('regEmail').value,pass=document.getElementById('regPass').value;
@@ -161,7 +168,11 @@
             var result=await sb.auth.updateUser({password:pass});
             document.getElementById('updateBtn').disabled=false;document.getElementById('updateBtn').textContent='💾 حفظ كلمة المرور';
             if(result.error){document.getElementById('updateError').textContent=result.error.message;document.getElementById('updateError').style.display='block';}
-            else{document.getElementById('updateSuccess').style.display='block';setTimeout(function(){window.location.href='login.html';},2000);}
+            else{
+                document.getElementById('updateSuccess').style.display='block';
+                sessionStorage.removeItem('recoveryMode');
+                setTimeout(function(){window.location.href='login.html';},2000);
+            }
         }
 
         async function signOut(){await sb.auth.signOut();window.location.reload();}
