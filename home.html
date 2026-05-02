@@ -2,181 +2,202 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | مدينتنا نظيفة</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
-            --accent: #FF6F00; --accent-light: #FFA726; --danger: #E53935;
-            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F;
-            --radius: 24px; --radius-sm: 14px;
-            --shadow-xl: 0 30px 80px rgba(0,0,0,0.25);
-            --shadow-lg: 0 20px 60px rgba(0,0,0,0.2);
-            --shadow: 0 4px 16px rgba(0,0,0,0.08);
-            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-        }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --info: #1E88E5; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --gold: #FFD700; --radius: 20px; --radius-sm: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-lg: 0 8px 28px rgba(0,0,0,0.12); --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
-        .bg-layer { position: fixed; top:0;left:0;width:100%;height:100%;z-index:0; background: linear-gradient(160deg, #0d260d 0%, #0a1f0a 30%, #061406 100%); }
-        .particle { position: fixed; border-radius: 50%; pointer-events: none; z-index:0; animation: floatUp linear infinite; opacity:0; }
-        @keyframes floatUp { 0%{transform:translateY(110vh) scale(0);opacity:0;} 10%{opacity:1;} 90%{opacity:1;} 100%{transform:translateY(-10vh) scale(1.5);opacity:0;} }
-        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index:0; animation: orbFloat 8s ease-in-out infinite; }
-        .orb-1 { width:300px;height:300px;background:rgba(46,125,50,0.10);top:-8%;right:-8%; }
-        .orb-2 { width:250px;height:250px;background:rgba(255,215,0,0.06);bottom:-12%;left:-6%;animation-delay:-4s; }
-        @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(25px,-25px) scale(1.1);} 66%{transform:translate(-15px,15px) scale(0.9);} }
-
-        .navbar { position:fixed; top:0;left:0;right:0;z-index:1000; background:rgba(10,31,10,0.85); backdrop-filter:blur(25px); -webkit-backdrop-filter:blur(25px); border-bottom:1px solid rgba(255,255,255,0.08); padding:10px 16px; display:flex; align-items:center; gap:10px; box-shadow:0 4px 30px rgba(0,0,0,0.3); }
-        .btn-back { width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:white;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:var(--transition);text-decoration:none; }
-        .btn-back:hover { background:rgba(255,255,255,0.12); }
-        .nav-title { flex:1; font-size:16px; font-weight:700; color:white; }
-        .btn-logout { font-size:11px; padding:7px 12px; border-radius:15px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:white; cursor:pointer; font-family:'Cairo',sans-serif; font-weight:600; }
-
-        .main { position:relative; z-index:1; flex:1; padding:78px 16px 20px; max-width:500px; margin:0 auto; width:100%; }
-        
-        /* بطاقة الترحيب */
-        .welcome-card { background:linear-gradient(135deg,var(--primary-dark),var(--primary-light)); border-radius:var(--radius); padding:20px; color:white; margin-bottom:12px; animation:fadeIn 0.5s ease; }
-        @keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
-        .welcome-text { font-size:13px; opacity:0.9; }
-        .welcome-email { font-size:16px; font-weight:800; }
-
-        /* بطاقة النقاط */
-        .points-card { background:linear-gradient(135deg,#FFD700,#FFA726,#FF9800); border-radius:var(--radius); padding:20px; color:white; margin-bottom:12px; text-align:center; animation:fadeIn 0.5s ease 0.1s both; }
-        .points-label { font-size:12px; opacity:0.9; }
-        .points-value { font-size:44px; font-weight:900; direction:ltr; display:inline-block; margin:4px 0; }
-        .points-sub { font-size:10px; opacity:0.8; }
-
-        /* شبكة الخدمات */
-        .services { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
-        .service-card { background:rgba(255,255,255,0.94); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); border-radius:var(--radius); padding:20px 14px; text-align:center; box-shadow:var(--shadow-lg); border:1px solid rgba(255,255,255,0.2); text-decoration:none; color:inherit; transition:var(--transition); animation:fadeIn 0.5s ease both; cursor:pointer; }
-        .service-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-xl); }
-        .service-icon { font-size:36px; display:block; margin-bottom:8px; }
-        .service-name { font-size:13px; font-weight:700; color:var(--text-dark); }
-
-        /* سجل */
-        .card { background:rgba(255,255,255,0.94); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); border-radius:var(--radius); padding:20px 18px; box-shadow:var(--shadow-lg); margin-bottom:10px; border:1px solid rgba(255,255,255,0.2); animation:fadeIn 0.5s ease both; }
-        .card-header { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
-        .card-icon { width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px; background:#E8F5E9; }
-        .card-label { flex:1; font-size:14px; font-weight:700; color:var(--text-dark); }
-        .history-item { display:flex; align-items:center; gap:8px; padding:10px; border-radius:var(--radius-sm); background:rgba(0,0,0,0.02); font-size:12px; margin-bottom:4px; }
-        .dot { width:8px;height:8px;border-radius:50%;flex-shrink:0; }
-        .dot-report { background:#E53935; } .dot-pickup { background:#FF9800; } .dot-reward { background:#4CAF50; }
-        .history-info { flex:1; }
-        .history-pts { font-weight:700; direction:ltr; } .pts-plus { color:#4CAF50; } .pts-minus { color:#E53935; }
-        .empty { text-align:center; padding:20px; } .empty-icon { font-size:36px; } .empty-text { font-size:12px; color:var(--text-gray); }
-
-        .footer { position:relative; z-index:1; text-align:center; padding:8px 20px; font-size:9px; color:rgba(255,255,255,0.45); background:linear-gradient(transparent,rgba(0,0,0,0.3)); }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
+        .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
+        .orb-1 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); top: -8%; right: -8%; }
+        .orb-2 { width: 250px; height: 250px; background: rgba(255,215,0,0.06); bottom: -10%; left: -6%; animation-delay: -4s; }
+        @keyframes orbFloat { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,-20px); } }
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+        .btn-back { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 15px; display: flex; align-items: center; justify-content: center; text-decoration: none; flex-shrink: 0; }
+        .nav-title { flex: 1; font-size: 15px; font-weight: 700; color: white; }
+        .nav-actions { display: flex; gap: 6px; }
+        .btn-notif { position: relative; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 16px; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        .notif-badge { position: absolute; top: -2px; right: -2px; width: 16px; height: 16px; background: var(--danger); border-radius: 50%; font-size: 9px; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; display: none; }
+        .btn-logout { font-size: 10px; padding: 6px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; white-space: nowrap; }
+        .main { position: relative; z-index: 1; flex: 1; padding: 74px 14px 20px; max-width: 500px; margin: 0 auto; width: 100%; }
+        .welcome-card { background: linear-gradient(135deg, var(--primary-dark), var(--primary-light)); border-radius: var(--radius); padding: 18px 16px; color: white; margin-bottom: 10px; animation: cardIn 0.5s ease; }
+        @keyframes cardIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .welcome-text { font-size: 12px; opacity: 0.9; }
+        .welcome-email { font-size: 16px; font-weight: 800; }
+        .points-card { background: linear-gradient(135deg, #FFD700, #FFA726); border-radius: var(--radius); padding: 18px 16px; color: white; margin-bottom: 10px; text-align: center; animation: cardIn 0.5s ease 0.1s both; }
+        .points-label { font-size: 11px; opacity: 0.9; }
+        .points-value { font-size: 40px; font-weight: 900; direction: ltr; display: inline-block; margin: 2px 0; }
+        .points-sub { font-size: 9px; opacity: 0.8; }
+        .services { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .service-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 18px 12px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; animation: cardIn 0.5s ease both; }
+        .service-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .service-icon { font-size: 32px; display: block; margin-bottom: 6px; }
+        .service-name { font-size: 12px; font-weight: 700; color: var(--text-dark); }
+        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 16px 14px; box-shadow: var(--shadow); margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.12); animation: cardIn 0.5s ease both; }
+        .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; background: #E8F5E9; }
+        .card-label { flex: 1; font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .history-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); background: rgba(0,0,0,0.01); font-size: 11px; margin-bottom: 3px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .dot-report { background: #E53935; } .dot-pickup { background: #FF9800; }
+        .history-info { flex: 1; }
+        .history-pts { font-weight: 700; direction: ltr; font-size: 11px; } .pts-plus { color: #4CAF50; }
+        .empty { text-align: center; padding: 20px; } .empty-icon { font-size: 32px; } .empty-text { font-size: 11px; color: var(--text-gray); }
+        .footer { position: relative; z-index: 1; text-align: center; padding: 6px 14px; font-size: 8px; color: rgba(255,255,255,0.4); }
     </style>
 </head>
 <body>
-
-    <div class="bg-layer"></div>
+    <div class="particles-bg"></div>
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
-
-    <header class="navbar">
+    <header class="top-nav">
         <a href="index.html" class="btn-back">←</a>
         <span class="nav-title">🏠 لوحة التحكم</span>
-        <button class="btn-logout" onclick="signOut()">🚪 خروج</button>
+        <div class="nav-actions">
+            <a href="notifications.html" class="btn-notif">🔔<span class="notif-badge" id="notifBadge"></span></a>
+            <button class="btn-logout" onclick="signOut()">🚪 خروج</button>
+        </div>
     </header>
-
     <main class="main">
-        
-        <!-- ترحيب -->
         <div class="welcome-card">
             <div class="welcome-text">👋 مرحباً</div>
             <div class="welcome-email" id="userEmail">...</div>
         </div>
-
-        <!-- نقاط -->
         <div class="points-card">
             <div class="points-label">⭐ نقاطك الخضراء</div>
             <div class="points-value" id="myPoints">0</div>
             <div class="points-sub">قابلة للاستبدال بمكافآت</div>
         </div>
-
-        <!-- خدمات -->
         <div class="services">
-            <a href="report.html" class="service-card" style="animation-delay:0.2s">
-                <span class="service-icon">📸</span>
-                <span class="service-name">أبلغ عن مفرغة</span>
-            </a>
-            <a href="sort.html" class="service-card" style="animation-delay:0.25s">
-                <span class="service-icon">📦</span>
-                <span class="service-name">طلب جمع مواد</span>
-            </a>
-            <a href="#" onclick="alert('قريباً')" class="service-card" style="animation-delay:0.3s">
-                <span class="service-icon">🎁</span>
-                <span class="service-name">المكافآت</span>
-            </a>
-            <a href="#" onclick="alert('قريباً')" class="service-card" style="animation-delay:0.35s">
-                <span class="service-icon">📋</span>
-                <span class="service-name">طلباتي</span>
-            </a>
+            <a href="report.html" class="service-card" style="animation-delay:0.15s"><span class="service-icon">📸</span><span class="service-name">أبلغ عن مفرغة</span></a>
+            <a href="sort.html" class="service-card" style="animation-delay:0.2s"><span class="service-icon">📦</span><span class="service-name">طلب جمع مواد</span></a>
+            <a href="rewards.html" class="service-card" style="animation-delay:0.25s"><span class="service-icon">🎁</span><span class="service-name">المكافآت</span></a>
+            <a href="my-requests.html" class="service-card" style="animation-delay:0.3s"><span class="service-icon">📋</span><span class="service-name">طلباتي</span></a>
         </div>
-
-        <!-- سجل النشاط -->
-        <div class="card" style="animation-delay:0.4s">
+        <div class="card" style="animation-delay:0.35s">
             <div class="card-header"><div class="card-icon">📋</div><span class="card-label">آخر النشاطات</span></div>
             <div id="historyList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div></div>
         </div>
-
     </main>
-
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
-
-        // جسيمات
-        (function(){var c=document.body;var colors=['#4CAF50','#81C784','#FFA726','#FFD700'];for(var i=0;i<25;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
+        var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         var userEmail = '';
         var myPoints = 0;
 
-        // تحقق من الجلسة
+        // الجلسة
         sb.auth.getSession().then(function(result){
             if(result.data.session){
                 userEmail = result.data.session.user.email;
                 document.getElementById('userEmail').textContent = userEmail;
-                loadData();
+                loadAll();
             } else {
                 window.location.href = 'login.html';
             }
         });
 
-        async function loadData(){
-            // نقاط من Supabase
-            try{
-                var r = await sb.from('pickups').select('*');
-                if(!r.error){ myPoints = r.data.reduce(function(s,x){return s+(x.points||0);},0); }
-            }catch(e){}
-            myPoints += parseInt(localStorage.getItem('userPoints')||'0');
-            document.getElementById('myPoints').textContent = myPoints.toLocaleString('en-US');
-            
-            // سجل
-            var history = [];
-            try{
-                var r2 = await sb.from('pickups').select('*').order('created_at',{ascending:false}).limit(5);
-                if(!r2.error){
-                    r2.data.forEach(function(x){
-                        var names={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
-                        history.push({type:'pickup',desc:'جمع '+names[x.material]+' ('+x.weight+' كغ)',points:x.points||0});
-                    });
-                }
-            }catch(e){}
-            
-            var hl = document.getElementById('historyList');
-            if(history.length===0){ hl.innerHTML='<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>'; }
-            else { hl.innerHTML = history.map(function(h){return '<div class="history-item"><span class="dot '+(h.type==='pickup'?'dot-pickup':'dot-report')+'"></span><div class="history-info">'+h.desc+'</div><span class="history-pts pts-plus">+'+h.points.toLocaleString('en-US')+'</span></div>';}).join(''); }
+        function apiGet(table){
+            return new Promise(function(resolve){
+                var fields = '*';
+                if(table === 'reports') fields = 'id,type,status,created_at';
+                if(table === 'pickups') fields = 'id,material,weight,points,status,created_at';
+                var x = new XMLHttpRequest();
+                x.open('GET', SUPABASE_URL + '/rest/v1/' + table + '?select=' + fields + '&apikey=' + SUPABASE_KEY, true);
+                x.timeout = 20000;
+                x.onload = function(){ if(x.status === 200) resolve(JSON.parse(x.responseText)); else resolve([]); };
+                x.onerror = function(){ resolve([]); };
+                x.send();
+            });
         }
 
-        async function signOut(){ await sb.auth.signOut(); window.location.href='index.html'; }
+        async function loadAll(){
+            // النقاط - نجمع من localStorage بتوحيد greenPoints
+            myPoints = parseInt(localStorage.getItem('greenPoints') || '0');
+            
+            // نضيف نقاط pickups من Supabase
+            try {
+                var pickups = await apiGet('pickups');
+                myPoints += pickups.reduce(function(s, x){ return s + (x.points || 0); }, 0);
+            } catch(e) {}
+            
+            document.getElementById('myPoints').textContent = myPoints.toLocaleString('en-US');
+
+            // سجل النشاط - بلاغات + طلبات جمع
+            var history = [];
+            try {
+                var reports = await apiGet('reports');
+                reports.forEach(function(r){
+                    var typeNames = {menagere:'منزلية', plastique:'بلاستيك', carton:'كرتون', verre:'زجاج', decombres:'أنقاض', autre:'أخرى'};
+                    history.push({
+                        type: 'report',
+                        desc: '📸 بلاغ عن مفرغة - ' + (typeNames[r.type] || r.type || 'غير محدد'),
+                        time: r.created_at,
+                        points: 5
+                    });
+                });
+            } catch(e) {}
+            
+            try {
+                var pickups2 = await apiGet('pickups');
+                pickups2.forEach(function(p){
+                    var matNames = {carton:'كرتون', plastique:'بلاستيك', verre:'زجاج'};
+                    history.push({
+                        type: 'pickup',
+                        desc: '📦 طلب جمع ' + (matNames[p.material] || p.material || '') + ' - ' + (p.weight || 0) + ' كغ',
+                        time: p.created_at,
+                        points: p.points || 0
+                    });
+                });
+            } catch(e) {}
+
+            // ترتيب حسب الوقت
+            history.sort(function(a, b){ return new Date(b.time) - new Date(a.time); });
+            history = history.slice(0, 10);
+
+            var hl = document.getElementById('historyList');
+            if(history.length === 0){
+                hl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>';
+            } else {
+                hl.innerHTML = history.map(function(h){
+                    return '<div class="history-item"><span class="dot ' + (h.type === 'report' ? 'dot-report' : 'dot-pickup') + '"></span><div class="history-info">' + h.desc + '</div><span class="history-pts pts-plus">+' + h.points + '</span></div>';
+                }).join('');
+            }
+
+            // عداد الإشعارات
+            loadNotifCount();
+        }
+
+        function loadNotifCount(){
+            var x = new XMLHttpRequest();
+            x.open('GET', SUPABASE_URL + '/rest/v1/notifications?select=count&is_read=eq.false&apikey=' + SUPABASE_KEY, true);
+            x.timeout = 10000;
+            x.onload = function(){
+                if(x.status === 200){
+                    var d = JSON.parse(x.responseText);
+                    var count = d[0] ? d[0].count : 0;
+                    var badge = document.getElementById('notifBadge');
+                    if(count > 0){
+                        badge.textContent = count > 99 ? '99+' : count;
+                        badge.style.display = 'flex';
+                    }
+                }
+            };
+            x.send();
+        }
+
+        async function signOut(){ await sb.auth.signOut(); window.location.href = 'index.html'; }
     </script>
 </body>
 </html>
