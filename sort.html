@@ -65,14 +65,11 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <header class="top-nav">
-        <a href="index.html" class="btn-back" id="backBtn">←</a>
+        <a href="home.html" class="btn-back">←</a>
         <span class="nav-title">📦 طلب جمع المواد</span>
     </header>
     <main class="main-container">
-        <div class="points-card" style="animation-delay:0.05s">
-            <div class="points-label">⭐ رصيد نقاطك الخضراء</div>
-            <div class="points-value" id="totalPoints">0</div>
-        </div>
+        <div class="points-card" style="animation-delay:0.05s"><div class="points-label">⭐ رصيد نقاطك الخضراء</div><div class="points-value" id="totalPoints">0</div></div>
         <div class="card" style="animation-delay:0.1s"><div class="card-header"><div class="card-icon">♻️</div><span class="card-label">اختر نوع المادة للتجميع</span></div>
             <div class="material-grid">
                 <div class="material-item selected" onclick="selectMaterial(this,'carton')" data-price="10"><span class="material-check">✓</span><span class="material-emoji">📦</span><span class="material-name">كرتون</span><span class="material-price">10 نقاط/كغ</span></div>
@@ -97,20 +94,15 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
-        var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null,currentUserEmail=null;
-
-        (function(){document.getElementById('backBtn').href='home.html';
-            var xhr=new XMLHttpRequest();
-            xhr.open('GET',SUPABASE_URL+'/auth/v1/user?apikey='+SUPABASE_KEY,true);
-            xhr.onload=function(){if(xhr.status===200){try{var u=JSON.parse(xhr.responseText);currentUserEmail=u.email;}catch(e){}}};
-            xhr.send();
-        })();
+        var selectedMaterial='carton',selectedPrice=10,userLat=null,userLng=null;
+        var userEmail=localStorage.getItem('userEmail'); // البريد من localStorage
 
         function loadPoints(){
+            if(!userEmail){document.getElementById('totalPoints').textContent='0';return;}
             var x=new XMLHttpRequest();
-            x.open('GET',SUPABASE_URL+'/rest/v1/point_transactions?select=amount&user_email=eq.'+encodeURIComponent(currentUserEmail||'')+'&apikey='+SUPABASE_KEY,true);
+            x.open('GET',SUPABASE_URL+'/rest/v1/point_transactions?select=amount&user_email=eq.'+encodeURIComponent(userEmail)+'&apikey='+SUPABASE_KEY,true);
             x.timeout=15000;
-            x.onload=function(){var pts=0;if(x.status===200){var d=JSON.parse(x.responseText);pts=d.reduce(function(s,r){return s+(r.amount||0);},0);}document.getElementById('totalPoints').textContent=pts.toLocaleString('en-US');};
+            x.onload=function(){var pts=0;if(x.status===200){var d=JSON.parse(x.responseText);pts=d.reduce(function(s,r){return s+(r.amount||0);},0);if(pts<0)pts=0;}document.getElementById('totalPoints').textContent=pts.toLocaleString('en-US');};
             x.onerror=function(){document.getElementById('totalPoints').textContent='0';};
             x.send();
         }
@@ -134,7 +126,6 @@
             var pointsEarned=weight*selectedPrice;
             document.getElementById('btnSubmit').disabled=true;document.getElementById('btnSubmit').textContent='⏳ جاري الإرسال...';
 
-            // 1. إرسال الطلب إلى pickups
             var xhr=new XMLHttpRequest();
             xhr.open('POST',SUPABASE_URL+'/rest/v1/pickups?apikey='+SUPABASE_KEY,true);
             xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');xhr.timeout=15000;
@@ -147,12 +138,12 @@
             xhr.onerror=function(){document.getElementById('btnSubmit').disabled=false;document.getElementById('btnSubmit').textContent='🚛 طلب جمع المواد';document.getElementById('overlay').classList.add('show');};
             xhr.send(JSON.stringify({material:selectedMaterial,weight:weight,points:pointsEarned,lat:userLat,lng:userLng,status:'pending'}));
 
-            // 2. تسجيل النقاط في point_transactions
-            if(currentUserEmail){
+            // نقاط للمستخدم المسجل
+            if(userEmail){
                 var pxhr=new XMLHttpRequest();
                 pxhr.open('POST',SUPABASE_URL+'/rest/v1/point_transactions?apikey='+SUPABASE_KEY,true);
                 pxhr.setRequestHeader('Content-Type','application/json');pxhr.setRequestHeader('Prefer','return=minimal');
-                pxhr.send(JSON.stringify({user_email:currentUserEmail,amount:pointsEarned,description:'طلب جمع '+selectedMaterial}));
+                pxhr.send(JSON.stringify({user_email:userEmail,amount:pointsEarned,description:'طلب جمع '+selectedMaterial}));
             }
         }
 
