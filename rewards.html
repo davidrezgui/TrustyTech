@@ -39,6 +39,7 @@
         .btn-redeem:disabled { background: #ccc; cursor: not-allowed; }
         .msg { padding: 10px; border-radius: var(--radius-sm); font-size: 11px; text-align: center; margin-top: 8px; display: none; }
         .msg-success { background: #E8F5E9; color: var(--primary); }
+        .msg-error { background: #FFEBEE; color: var(--danger); }
         .footer { position: relative; z-index: 1; text-align: center; padding: 6px 14px; font-size: 8px; color: rgba(255,255,255,0.4); }
     </style>
 </head>
@@ -56,15 +57,19 @@
             <div class="value" id="pointsDisplay">0</div>
         </div>
         <div id="rewardsList"></div>
-        <div class="msg msg-success" id="successMsg">✅ تم استبدال المكافأة بنجاح!</div>
+        <div class="msg msg-success" id="successMsg">✅ تم استبدال المكافأة بنجاح! سيتواصل معك المشرف قريباً</div>
+        <div class="msg msg-error" id="errorMsg"></div>
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         var myPoints = 0;
+        var userEmail = '';
 
         var rewards = [
             { id: 1, icon: '🗑️', name: 'كيس قمامة', desc: 'كيس متين 50 لتر', cost: 100 },
@@ -75,22 +80,31 @@
             { id: 6, icon: '🏆', name: 'شهادة تقدير', desc: 'مواطن بيئي نشط', cost: 3000 }
         ];
 
-        // جمع النقاط من localStorage + Supabase (مثل home.html)
-        function loadPoints(){
-            var localPts = parseInt(localStorage.getItem('greenPoints') || '0');
-            myPoints = localPts;
+        // جلب الجلسة أولاً
+        sb.auth.getSession().then(function(result){
+            if(result.data.session){
+                userEmail = result.data.session.user.email;
+            }
+        });
 
+        // الرصيد = مجموع عمليات point_transactions لهذا المستخدم
+        function loadPoints(){
             var x = new XMLHttpRequest();
-            x.open('GET', SUPABASE_URL + '/rest/v1/pickups?select=points&apikey=' + SUPABASE_KEY, true);
+            x.open('GET', SUPABASE_URL + '/rest/v1/point_transactions?select=amount&apikey=' + SUPABASE_KEY, true);
             x.timeout = 15000;
             x.onload = function(){
                 if(x.status === 200){
                     var data = JSON.parse(x.responseText);
-                    myPoints += data.reduce(function(s, r){ return s + (r.points || 0); }, 0);
+                    myPoints = data.reduce(function(s, r){ return s + (r.amount || 0); }, 0);
                 }
+                // نضيف النقاط المحلية أيضاً
+                myPoints += parseInt(localStorage.getItem('greenPoints') || '0');
                 showPointsAndRewards();
             };
-            x.onerror = function(){ showPointsAndRewards(); };
+            x.onerror = function(){
+                myPoints = parseInt(localStorage.getItem('greenPoints') || '0');
+                showPointsAndRewards();
+            };
             x.send();
         }
 
@@ -112,20 +126,60 @@
             if(myPoints < cost) return;
             if(!confirm('استبدال ' + name + ' بـ ' + cost + ' نقطة؟')) return;
 
-            // نخصم من localStorage أولاً
+            // 1. تسجيل خصم النقاط في point_transactions
+            var xhr1 = new XMLHttpRequest();
+            xhr1.open('POST', SUPABASE_URL + '/rest/v1/point_transactions?apikey=' + SUPABASE_KEY, true);
+            xhr1.setRequestHeader('Content-Type', 'application/json');
+            xhr1.setRequestHeader('Prefer', 'return=minimal');
+            xhr1.send(JSON.stringify({
+                user_email: userEmail,
+                amount: -cost,
+                description: 'استبدال: ' + name
+            }));
+
+            // 2. تسجيل الطلب في redeems
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', SUPABASE_URL + '/rest/v1/redeems?apikey=' + SUPABASE_KEY, true);
+            xhr2.setRequestHeader('Content-Type', 'application/json');
+            xhr2.setRequestHeader('Prefer', 'return=minimal');
+            xhr2.send(JSON.stringify({
+                user_email: userEmail,
+                reward_name: name,
+                cost: cost,
+                status: 'pending'
+            }));
+
+            // 3. خصم من localStorage أيضاً
             var localPts = parseInt(localStorage.getItem('greenPoints') || '0');
-            var remaining = localPts - cost;
-            if(remaining >= 0){
-                localStorage.setItem('greenPoints', remaining.toString());
+            if(localPts >= cost){
+                localStorage.setItem('greenPoints', (localPts - cost).toString());
             } else {
-                // النقاط المحلية لا تكفي، نخصم منها كلها والباقي من Supabase
                 localStorage.setItem('greenPoints', '0');
             }
 
+            // 4. تحديث العرض
             myPoints -= cost;
             document.getElementById('pointsDisplay').textContent = myPoints.toLocaleString('en-US');
             document.getElementById('successMsg').style.display = 'block';
-            setTimeout(function(){ document.getElementById('successMsg').style.display = 'none'; location.reload(); }, 2000);
+            document.getElementById('errorMsg').style.display = 'none';
+
+            // 5. إرسال إشعار للمشرف
+            var xhr3 = new XMLHttpRequest();
+            xhr3.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
+            xhr3.setRequestHeader('Content-Type', 'application/json');
+            xhr3.setRequestHeader('Prefer', 'return=minimal');
+            xhr3.send(JSON.stringify({
+                title: 'طلب مكافأة جديد',
+                message: userEmail + ' استبدل ' + name + ' بـ ' + cost + ' نقطة',
+                type: 'info',
+                is_read: false
+            }));
+
+            // 6. تحديث الأزرار بعد ثانيتين
+            setTimeout(function(){
+                document.getElementById('successMsg').style.display = 'none';
+                showPointsAndRewards();
+            }, 2500);
         }
 
         loadPoints();
