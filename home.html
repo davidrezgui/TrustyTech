@@ -92,20 +92,6 @@
             } else { window.location.href = 'login.html'; }
         });
 
-        function apiGet(table){
-            return new Promise(function(resolve){
-                var fields = '*';
-                if(table === 'reports') fields = 'id,type,status,created_at';
-                if(table === 'pickups') fields = 'id,material,weight,points,status,created_at';
-                var x = new XMLHttpRequest();
-                x.open('GET', SUPABASE_URL + '/rest/v1/' + table + '?select=' + fields + '&apikey=' + SUPABASE_KEY, true);
-                x.timeout = 20000;
-                x.onload = function(){ if(x.status === 200) resolve(JSON.parse(x.responseText)); else resolve([]); };
-                x.onerror = function(){ resolve([]); };
-                x.send();
-            });
-        }
-
         async function loadAll(){
             // النقاط من point_transactions
             var x = new XMLHttpRequest();
@@ -121,27 +107,32 @@
             };
             x.send();
 
-            // سجل النشاط
+            // سجل النشاط - فقط للمستخدم الحالي
             var history = [];
-            try {
-                var reports = await apiGet('reports');
-                reports.forEach(function(r){
-                    var typeNames = {menagere:'منزلية', plastique:'بلاستيك', carton:'كرتون', verre:'زجاج', decombres:'أنقاض', autre:'أخرى'};
-                    history.push({ type: 'report', desc: '📸 بلاغ عن مفرغة - ' + (typeNames[r.type] || r.type || 'غير محدد'), time: r.created_at, points: 5 });
-                });
-            } catch(e) {}
-            try {
-                var pickups = await apiGet('pickups');
-                pickups.forEach(function(p){
-                    var matNames = {carton:'كرتون', plastique:'بلاستيك', verre:'زجاج'};
-                    history.push({ type: 'pickup', desc: '📦 طلب جمع ' + (matNames[p.material] || p.material || '') + ' - ' + (p.weight || 0) + ' كغ', time: p.created_at, points: p.points || 0 });
-                });
-            } catch(e) {}
-            history.sort(function(a, b){ return new Date(b.time) - new Date(a.time); });
-            history = history.slice(0, 10);
-            var hl = document.getElementById('historyList');
-            if(history.length === 0){ hl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>'; }
-            else { hl.innerHTML = history.map(function(h){ return '<div class="history-item"><span class="dot ' + (h.type === 'report' ? 'dot-report' : 'dot-pickup') + '"></span><div class="history-info">' + h.desc + '</div><span class="history-pts pts-plus">+' + h.points + '</span></div>'; }).join(''); }
+            
+            // البلاغات من point_transactions (للمستخدم الحالي)
+            var x2 = new XMLHttpRequest();
+            x2.open('GET', SUPABASE_URL + '/rest/v1/point_transactions?select=*&user_email=eq.' + encodeURIComponent(userEmail) + '&order=created_at.desc&limit=10&apikey=' + SUPABASE_KEY, true);
+            x2.timeout = 15000;
+            x2.onload = function(){
+                if(x2.status === 200){
+                    var data = JSON.parse(x2.responseText);
+                    data.forEach(function(pt){
+                        var icon = pt.amount > 0 ? '📸' : '🎁';
+                        var dotClass = pt.amount > 0 ? 'dot-report' : 'dot-pickup';
+                        history.push({
+                            type: pt.amount > 0 ? 'report' : 'redeem',
+                            desc: pt.description || (pt.amount > 0 ? 'نقاط مكتسبة' : 'استبدال مكافأة'),
+                            time: pt.created_at,
+                            points: pt.amount,
+                            dotClass: dotClass
+                        });
+                    });
+                }
+                showHistory(history);
+            };
+            x2.onerror = function(){ showHistory(history); };
+            x2.send();
 
             // عداد الإشعارات
             var nx = new XMLHttpRequest();
@@ -156,6 +147,14 @@
                 }
             };
             nx.send();
+        }
+
+        function showHistory(history){
+            history.sort(function(a, b){ return new Date(b.time) - new Date(a.time); });
+            history = history.slice(0, 10);
+            var hl = document.getElementById('historyList');
+            if(history.length === 0){ hl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>'; }
+            else { hl.innerHTML = history.map(function(h){ return '<div class="history-item"><span class="dot ' + (h.dotClass || 'dot-report') + '"></span><div class="history-info">' + h.desc + '</div><span class="history-pts pts-plus">' + (h.points > 0 ? '+' : '') + h.points + '</span></div>'; }).join(''); }
         }
 
         async function signOut(){ await sb.auth.signOut(); window.location.href = 'index.html'; }
