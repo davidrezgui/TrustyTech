@@ -171,14 +171,10 @@
     <video id="qrVideo" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:3000;background:black;" playsinline></video>
     <canvas id="qrCanvas" style="display:none;"></canvas>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-        
-        // Supabase Client للإرسال فقط
-        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#42A5F5','#1E88E5','#4CAF50','#81C784','#FFA726'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;';c.appendChild(p);}})();
 
@@ -189,7 +185,7 @@
 
         function checkPass(){if(document.getElementById('driverPass').value==='1234'){document.getElementById('loginScreen').style.display='none';document.getElementById('driverMain').style.display='block';loadAll();}else{document.getElementById('loginError').style.display='block';}}
 
-        // القراءة بـ XMLHttpRequest (سريع، بدون timeout)
+        // القراءة بدون صور لتجنب timeout
         function apiGet(table){
             return new Promise(function(resolve){
                 var fields='*';
@@ -235,23 +231,66 @@
         function openProofGallery(){if(!proofPhoto)document.getElementById('proofGallery').click();}
 
         function handleProofPhoto(e){
-            var f=e.target.files[0];if(!f)return;var r=new FileReader();
-            r.onload=function(ev){proofPhoto=ev.target.result;document.getElementById('proofPreview').src=proofPhoto;document.getElementById('proofPreview').style.display='block';document.getElementById('proofInner').style.display='none';document.getElementById('proofZone').classList.add('filled');document.getElementById('btnProofGallery').style.display='none';document.getElementById('btnProofDelete').style.display='flex';};r.readAsDataURL(f);
+            var f=e.target.files[0];if(!f)return;
+            var reader=new FileReader();
+            reader.onload=function(ev){
+                // ضغط الصورة قبل التخزين لتقليل الحجم
+                var img=new Image();
+                img.onload=function(){
+                    var canvas=document.createElement('canvas');
+                    var maxW=800,maxH=600;
+                    var w=img.width,h=img.height;
+                    if(w>maxW){h=h*(maxW/w);w=maxW;}
+                    if(h>maxH){w=w*(maxH/h);h=maxH;}
+                    canvas.width=w;canvas.height=h;
+                    canvas.getContext('2d').drawImage(img,0,0,w,h);
+                    // تخزين الصورة المضغوطة (جودة 0.6 تعطي حجم صغير جداً)
+                    proofPhoto=canvas.toDataURL('image/jpeg',0.6);
+                    
+                    document.getElementById('proofPreview').src=proofPhoto;
+                    document.getElementById('proofPreview').style.display='block';
+                    document.getElementById('proofInner').style.display='none';
+                    document.getElementById('proofZone').classList.add('filled');
+                    document.getElementById('btnProofGallery').style.display='none';
+                    document.getElementById('btnProofDelete').style.display='flex';
+                };
+                img.src=ev.target.result;
+            };
+            reader.readAsDataURL(f);
         }
         function deleteProofPhoto(){proofPhoto=null;document.getElementById('proofPreview').style.display='none';document.getElementById('proofInner').style.display='block';document.getElementById('proofZone').classList.remove('filled');document.getElementById('btnProofGallery').style.display='flex';document.getElementById('btnProofDelete').style.display='none';document.getElementById('proofCamera').value='';document.getElementById('proofGallery').value='';}
 
-        // الإرسال بـ Supabase Client (يتعامل مع الصور الكبيرة)
+        // الإرسال مع الصورة المضغوطة عبر XMLHttpRequest (لن يكون هناك timeout)
         function finalConfirm(){
             if(!proofPhoto){alert('الرجاء التقاط صورة إثبات أولاً');return;}
             if(!currentTaskId){alert('خطأ: لا توجد مهمة');return;}
+            
+            // إضافة المهمة إلى المكتملة محلياً
             if(completedTasks.indexOf(currentTaskId)===-1)completedTasks.push(currentTaskId);
-            var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};localStorage.setItem('taskProofs',JSON.stringify(proofs));localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
-            var el=document.getElementById('task_'+currentTaskId);if(el)el.style.opacity='0.4';
+            var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');
+            proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};
+            localStorage.setItem('taskProofs',JSON.stringify(proofs));
+            localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
+            
+            var el=document.getElementById('task_'+currentTaskId);
+            if(el)el.style.opacity='0.4';
             document.getElementById('confirmOverlay').classList.remove('show');
             document.getElementById('successOverlay').classList.add('show');
             
-            // إرسال عبر Supabase Client
-            sb.from('completed').insert({task_id:currentTaskId,proof_photo:proofPhoto}).then(function(){});
+            // إرسال البيانات إلى Supabase (الصورة مضغوطة مسبقاً في handleProofPhoto)
+            var xhr=new XMLHttpRequest();
+            xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);
+            xhr.setRequestHeader('Content-Type','application/json');
+            xhr.setRequestHeader('Prefer','return=minimal');
+            xhr.timeout=30000;
+            xhr.send(JSON.stringify({task_id:currentTaskId,proof_photo:proofPhoto}));
+            
+            // إرسال إشعار
+            var nxhr=new XMLHttpRequest();
+            nxhr.open('POST',SUPABASE_URL+'/rest/v1/notifications?apikey='+SUPABASE_KEY,true);
+            nxhr.setRequestHeader('Content-Type','application/json');
+            nxhr.setRequestHeader('Prefer','return=minimal');
+            nxhr.send(JSON.stringify({title:'مهمة مكتملة',message:'تم تأكيد إكمال المهمة: '+currentTaskId,type:'success',is_read:false}));
             
             currentTaskId=null;proofPhoto=null;
         }
