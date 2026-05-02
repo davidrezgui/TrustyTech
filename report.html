@@ -175,7 +175,6 @@
         var currentUserId = null;
         var isLoggedIn = false;
 
-        // معرفة حالة المستخدم
         (function(){
             var backBtn = document.getElementById('backBtn');
             backBtn.href = 'index.html';
@@ -185,10 +184,7 @@
                 if(xhr.status === 200){
                     backBtn.href = 'home.html';
                     isLoggedIn = true;
-                    try {
-                        var user = JSON.parse(xhr.responseText);
-                        currentUserId = user.id;
-                    } catch(e) {}
+                    try { var user = JSON.parse(xhr.responseText); currentUserId = user.id; } catch(e) {}
                 }
             };
             xhr.send();
@@ -199,22 +195,33 @@
 
         function handlePhoto(e){
             var f=e.target.files[0];if(!f)return;
-            var r=new FileReader();
-            r.onload=function(ev){
-                S.photo=ev.target.result;
-                document.getElementById('preview').src=S.photo;
-                document.getElementById('preview').style.display='block';
-                document.getElementById('camInner').style.display='none';
-                document.getElementById('camZone').classList.add('filled');
-                document.getElementById('btnGallery').style.display='none';
-                document.getElementById('btnDelete').style.display='flex';
-                document.getElementById('t1').className='tag tag-ok';document.getElementById('t1').textContent='✓ تم';
-                document.getElementById('c1').classList.add('done');
-                document.getElementById('flash').classList.add('fire');
-                setTimeout(function(){document.getElementById('flash').classList.remove('fire');},100);
-                update();
+            var reader=new FileReader();
+            reader.onload=function(ev){
+                var img=new Image();
+                img.onload=function(){
+                    var canvas=document.createElement('canvas');
+                    var maxW=800,maxH=600,w=img.width,h=img.height;
+                    if(w>maxW){h=h*(maxW/w);w=maxW;}
+                    if(h>maxH){w=w*(maxH/h);h=maxH;}
+                    canvas.width=w;canvas.height=h;
+                    canvas.getContext('2d').drawImage(img,0,0,w,h);
+                    S.photo=canvas.toDataURL('image/jpeg',0.6);
+                    
+                    document.getElementById('preview').src=S.photo;
+                    document.getElementById('preview').style.display='block';
+                    document.getElementById('camInner').style.display='none';
+                    document.getElementById('camZone').classList.add('filled');
+                    document.getElementById('btnGallery').style.display='none';
+                    document.getElementById('btnDelete').style.display='flex';
+                    document.getElementById('t1').className='tag tag-ok';document.getElementById('t1').textContent='✓ تم';
+                    document.getElementById('c1').classList.add('done');
+                    document.getElementById('flash').classList.add('fire');
+                    setTimeout(function(){document.getElementById('flash').classList.remove('fire');},100);
+                    update();
+                };
+                img.src=ev.target.result;
             };
-            r.readAsDataURL(f);
+            reader.readAsDataURL(f);
         }
 
         function deletePhoto(){
@@ -241,46 +248,26 @@
             var mapText = document.getElementById('mapText');
             var btn = document.getElementById('btnLocate');
             var mapEmoji = document.getElementById('mapEmoji');
-
-            if(!navigator.geolocation){
-                mapText.textContent = '⚠️ GPS غير مدعوم في متصفحك';
-                return;
-            }
-
-            btn.textContent = '📡 جاري التحديد...';
-            btn.classList.add('loading');
-            mapText.textContent = 'جاري البحث عن موقعك...';
-
+            if(!navigator.geolocation){mapText.textContent = '⚠️ GPS غير مدعوم في متصفحك';return;}
+            btn.textContent = '📡 جاري التحديد...';btn.classList.add('loading');mapText.textContent = 'جاري البحث عن موقعك...';
             navigator.geolocation.getCurrentPosition(
                 function(pos){
-                    S.lat = pos.coords.latitude;
-                    S.lng = pos.coords.longitude;
-                    
+                    S.lat = pos.coords.latitude;S.lng = pos.coords.longitude;
                     document.getElementById('coords').textContent = S.lat.toFixed(6) + ', ' + S.lng.toFixed(6);
                     document.getElementById('coords').classList.add('show');
                     document.getElementById('mapBox').classList.add('located');
-                    mapEmoji.textContent = '✅';
-                    mapText.textContent = 'تم تحديد الموقع بنجاح';
-                    btn.textContent = '📍 إعادة التحديد';
-                    btn.classList.remove('loading');
-                    
-                    document.getElementById('t3').className='tag tag-ok';
-                    document.getElementById('t3').textContent='✓ تم';
-                    document.getElementById('c3').classList.add('done');
-                    update();
+                    mapEmoji.textContent = '✅';mapText.textContent = 'تم تحديد الموقع بنجاح';
+                    btn.textContent = '📍 إعادة التحديد';btn.classList.remove('loading');
+                    document.getElementById('t3').className='tag tag-ok';document.getElementById('t3').textContent='✓ تم';
+                    document.getElementById('c3').classList.add('done');update();
                 },
                 function(err){
-                    btn.classList.remove('loading');
-                    btn.textContent = '📍 حاول مرة أخرى';
-                    
+                    btn.classList.remove('loading');btn.textContent = '📍 حاول مرة أخرى';
                     if(err.code === 1){
                         mapText.textContent = '⚠️ GPS غير مفعل. الرجاء تشغيله من إعدادات الهاتف';
                         alert('⚠️ لتحديد موقعك:\n\n1. افتح إعدادات الهاتف\n2. ابحث عن "الموقع" أو "GPS"\n3. قم بتشغيله\n4. ارجع لهذه الصفحة واضغط مرة أخرى');
-                    } else if(err.code === 2){
-                        mapText.textContent = '⚠️ تعذر الحصول على الموقع. تأكد من أنك في منطقة مفتوحة.';
-                    } else {
-                        mapText.textContent = '⏰ انتهت المهلة. الرجاء المحاولة مرة أخرى.';
-                    }
+                    } else if(err.code === 2){mapText.textContent = '⚠️ تعذر الحصول على الموقع. تأكد من أنك في منطقة مفتوحة.';}
+                    else {mapText.textContent = '⏰ انتهت المهلة. الرجاء المحاولة مرة أخرى.';}
                 },
                 {enableHighAccuracy:true,timeout:20000,maximumAge:0}
             );
@@ -300,78 +287,46 @@
         function send(){
             var b=document.getElementById('btnSubmit');
             b.innerHTML='⏳ جاري الإرسال...';b.classList.remove('ready');b.disabled=true;
-
-            var xhr = new XMLHttpRequest();
             var url = SUPABASE_URL + '/rest/v1/reports?apikey=' + SUPABASE_KEY;
+            var xhr = new XMLHttpRequest();
             xhr.open('POST', url, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.setRequestHeader('Prefer', 'return=representation');
             xhr.timeout = 15000;
-
             xhr.onload = function(){
                 if(xhr.status === 201){
                     var result = JSON.parse(xhr.responseText);
                     var reportId = result[0] ? result[0].id : '—';
-
-                    // عرض رقم البلاغ
                     document.getElementById('reportIdDisplay').textContent = 'رقم البلاغ: #' + reportId;
-
-                    // نقاط للمستخدم المسجل
                     if(isLoggedIn && currentUserId){
                         var points = parseInt(localStorage.getItem('greenPoints') || '0');
                         points += 5;
                         localStorage.setItem('greenPoints', points.toString());
                         document.getElementById('pointsDisplay').textContent = '✨ لقد كسبت 5 نقاط خضراء!';
                     }
-
-                    // إشعار تلقائي
                     var notifXhr = new XMLHttpRequest();
                     notifXhr.open('POST', SUPABASE_URL + '/rest/v1/notifications?apikey=' + SUPABASE_KEY, true);
                     notifXhr.setRequestHeader('Content-Type', 'application/json');
                     notifXhr.setRequestHeader('Prefer', 'return=minimal');
-                    notifXhr.send(JSON.stringify({
-                        title: 'بلاغ جديد',
-                        message: 'تم تسجيل بلاغ جديد عن مفرغة (' + (S.type || 'غير محدد') + ') #' + reportId,
-                        type: 'info',
-                        is_read: false
-                    }));
-
+                    notifXhr.send(JSON.stringify({title:'بلاغ جديد',message:'تم تسجيل بلاغ جديد عن مفرغة ('+(S.type||'غير محدد')+') #'+reportId,type:'info',is_read:false}));
                     document.getElementById('overlay').classList.add('show');
                 } else {
                     alert('❌ خطأ: ' + xhr.status);
-                    b.classList.add('ready');
-                    b.disabled=false;
+                    b.classList.add('ready');b.disabled=false;
                 }
                 b.innerHTML='🚀 إرسال البلاغ';
             };
-
-            xhr.onerror = function(){
-                alert('❌ فشل الاتصال');
-                b.innerHTML='🚀 إرسال البلاغ';
-                b.classList.add('ready');
-                b.disabled=false;
-            };
-
-            xhr.send(JSON.stringify({
-                photo_url: S.photo || '',
-                type: S.type,
-                lat: S.lat,
-                lng: S.lng,
-                status: 'new'
-            }));
+            xhr.onerror = function(){alert('❌ فشل الاتصال');b.innerHTML='🚀 إرسال البلاغ';b.classList.add('ready');b.disabled=false;};
+            xhr.send(JSON.stringify({photo_url:S.photo||'',type:S.type,lat:S.lat,lng:S.lng,status:'new'}));
         }
 
         function resetAll(){
             document.getElementById('overlay').classList.remove('show');
             document.getElementById('reportIdDisplay').textContent = '';
             document.getElementById('pointsDisplay').textContent = '';
-            deletePhoto();
-            S.type=null;S.lat=null;S.lng=null;
+            deletePhoto();S.type=null;S.lat=null;S.lng=null;
             document.querySelectorAll('.type-item').forEach(function(i){i.classList.remove('selected');});
-            ['t2','t3'].forEach(function(id){
-                document.getElementById(id).className='tag tag-req';
-                document.getElementById(id).textContent='مطلوب';
-            });
+            ['t2','t3'].forEach(function(id){document.getElementById(id).className='tag tag-req';document.getElementById(id).textContent='مطلوب';});
             ['c2','c3'].forEach(function(id){document.getElementById(id).classList.remove('done');});
             document.getElementById('coords').classList.remove('show');
             document.getElementById('coords').textContent = '';
