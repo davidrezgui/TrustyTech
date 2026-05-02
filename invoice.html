@@ -2,29 +2,30 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فاتورة | مدينتنا نظيفة</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    
     <style>
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --white: #FFFFFF; --text-gray: #666; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background: #f5f5f5; display: flex; justify-content: center; padding: 20px; }
-        .invoice { width: 100%; max-width: 600px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 3px solid #2E7D32; padding-bottom: 16px; margin-bottom: 20px; }
-        .header h1 { font-size: 24px; font-weight: 900; color: #1B5E20; }
-        .header p { font-size: 12px; color: #666; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
-        .row strong { color: #1B5E20; }
-        .divider { border-top: 2px dashed #e0e0e0; margin: 16px 0; }
-        .total { font-size: 20px; font-weight: 900; color: #1B5E20; text-align: left; direction: ltr; }
-        .footer { text-align: center; font-size: 11px; color: #999; margin-top: 24px; border-top: 1px solid #e0e0e0; padding-top: 12px; }
-        .btn-print { display: block; width: 100%; padding: 12px; background: #2E7D32; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; margin-top: 20px; }
-        .btn-print:hover { background: #1B5E20; }
-        @media print { body { background: white; } .btn-print { display: none; } }
-        .material-icon { font-size: 18px; }
+        body { font-family: 'Cairo', sans-serif; background: #f0f0f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px; }
+        .invoice { width: 100%; max-width: 580px; background: white; border-radius: 16px; padding: 28px 22px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .header { text-align: center; border-bottom: 3px solid var(--primary); padding-bottom: 14px; margin-bottom: 18px; }
+        .header h1 { font-size: 22px; font-weight: 900; color: var(--primary-dark); }
+        .header p { font-size: 11px; color: var(--text-gray); margin-top: 2px; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; }
+        .row strong { color: var(--primary-dark); }
+        .divider { border-top: 2px dashed #e0e0e0; margin: 14px 0; }
+        .total { font-size: 18px; font-weight: 900; color: var(--primary-dark); text-align: left; direction: ltr; }
+        .footer-text { text-align: center; font-size: 10px; color: #999; margin-top: 20px; border-top: 1px solid #e0e0e0; padding-top: 10px; }
+        .btn-print { display: block; width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; margin-top: 18px; transition: all 0.3s; }
+        .btn-print:hover { background: var(--primary-dark); }
+        @media print { body { background: white; padding: 0; } .btn-print { display: none; } .invoice { box-shadow: none; border-radius: 0; } }
     </style>
 </head>
 <body>
@@ -34,7 +35,6 @@
             <p>مدينتنا نظيفة — منصة وطنية للاقتصاد الأخضر</p>
             <p>🇩🇿 ولاية برج بوعريريج</p>
         </div>
-
         <div class="row"><span>رقم الفاتورة:</span> <strong id="invId">—</strong></div>
         <div class="row"><span>التاريخ:</span> <strong id="invDate">—</strong></div>
         <div class="divider"></div>
@@ -43,30 +43,37 @@
         <div class="row"><span>السعر/كغ:</span> <strong id="invPrice" style="direction:ltr;">—</strong></div>
         <div class="divider"></div>
         <div class="total">الإجمالي: <span id="invTotal">—</span> دج</div>
-        <div class="footer">شكراً لتعاملكم مع مدينتنا نظيفة — معاً نحو جزائر أنظف ♻️</div>
+        <div class="footer-text">شكراً لتعاملكم مع مدينتنا نظيفة — معاً نحو جزائر أنظف ♻️</div>
         <button class="btn-print" onclick="window.print()">🖨️ طباعة الفاتورة</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        var sb = window.supabase.createClient('https://ctkkkpcjwebkrcbzsvpf.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc');
+        var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
+        var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
         var urlParams = new URLSearchParams(window.location.search);
         var invoiceId = urlParams.get('id');
 
         if(invoiceId){
-            sb.from('invoices').select('*').eq('id',invoiceId).single().then(function(r){
-                if(r.data){
-                    var d = r.data;
-                    var names = {carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
-                    document.getElementById('invId').textContent = 'F-' + d.id;
-                    document.getElementById('invDate').textContent = new Date(d.created_at).toLocaleDateString('ar-DZ');
-                    document.getElementById('invMaterial').textContent = names[d.material] || d.material;
-                    document.getElementById('invQty').textContent = (d.quantity||0).toLocaleString('en-US') + ' كغ';
-                    document.getElementById('invPrice').textContent = (d.price_per_kg||0).toLocaleString('en-US') + ' دج/كغ';
-                    document.getElementById('invTotal').textContent = (d.total||0).toLocaleString('en-US');
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', SUPABASE_URL + '/rest/v1/invoices?id=eq.' + invoiceId + '&apikey=' + SUPABASE_KEY, true);
+            xhr.timeout = 15000;
+            xhr.onload = function(){
+                if(xhr.status === 200){
+                    var data = JSON.parse(xhr.responseText);
+                    if(data.length > 0){
+                        var d = data[0];
+                        var names = {carton:'📦 كرتون',plastique:'🫙 بلاستيك',verre:'🫗 زجاج'};
+                        document.getElementById('invId').textContent = 'F-' + d.id;
+                        document.getElementById('invDate').textContent = new Date(d.created_at).toLocaleDateString('ar-DZ');
+                        document.getElementById('invMaterial').textContent = names[d.material] || d.material;
+                        document.getElementById('invQty').textContent = (d.quantity||0).toLocaleString('en-US') + ' كغ';
+                        document.getElementById('invPrice').textContent = (d.price_per_kg||0).toLocaleString('en-US') + ' دج/كغ';
+                        document.getElementById('invTotal').textContent = (d.total||0).toLocaleString('en-US');
+                    }
                 }
-            });
+            };
+            xhr.send();
         }
     </script>
 </body>
