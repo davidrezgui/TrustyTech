@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --white: #FFFFFF; --text-gray: #90A4AE; --danger: #E53935; --radius: 20px; --radius-sm: 12px; --shadow-xl: 0 20px 60px rgba(0,0,0,0.2); --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,7 +50,7 @@
         <p>أدخل بريدك الإلكتروني لتتلقى رابط إعادة تعيين كلمة المرور</p>
         <input type="email" id="resetEmail" placeholder="البريد الإلكتروني" dir="ltr">
         <button class="btn" id="resetBtn" onclick="resetPassword()">📩 إرسال رابط الاستعادة</button>
-        <p class="msg msg-success" id="successMsg">✅ تم الإرسال! تفقد بريدك الإلكتروني (بما في ذلك صندوق البريد غير الهام)</p>
+        <p class="msg msg-success" id="successMsg">✅ تم الإرسال! تفقد بريدك الإلكتروني</p>
         <p class="msg msg-error" id="errorMsg"></p>
         <a href="login.html" class="back-link">← العودة لتسجيل الدخول</a>
     </div>
@@ -57,11 +58,11 @@
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-        var REDIRECT_URL = 'https://davidrezgui.github.io/school-/login.html';
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726'];for(var i=0;i<18;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*4+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*8+8)+'s;animation-delay:'+Math.random()*6+'s;';c.appendChild(p);}})();
 
-        function resetPassword(){
+        async function resetPassword(){
             var email = document.getElementById('resetEmail').value.trim();
             var btn = document.getElementById('resetBtn');
             var successMsg = document.getElementById('successMsg');
@@ -79,40 +80,19 @@
             btn.disabled = true;
             btn.textContent = '⏳ جاري الإرسال...';
             
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', SUPABASE_URL + '/auth/v1/recover?apikey=' + SUPABASE_KEY, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.timeout = 20000;
+            var result = await sb.auth.resetPasswordForEmail(email, {
+                redirectTo: 'https://davidrezgui.github.io/school-/login.html'
+            });
             
-            xhr.onload = function(){
-                btn.disabled = false;
-                btn.textContent = '📩 إرسال رابط الاستعادة';
-                
-                if(xhr.status === 200 || xhr.status === 201){
-                    successMsg.style.display = 'block';
-                    errorMsg.style.display = 'none';
-                } else {
-                    try {
-                        var resp = JSON.parse(xhr.responseText);
-                        errorMsg.textContent = '❌ ' + (resp.msg || resp.message || 'خطأ غير معروف');
-                    } catch(e){
-                        errorMsg.textContent = '❌ فشل في إرسال الرابط. الرجاء المحاولة مرة أخرى.';
-                    }
-                    errorMsg.style.display = 'block';
-                }
-            };
+            btn.disabled = false;
+            btn.textContent = '📩 إرسال رابط الاستعادة';
             
-            xhr.onerror = function(){
-                btn.disabled = false;
-                btn.textContent = '📩 إرسال رابط الاستعادة';
-                errorMsg.textContent = '❌ تعذر الاتصال. تأكد من اتصالك بالإنترنت.';
+            if(result.error){
+                errorMsg.textContent = '❌ ' + result.error.message;
                 errorMsg.style.display = 'block';
-            };
-            
-            xhr.send(JSON.stringify({
-                email: email,
-                redirect_to: REDIRECT_URL
-            }));
+            } else {
+                successMsg.style.display = 'block';
+            }
         }
     </script>
 </body>
