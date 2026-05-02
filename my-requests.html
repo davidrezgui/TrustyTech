@@ -52,12 +52,8 @@
     </header>
     <main class="main">
         <div class="card">
-            <div class="card-header"><div class="card-icon ci-reports">📸</div><span class="card-label">البلاغات</span><span class="badge badge-red" id="reportsBadge">0</span></div>
-            <div id="reportsList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد بلاغات</div></div></div>
-        </div>
-        <div class="card">
-            <div class="card-header"><div class="card-icon ci-pickups">📦</div><span class="card-label">طلبات جمع المواد</span><span class="badge badge-orange" id="pickupsBadge">0</span></div>
-            <div id="pickupsList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد طلبات</div></div></div>
+            <div class="card-header"><div class="card-icon ci-reports">📸</div><span class="card-label">نشاطاتي</span><span class="badge badge-red" id="reportsBadge">0</span></div>
+            <div id="reportsList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد نشاطات</div></div></div>
         </div>
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
@@ -65,49 +61,39 @@
     <script>
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
-
-        function apiGet(table){
-            return new Promise(function(resolve){
-                var fields = '*';
-                if(table === 'reports') fields = 'id,type,status,created_at';
-                if(table === 'pickups') fields = 'id,material,weight,points,status,created_at';
-                var x = new XMLHttpRequest();
-                x.open('GET', SUPABASE_URL + '/rest/v1/' + table + '?select=' + fields + '&order=created_at.desc&limit=20&apikey=' + SUPABASE_KEY, true);
-                x.timeout = 20000;
-                x.onload = function(){ if(x.status === 200) resolve(JSON.parse(x.responseText)); else resolve([]); };
-                x.onerror = function(){ resolve([]); };
-                x.send();
-            });
-        }
+        var userEmail = localStorage.getItem('userEmail');
 
         function formatDateDZ(iso){if(!iso)return'';var d=new Date(iso);return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
 
-        async function loadRequests(){
-            var reports = await apiGet('reports');
-            var pickups = await apiGet('pickups');
+        function loadRequests(){
+            if(!userEmail){
+                document.getElementById('reportsList').innerHTML = '<div class="empty"><span class="empty-icon">🔒</span><div class="empty-text">يرجى تسجيل الدخول</div></div>';
+                return;
+            }
             
-            var typeNames = {menagere:'منزلية', plastique:'بلاستيك', carton:'كرتون', verre:'زجاج', decombres:'أنقاض', autre:'أخرى'};
-            var matNames = {carton:'كرتون', plastique:'بلاستيك', verre:'زجاج'};
-
-            document.getElementById('reportsBadge').textContent = reports.length;
-            var rl = document.getElementById('reportsList');
-            if(reports.length === 0){
-                rl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد بلاغات</div></div>';
-            } else {
-                rl.innerHTML = reports.map(function(r){
-                    return '<div class="item"><span class="item-icon">📸</span><div class="item-info"><div class="item-title">بلاغ عن مفرغة</div><div class="item-detail">'+(typeNames[r.type]||r.type)+'</div><div class="item-time">'+formatDateDZ(r.created_at)+'</div></div><span class="item-pts">+5</span></div>';
-                }).join('');
-            }
-
-            document.getElementById('pickupsBadge').textContent = pickups.length;
-            var pl = document.getElementById('pickupsList');
-            if(pickups.length === 0){
-                pl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد طلبات</div></div>';
-            } else {
-                pl.innerHTML = pickups.map(function(p){
-                    return '<div class="item"><span class="item-icon">📦</span><div class="item-info"><div class="item-title">طلب جمع '+(matNames[p.material]||p.material)+'</div><div class="item-detail">'+(p.weight||0)+' كغ</div><div class="item-time">'+formatDateDZ(p.created_at)+'</div></div><span class="item-pts">+'+(p.points||0)+'</span></div>';
-                }).join('');
-            }
+            var x = new XMLHttpRequest();
+            x.open('GET', SUPABASE_URL + '/rest/v1/point_transactions?select=*&user_email=eq.' + encodeURIComponent(userEmail) + '&order=created_at.desc&limit=30&apikey=' + SUPABASE_KEY, true);
+            x.timeout = 15000;
+            x.onload = function(){
+                if(x.status === 200){
+                    var data = JSON.parse(x.responseText);
+                    document.getElementById('reportsBadge').textContent = data.length;
+                    var rl = document.getElementById('reportsList');
+                    
+                    if(data.length === 0){
+                        rl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا توجد نشاطات</div></div>';
+                    } else {
+                        rl.innerHTML = data.map(function(pt){
+                            var icon = pt.amount > 0 ? '📸' : '🎁';
+                            var title = pt.amount > 0 ? 'نقاط مكتسبة' : 'استبدال مكافأة';
+                            var ptsClass = pt.amount > 0 ? 'item-pts' : '';
+                            var ptsText = (pt.amount > 0 ? '+' : '') + pt.amount;
+                            return '<div class="item"><span class="item-icon">' + icon + '</span><div class="item-info"><div class="item-title">' + title + '</div><div class="item-detail">' + (pt.description || '') + '</div><div class="item-time">' + formatDateDZ(pt.created_at) + '</div></div><span class="' + ptsClass + '" style="color:' + (pt.amount > 0 ? '#4CAF50' : '#E53935') + ';font-weight:700;direction:ltr;font-size:11px;">' + ptsText + '</span></div>';
+                        }).join('');
+                    }
+                }
+            };
+            x.send();
         }
 
         loadRequests();
