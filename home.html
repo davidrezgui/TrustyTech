@@ -11,10 +11,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --info: #1E88E5; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --gold: #FFD700; --radius: 20px; --radius-sm: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-lg: 0 8px 28px rgba(0,0,0,0.12); --transition: all 0.3s ease; }
+        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --danger: #E53935; --info: #1E88E5; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 20px; --radius-sm: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.06); --shadow-lg: 0 8px 28px rgba(0,0,0,0.12); --transition: all 0.3s ease; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
-        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
+        .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
         .orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; animation: orbFloat 8s ease-in-out infinite; }
         .orb-1 { width: 300px; height: 300px; background: rgba(46,125,50,0.10); top: -8%; right: -8%; }
         .orb-2 { width: 250px; height: 250px; background: rgba(255,215,0,0.06); bottom: -10%; left: -6%; animation-delay: -4s; }
@@ -34,7 +34,6 @@
         .points-card { background: linear-gradient(135deg, #FFD700, #FFA726); border-radius: var(--radius); padding: 18px 16px; color: white; margin-bottom: 10px; text-align: center; animation: cardIn 0.5s ease 0.1s both; }
         .points-label { font-size: 11px; opacity: 0.9; }
         .points-value { font-size: 40px; font-weight: 900; direction: ltr; display: inline-block; margin: 2px 0; }
-        .points-sub { font-size: 9px; opacity: 0.8; }
         .services { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
         .service-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 18px 12px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); text-decoration: none; color: inherit; transition: var(--transition); cursor: pointer; animation: cardIn 0.5s ease both; }
         .service-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
@@ -66,25 +65,15 @@
         </div>
     </header>
     <main class="main">
-        <div class="welcome-card">
-            <div class="welcome-text">👋 مرحباً</div>
-            <div class="welcome-email" id="userEmail">...</div>
-        </div>
-        <div class="points-card">
-            <div class="points-label">⭐ نقاطك الخضراء</div>
-            <div class="points-value" id="myPoints">0</div>
-            <div class="points-sub">قابلة للاستبدال بمكافآت</div>
-        </div>
+        <div class="welcome-card"><div class="welcome-text">👋 مرحباً</div><div class="welcome-email" id="userEmail">...</div></div>
+        <div class="points-card"><div class="points-label">⭐ نقاطك الخضراء</div><div class="points-value" id="myPoints">0</div></div>
         <div class="services">
             <a href="report.html" class="service-card" style="animation-delay:0.15s"><span class="service-icon">📸</span><span class="service-name">أبلغ عن مفرغة</span></a>
             <a href="sort.html" class="service-card" style="animation-delay:0.2s"><span class="service-icon">📦</span><span class="service-name">طلب جمع مواد</span></a>
             <a href="rewards.html" class="service-card" style="animation-delay:0.25s"><span class="service-icon">🎁</span><span class="service-name">المكافآت</span></a>
             <a href="my-requests.html" class="service-card" style="animation-delay:0.3s"><span class="service-icon">📋</span><span class="service-name">طلباتي</span></a>
         </div>
-        <div class="card" style="animation-delay:0.35s">
-            <div class="card-header"><div class="card-icon">📋</div><span class="card-label">آخر النشاطات</span></div>
-            <div id="historyList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div></div>
-        </div>
+        <div class="card" style="animation-delay:0.35s"><div class="card-header"><div class="card-icon">📋</div><span class="card-label">آخر النشاطات</span></div><div id="historyList"><div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div></div></div>
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
 
@@ -93,19 +82,14 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
         var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
         var userEmail = '';
-        var myPoints = 0;
 
-        // الجلسة
         sb.auth.getSession().then(function(result){
             if(result.data.session){
                 userEmail = result.data.session.user.email;
                 document.getElementById('userEmail').textContent = userEmail;
                 loadAll();
-            } else {
-                window.location.href = 'login.html';
-            }
+            } else { window.location.href = 'login.html'; }
         });
 
         function apiGet(table){
@@ -123,78 +107,55 @@
         }
 
         async function loadAll(){
-            // النقاط - نجمع من localStorage بتوحيد greenPoints
-            myPoints = parseInt(localStorage.getItem('greenPoints') || '0');
-            
-            // نضيف نقاط pickups من Supabase
-            try {
-                var pickups = await apiGet('pickups');
-                myPoints += pickups.reduce(function(s, x){ return s + (x.points || 0); }, 0);
-            } catch(e) {}
-            
-            document.getElementById('myPoints').textContent = myPoints.toLocaleString('en-US');
+            // النقاط من point_transactions
+            var x = new XMLHttpRequest();
+            x.open('GET', SUPABASE_URL + '/rest/v1/point_transactions?select=amount&user_email=eq.' + encodeURIComponent(userEmail) + '&apikey=' + SUPABASE_KEY, true);
+            x.timeout = 15000;
+            x.onload = function(){
+                var pts = 0;
+                if(x.status === 200){
+                    var data = JSON.parse(x.responseText);
+                    pts = data.reduce(function(s, r){ return s + (r.amount || 0); }, 0);
+                }
+                document.getElementById('myPoints').textContent = pts.toLocaleString('en-US');
+            };
+            x.send();
 
-            // سجل النشاط - بلاغات + طلبات جمع
+            // سجل النشاط
             var history = [];
             try {
                 var reports = await apiGet('reports');
                 reports.forEach(function(r){
                     var typeNames = {menagere:'منزلية', plastique:'بلاستيك', carton:'كرتون', verre:'زجاج', decombres:'أنقاض', autre:'أخرى'};
-                    history.push({
-                        type: 'report',
-                        desc: '📸 بلاغ عن مفرغة - ' + (typeNames[r.type] || r.type || 'غير محدد'),
-                        time: r.created_at,
-                        points: 5
-                    });
+                    history.push({ type: 'report', desc: '📸 بلاغ عن مفرغة - ' + (typeNames[r.type] || r.type || 'غير محدد'), time: r.created_at, points: 5 });
                 });
             } catch(e) {}
-            
             try {
-                var pickups2 = await apiGet('pickups');
-                pickups2.forEach(function(p){
+                var pickups = await apiGet('pickups');
+                pickups.forEach(function(p){
                     var matNames = {carton:'كرتون', plastique:'بلاستيك', verre:'زجاج'};
-                    history.push({
-                        type: 'pickup',
-                        desc: '📦 طلب جمع ' + (matNames[p.material] || p.material || '') + ' - ' + (p.weight || 0) + ' كغ',
-                        time: p.created_at,
-                        points: p.points || 0
-                    });
+                    history.push({ type: 'pickup', desc: '📦 طلب جمع ' + (matNames[p.material] || p.material || '') + ' - ' + (p.weight || 0) + ' كغ', time: p.created_at, points: p.points || 0 });
                 });
             } catch(e) {}
-
-            // ترتيب حسب الوقت
             history.sort(function(a, b){ return new Date(b.time) - new Date(a.time); });
             history = history.slice(0, 10);
-
             var hl = document.getElementById('historyList');
-            if(history.length === 0){
-                hl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>';
-            } else {
-                hl.innerHTML = history.map(function(h){
-                    return '<div class="history-item"><span class="dot ' + (h.type === 'report' ? 'dot-report' : 'dot-pickup') + '"></span><div class="history-info">' + h.desc + '</div><span class="history-pts pts-plus">+' + h.points + '</span></div>';
-                }).join('');
-            }
+            if(history.length === 0){ hl.innerHTML = '<div class="empty"><span class="empty-icon">📭</span><div class="empty-text">لا يوجد نشاط</div></div>'; }
+            else { hl.innerHTML = history.map(function(h){ return '<div class="history-item"><span class="dot ' + (h.type === 'report' ? 'dot-report' : 'dot-pickup') + '"></span><div class="history-info">' + h.desc + '</div><span class="history-pts pts-plus">+' + h.points + '</span></div>'; }).join(''); }
 
             // عداد الإشعارات
-            loadNotifCount();
-        }
-
-        function loadNotifCount(){
-            var x = new XMLHttpRequest();
-            x.open('GET', SUPABASE_URL + '/rest/v1/notifications?select=count&is_read=eq.false&apikey=' + SUPABASE_KEY, true);
-            x.timeout = 10000;
-            x.onload = function(){
-                if(x.status === 200){
-                    var d = JSON.parse(x.responseText);
+            var nx = new XMLHttpRequest();
+            nx.open('GET', SUPABASE_URL + '/rest/v1/notifications?select=count&is_read=eq.false&apikey=' + SUPABASE_KEY, true);
+            nx.timeout = 10000;
+            nx.onload = function(){
+                if(nx.status === 200){
+                    var d = JSON.parse(nx.responseText);
                     var count = d[0] ? d[0].count : 0;
                     var badge = document.getElementById('notifBadge');
-                    if(count > 0){
-                        badge.textContent = count > 99 ? '99+' : count;
-                        badge.style.display = 'flex';
-                    }
+                    if(count > 0){ badge.textContent = count > 99 ? '99+' : count; badge.style.display = 'flex'; }
                 }
             };
-            x.send();
+            nx.send();
         }
 
         async function signOut(){ await sb.auth.signOut(); window.location.href = 'index.html'; }
