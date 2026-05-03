@@ -26,33 +26,64 @@
         .driver-status { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 5px 10px; border-radius: 12px; }
         .driver-status .dot { width: 6px; height: 6px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .main-container { position: relative; z-index: 1; flex: 1; padding: 72px 12px 16px; max-width: 520px; margin: 0 auto; width: 100%; }
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
-        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius-sm); padding: 12px 6px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.12); }
-        .stat-value { font-size: 20px; font-weight: 900; color: var(--info); direction: ltr; }
-        .stat-label { font-size: 9px; color: var(--text-gray); margin-top: 2px; font-weight: 600; }
-        .card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 16px 14px; box-shadow: var(--shadow); margin-bottom: 8px; border: 1px solid rgba(255,255,255,0.15); }
-        .card-header { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
-        .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; background: #E3F2FD; }
-        .card-label { flex: 1; font-size: 13px; font-weight: 700; color: var(--text-dark); }
-        .badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 700; background: #FFF3E0; color: var(--accent); }
+        .main-container { position: relative; z-index: 1; flex: 1; padding: 72px 12px 16px; max-width: 540px; margin: 0 auto; width: 100%; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.12); position: relative; overflow: hidden; }
+        .stat-box::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .stat-box.sb-pending::after { background: var(--accent); }
+        .stat-box.sb-done::after { background: var(--primary-light); }
+        .stat-box.sb-kg::after { background: var(--info); }
+        .stat-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); transition: var(--transition); }
+        .stat-value { font-size: 22px; font-weight: 900; direction: ltr; }
+        .sb-pending .stat-value { color: var(--accent); }
+        .sb-done .stat-value { color: var(--primary); }
+        .sb-kg .stat-value { color: var(--info); }
+        .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 600; }
+
+        /* ============ SECTION CARD ============ */
+        .section-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 16px 14px; box-shadow: var(--shadow); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.15); overflow: hidden; }
+        .section-card:hover { box-shadow: var(--shadow-lg); transition: var(--transition); }
+        .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .section-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .si-reports { background: #FFEBEE; }
+        .si-pickups { background: #FFF8E1; }
+        .section-label { flex: 1; font-size: 14px; font-weight: 800; color: var(--text-dark); }
+        .section-badge { font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
+        .section-badge.reports { background: #FFEBEE; color: #C62828; }
+        .section-badge.pickups { background: #FFF8E1; color: #E65100; }
+
+        /* ============ TASK LIST ============ */
         .task-list { display: flex; flex-direction: column; gap: 8px; }
-        .task-item { background: white; border-radius: var(--radius-sm); padding: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); }
-        .task-top { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+        .task-item { background: white; border-radius: var(--radius-sm); padding: 12px 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); transition: var(--transition); }
+        .task-item:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+        .task-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
         .task-qr-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
-        .btn-qr-sm { width: 30px; height: 30px; border-radius: 10px; border: none; background: #F3E5F5; color: var(--purple); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-qr-sm { width: 32px; height: 32px; border-radius: 10px; border: none; background: #F3E5F5; color: var(--purple); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .btn-qr-sm:hover { background: #EDE7F6; transform: scale(1.05); }
         .task-info { flex: 1; min-width: 0; }
-        .task-header { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; flex-wrap: wrap; }
-        .task-type { font-size: 10px; padding: 3px 7px; border-radius: 6px; font-weight: 700; }
-        .type-report { background: #FFEBEE; color: #C62828; } .type-pickup { background: #FFF8E1; color: #E65100; }
-        .task-id-num { font-size: 9px; color: var(--primary); font-weight: 800; background: #E8F5E9; padding: 2px 6px; border-radius: 5px; direction: ltr; }
-        .task-category { font-size: 10px; color: var(--text-gray); font-weight: 600; }
+        .task-header { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; flex-wrap: wrap; }
+        .task-type { font-size: 11px; padding: 4px 8px; border-radius: 8px; font-weight: 700; }
+        .type-report { background: #FFEBEE; color: #C62828; }
+        .type-pickup { background: #FFF8E1; color: #E65100; }
+        .task-id-num { font-size: 10px; color: var(--primary); font-weight: 800; background: #E8F5E9; padding: 3px 8px; border-radius: 6px; direction: ltr; }
+        .task-category { font-size: 11px; color: var(--text-dark); font-weight: 600; }
+        .task-weight { font-size: 11px; color: var(--accent); font-weight: 700; background: rgba(255,111,0,0.08); padding: 2px 8px; border-radius: 6px; }
         .task-time { font-size: 9px; color: #b0bec5; margin-right: auto; direction: ltr; white-space: nowrap; }
-        .task-address { font-size: 10px; color: var(--text-gray); margin-bottom: 8px; }
-        .task-actions { display: flex; gap: 6px; }
-        .btn-task { flex: 1; padding: 9px; border-radius: 14px; border: none; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 4px; color: white; }
-        .btn-navigate { background: var(--info); } .btn-confirm { background: var(--primary); }
-        .empty-state { text-align: center; padding: 24px; } .empty-emoji { font-size: 40px; } .empty-text { font-size: 13px; color: var(--text-gray); }
+        .task-address { font-size: 10px; color: var(--text-gray); margin-bottom: 10px; }
+        .task-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.04); margin: 4px 0 8px; }
+        .task-actions { display: flex; gap: 8px; }
+        .btn-task { flex: 1; padding: 10px; border-radius: 14px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 5px; color: white; transition: var(--transition); }
+        .btn-task:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .btn-navigate { background: var(--info); }
+        .btn-confirm { background: var(--primary); }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state { text-align: center; padding: 20px; }
+        .empty-emoji { font-size: 36px; display: block; margin-bottom: 4px; }
+        .empty-text { font-size: 12px; color: var(--text-gray); font-weight: 600; }
+        .empty-sub { font-size: 10px; color: #b0bec5; }
+
+        /* ============ OVERLAY & MODAL ============ */
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .overlay.show { display: flex; }
         .modal { background: white; border-radius: var(--radius); padding: 20px 16px 18px; text-align: center; width: 100%; max-width: 340px; max-height: 85vh; overflow-y: auto; animation: spring 0.5s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
@@ -82,6 +113,7 @@
         .login-card input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 16px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; }
         .login-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
         .login-error { color: var(--danger); font-size: 10px; margin-top: 6px; display: none; }
+        @media (max-width: 360px) { .task-header { gap: 3px; } .task-type { font-size: 9px; padding: 3px 6px; } .btn-task { font-size: 10px; padding: 8px; } }
     </style>
 </head>
 <body>
@@ -106,13 +138,33 @@
     </div>
     <main class="main-container" id="driverMain" style="display:none;">
         <div class="stats-row">
-            <div class="stat-box"><div class="stat-value" id="pendingCount">0</div><div class="stat-label">مهام معلقة</div></div>
-            <div class="stat-box"><div class="stat-value" id="doneCount">0</div><div class="stat-label">مهام مكتملة</div></div>
-            <div class="stat-box"><div class="stat-value" id="totalKg">0</div><div class="stat-label">كغ اليوم</div></div>
+            <div class="stat-box sb-pending"><div class="stat-value" id="pendingCount">0</div><div class="stat-label">مهام معلقة</div></div>
+            <div class="stat-box sb-done"><div class="stat-value" id="doneCount">0</div><div class="stat-label">مهام مكتملة</div></div>
+            <div class="stat-box sb-kg"><div class="stat-value" id="totalKg">0</div><div class="stat-label">كغ اليوم</div></div>
         </div>
-        <div class="card">
-            <div class="card-header"><div class="card-icon">📋</div><span class="card-label">المهام المعلقة</span><span class="badge" id="pendingBadge">0</span></div>
-            <div class="task-list" id="pendingTasks"><div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div></div>
+
+        <!-- ============ 🚨 قسم المفرغات ============ -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon si-reports">🚨</div>
+                <span class="section-label">بلاغات المفرغات</span>
+                <span class="section-badge reports" id="reportsBadge">0</span>
+            </div>
+            <div class="task-list" id="reportsList">
+                <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد بلاغات معلقة</span></div>
+            </div>
+        </div>
+
+        <!-- ============ 📦 قسم جمع المواد ============ -->
+        <div class="section-card">
+            <div class="section-header">
+                <div class="section-icon si-pickups">📦</div>
+                <span class="section-label">طلبات جمع المواد</span>
+                <span class="section-badge pickups" id="pickupsBadge">0</span>
+            </div>
+            <div class="task-list" id="pickupsList">
+                <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد طلبات جمع معلقة</span></div>
+            </div>
         </div>
     </main>
     <footer class="footer">© 2026 مدينتنا نظيفة — جميع الحقوق محفوظة</footer>
@@ -182,27 +234,37 @@
             }).catch(function(){showAllTasks();b.disabled=false;b.innerHTML='🔄 تحديث';});
         }
 
+        function createTaskHTML(t){
+            var cn={menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'},
+                mn={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
+            var cat=t.type==='report'?(cn[t.category]||t.category||''):(mn[t.material]||t.material||'');
+            var weightHTML=t.type==='pickup'?' <span class="task-weight">'+(t.weight||0)+' كغ</span>':'';
+            var dt=t.time?(formatDateDZ(t.time)+' '+formatTimeDZ(t.time)):'--';
+            return'<div class="task-item" id="task_'+t.id+'"><div class="task-top"><div class="task-qr-col"><button class="btn-qr-sm" onclick="openQRScan()" title="مسح QR">📱</button></div><div class="task-info"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+cat+'</span>'+weightHTML+'<span class="task-time">'+dt+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div></div></div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+cat+' '+(t.weight||0)+' كغ\',\''+t.num+'\')">✅ تأكيد</button></div></div>';
+        }
+
         function showAllTasks(){
             allTasksFlat=[];
-            supabaseReports.forEach(function(r){if(completedTasks.indexOf('report_'+r.id)===-1)allTasksFlat.push({id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد',num:r.id});});
-            // ✅ إظهار الوزن للمواد
-            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)===-1)allTasksFlat.push({id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material,num:r.id});});
+            var reportsPending=[],pickupsPending=[];
+            supabaseReports.forEach(function(r){if(completedTasks.indexOf('report_'+r.id)===-1){var t={id:'report_'+r.id,type:'report',typeLabel:'🚨 مفرغة',typeClass:'type-report',lat:r.lat,lng:r.lng,time:r.created_at,category:r.type||'غير محدد',num:r.id};allTasksFlat.push(t);reportsPending.push(t);}});
+            supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)===-1){var t={id:'pickup_'+r.id,type:'pickup',typeLabel:'📦 جمع مواد',typeClass:'type-pickup',lat:r.lat,lng:r.lng,time:r.created_at,weight:r.weight,material:r.material,num:r.id};allTasksFlat.push(t);pickupsPending.push(t);}});
+
             document.getElementById('pendingCount').textContent=allTasksFlat.length;
             document.getElementById('doneCount').textContent=completedTasks.length;
-            document.getElementById('pendingBadge').textContent=allTasksFlat.length;
             var tk=0;supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1)tk+=(r.weight||0);});
             document.getElementById('totalKg').textContent=tk;
-            var pc=document.getElementById('pendingTasks');
-            if(allTasksFlat.length===0){pc.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد مهام معلقة</span></div>';}
-            else{pc.innerHTML=allTasksFlat.map(function(t){
-                var cn={menagere:'نفايات منزلية',plastique:'بلاستيك',carton:'كرتون',verre:'زجاج',decombres:'أنقاض بناء',autre:'أخرى'},
-                    mn={carton:'كرتون',plastique:'بلاستيك',verre:'زجاج'};
-                // ✅ إظهار الوزن مع المادة
-                var ct=t.type==='report'?(cn[t.category]||t.category||''):((mn[t.material]||t.material||'')+' - '+(t.weight||0)+' كغ');
-                // ✅ إظهار التاريخ + التوقيت
-                var dt=t.time?(formatDateDZ(t.time)+' '+formatTimeDZ(t.time)):'--';
-                return'<div class="task-item" id="task_'+t.id+'"><div class="task-top"><div class="task-qr-col"><button class="btn-qr-sm" onclick="openQRScan()" title="مسح QR">📱</button></div><div class="task-info"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+ct+'</span><span class="task-time">'+dt+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div></div></div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+ct+'\',\''+t.num+'\')">✅ تأكيد</button></div></div>';
-            }).join('');}
+
+            // 🚨 قسم المفرغات
+            document.getElementById('reportsBadge').textContent=reportsPending.length;
+            var rl=document.getElementById('reportsList');
+            if(reportsPending.length===0){rl.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد بلاغات معلقة</span><span class="empty-sub">كل البلاغات تمت معالجتها</span></div>';}
+            else{rl.innerHTML=reportsPending.map(function(t){return createTaskHTML(t);}).join('');}
+
+            // 📦 قسم جمع المواد
+            document.getElementById('pickupsBadge').textContent=pickupsPending.length;
+            var pl=document.getElementById('pickupsList');
+            if(pickupsPending.length===0){pl.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد طلبات جمع معلقة</span><span class="empty-sub">كل الطلبات تمت معالجتها</span></div>';}
+            else{pl.innerHTML=pickupsPending.map(function(t){return createTaskHTML(t);}).join('');}
         }
 
         function navigateTo(la,ln){window.open('https://www.google.com/maps/dir/?api=1&destination='+la+','+ln,'_blank');}
