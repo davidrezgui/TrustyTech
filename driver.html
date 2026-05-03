@@ -11,7 +11,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50; --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2; --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #37474F; --radius: 20px; --radius-sm: 12px; --shadow: 0 4px 16px rgba(0,0,0,0.08); --shadow-lg: 0 12px 32px rgba(0,0,0,0.15); --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        :root {
+            --primary: #2E7D32; --primary-dark: #1B5E20; --primary-light: #4CAF50;
+            --accent: #FF6F00; --info: #1E88E5; --danger: #E53935; --purple: #7B1FA2;
+            --white: #FFFFFF; --text-gray: #90A4AE; --text-dark: #263238;
+            --radius: 20px; --radius-sm: 14px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06); --shadow-lg: 0 12px 36px rgba(0,0,0,0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: #0a1a0a; min-height: 100vh; color: var(--text-dark); overflow-x: hidden; position: relative; display: flex; flex-direction: column; }
         .particles-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: linear-gradient(160deg, #0d260d 0%, #061406 100%); }
@@ -19,101 +26,124 @@
         .orb-1 { width: 300px; height: 300px; background: rgba(30,136,229,0.08); top: -10%; right: -10%; }
         .orb-2 { width: 250px; height: 250px; background: rgba(46,125,50,0.08); bottom: -10%; left: -8%; animation-delay: -4s; }
         @keyframes orbFloat { 0%,100% { transform: translate(0,0); } 50% { transform: translate(20px,-20px); } }
-        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.9); backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
-        .btn-back { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 15px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; }
-        .nav-title { flex: 1; font-size: 15px; font-weight: 700; color: white; }
-        .btn-refresh { font-size: 11px; padding: 6px 12px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-        .driver-status { display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 5px 10px; border-radius: 12px; }
-        .driver-status .dot { width: 6px; height: 6px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
-        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
-        .main-container { position: relative; z-index: 1; flex: 1; padding: 72px 12px 16px; max-width: 540px; margin: 0 auto; width: 100%; }
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-        .stat-box { background: rgba(255,255,255,0.92); border-radius: var(--radius); padding: 14px 8px; text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.12); position: relative; overflow: hidden; }
-        .stat-box::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+
+        /* ============ TOP NAV ============ */
+        .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,31,10,0.92); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px clamp(12px,3vw,18px); display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 40px rgba(0,0,0,0.35); }
+        .btn-back { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; text-decoration: none; transition: var(--transition); flex-shrink: 0; }
+        .btn-back:hover { background: rgba(255,255,255,0.14); transform: scale(1.05); }
+        .nav-title { flex: 1; font-size: clamp(14px,3vw,16px); font-weight: 800; color: white; white-space: nowrap; }
+        .nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .btn-refresh { font-size: clamp(10px,2vw,11px); padding: 7px 14px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+        .btn-refresh:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+        .btn-refresh:disabled { opacity: 0.5; cursor: wait; }
+        .driver-status { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--primary-light); background: rgba(76,175,80,0.15); padding: 6px 12px; border-radius: 50px; white-space: nowrap; }
+        .driver-status .dot { width: 7px; height: 7px; background: var(--primary-light); border-radius: 50%; animation: pulse 1.5s ease infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(76,175,80,0.5); } 50% { opacity: 0.4; box-shadow: 0 0 0 8px rgba(76,175,80,0); } }
+
+        /* ============ MAIN CONTAINER ============ */
+        .main-container { position: relative; z-index: 1; flex: 1; padding: 70px clamp(10px,3vw,14px) 20px; max-width: 560px; margin: 0 auto; width: 100%; }
+
+        /* ============ STATS ROW ============ */
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(6px,1.5vw,10px); margin-bottom: 16px; }
+        .stat-box { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: clamp(14px,3vw,18px) clamp(6px,1.5vw,10px); text-align: center; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.12); position: relative; overflow: hidden; transition: var(--transition); }
+        .stat-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .stat-box::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: var(--radius) var(--radius) 0 0; }
         .stat-box.sb-pending::after { background: var(--accent); }
         .stat-box.sb-done::after { background: var(--primary-light); }
         .stat-box.sb-kg::after { background: var(--info); }
-        .stat-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); transition: var(--transition); }
-        .stat-value { font-size: 22px; font-weight: 900; direction: ltr; }
+        .stat-value { font-size: clamp(20px,4.5vw,26px); font-weight: 900; direction: ltr; }
         .sb-pending .stat-value { color: var(--accent); }
         .sb-done .stat-value { color: var(--primary); }
         .sb-kg .stat-value { color: var(--info); }
-        .stat-label { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 600; }
+        .stat-label { font-size: clamp(9px,1.8vw,10px); color: var(--text-gray); margin-top: 4px; font-weight: 600; }
 
-        /* ============ SECTION CARD ============ */
-        .section-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 16px 14px; box-shadow: var(--shadow); margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.15); overflow: hidden; }
-        .section-card:hover { box-shadow: var(--shadow-lg); transition: var(--transition); }
-        .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-        .section-icon { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-        .si-reports { background: #FFEBEE; }
-        .si-pickups { background: #FFF8E1; }
-        .section-label { flex: 1; font-size: 14px; font-weight: 800; color: var(--text-dark); }
-        .section-badge { font-size: 10px; padding: 4px 10px; border-radius: 12px; font-weight: 700; }
-        .section-badge.reports { background: #FFEBEE; color: #C62828; }
-        .section-badge.pickups { background: #FFF8E1; color: #E65100; }
+        /* ============ 🆕 TABS ============ */
+        .tabs-container { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.15); overflow: hidden; }
+        .tabs-header { display: flex; position: relative; background: rgba(0,0,0,0.02); border-bottom: 1px solid rgba(0,0,0,0.04); }
+        .tab-btn { flex: 1; padding: clamp(12px,2.5vw,16px) clamp(10px,2vw,14px); border: none; background: transparent; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: clamp(12px,2.4vw,14px); font-weight: 700; color: var(--text-gray); transition: var(--transition); position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; }
+        .tab-btn .tab-icon { font-size: clamp(16px,3vw,20px); }
+        .tab-btn .tab-count { font-size: clamp(9px,1.8vw,11px); padding: 3px 9px; border-radius: 50px; font-weight: 700; transition: var(--transition); }
+        .tab-btn.reports-tab .tab-count { background: rgba(229,57,53,0.1); color: var(--danger); }
+        .tab-btn.pickups-tab .tab-count { background: rgba(255,111,0,0.1); color: var(--accent); }
+        .tab-btn.active { color: var(--text-dark); }
+        .tab-btn.active.reports-tab .tab-count { background: var(--danger); color: white; }
+        .tab-btn.active.pickups-tab .tab-count { background: var(--accent); color: white; }
+        /* المؤشر المتحرك */
+        .tab-indicator { position: absolute; bottom: 0; height: 3px; border-radius: 3px 3px 0 0; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1.2); z-index: 0; }
+        .tab-indicator.reports { background: var(--danger); }
+        .tab-indicator.pickups { background: var(--accent); }
 
-        /* ============ TASK LIST ============ */
+        /* ============ TASKS CONTENT ============ */
+        .tab-content { display: none; padding: clamp(12px,2.5vw,16px); }
+        .tab-content.active { display: block; animation: fadeSlideIn 0.4s ease; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .task-list { display: flex; flex-direction: column; gap: 8px; }
-        .task-item { background: white; border-radius: var(--radius-sm); padding: 12px 14px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); transition: var(--transition); }
-        .task-item:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+        /* ============ TASK ITEM ============ */
+        .task-item { background: white; border-radius: var(--radius-sm); padding: clamp(12px,2.5vw,14px); box-shadow: 0 1px 6px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.03); transition: var(--transition); }
+        .task-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
+        .task-item.done { opacity: 0.4; pointer-events: none; }
         .task-top { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
         .task-qr-col { display: flex; flex-direction: column; align-items: center; gap: 2px; flex-shrink: 0; }
-        .btn-qr-sm { width: 32px; height: 32px; border-radius: 10px; border: none; background: #F3E5F5; color: var(--purple); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        .btn-qr-sm:hover { background: #EDE7F6; transform: scale(1.05); }
+        .btn-qr-sm { width: 30px; height: 30px; border-radius: 10px; border: none; background: #F3E5F5; color: var(--purple); font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .btn-qr-sm:hover { background: #EDE7F6; transform: scale(1.08); }
         .task-info { flex: 1; min-width: 0; }
         .task-header { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; flex-wrap: wrap; }
-        .task-type { font-size: 11px; padding: 4px 8px; border-radius: 8px; font-weight: 700; }
-        .type-report { background: #FFEBEE; color: #C62828; }
-        .type-pickup { background: #FFF8E1; color: #E65100; }
         .task-id-num { font-size: 10px; color: var(--primary); font-weight: 800; background: #E8F5E9; padding: 3px 8px; border-radius: 6px; direction: ltr; }
         .task-category { font-size: 11px; color: var(--text-dark); font-weight: 600; }
-        .task-weight { font-size: 11px; color: var(--accent); font-weight: 700; background: rgba(255,111,0,0.08); padding: 2px 8px; border-radius: 6px; }
+        .task-weight { font-size: 11px; color: var(--accent); font-weight: 700; background: rgba(255,111,0,0.08); padding: 3px 9px; border-radius: 6px; }
         .task-time { font-size: 9px; color: #b0bec5; margin-right: auto; direction: ltr; white-space: nowrap; }
-        .task-address { font-size: 10px; color: var(--text-gray); margin-bottom: 10px; }
-        .task-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.04); margin: 4px 0 8px; }
+        .task-address { font-size: 10px; color: var(--text-gray); margin-bottom: 10px; display: flex; align-items: center; gap: 4px; }
         .task-actions { display: flex; gap: 8px; }
-        .btn-task { flex: 1; padding: 10px; border-radius: 14px; border: none; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 5px; color: white; transition: var(--transition); }
-        .btn-task:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .btn-task { flex: 1; padding: clamp(8px,2vw,10px); border-radius: 12px; border: none; font-size: clamp(10px,2vw,12px); font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; display: flex; align-items: center; justify-content: center; gap: 5px; color: white; transition: var(--transition); }
+        .btn-task:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .btn-task:active { transform: scale(0.97); }
         .btn-navigate { background: var(--info); }
         .btn-confirm { background: var(--primary); }
 
         /* ============ EMPTY STATE ============ */
-        .empty-state { text-align: center; padding: 20px; }
-        .empty-emoji { font-size: 36px; display: block; margin-bottom: 4px; }
-        .empty-text { font-size: 12px; color: var(--text-gray); font-weight: 600; }
-        .empty-sub { font-size: 10px; color: #b0bec5; }
+        .empty-state { text-align: center; padding: 28px 16px; }
+        .empty-emoji { font-size: 44px; display: block; margin-bottom: 6px; }
+        .empty-text { font-size: 13px; color: var(--text-gray); font-weight: 700; }
+        .empty-sub { font-size: 10px; color: #b0bec5; margin-top: 2px; }
 
         /* ============ OVERLAY & MODAL ============ */
         .overlay { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 16px; }
         .overlay.show { display: flex; }
-        .modal { background: white; border-radius: var(--radius); padding: 20px 16px 18px; text-align: center; width: 100%; max-width: 340px; max-height: 85vh; overflow-y: auto; animation: spring 0.5s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal { background: white; border-radius: var(--radius); padding: 22px 18px 20px; text-align: center; width: 100%; max-width: 350px; max-height: 85vh; overflow-y: auto; animation: spring 0.5s ease; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
         @keyframes spring { 0% { transform: scale(0.7) translateY(30px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
-        .modal-icon { font-size: 45px; } .modal-title { font-size: 16px; font-weight: 900; color: var(--primary-dark); margin: 4px 0; }
-        .modal-desc { font-size: 11px; color: var(--text-gray); margin-bottom: 10px; line-height: 1.5; }
-        .report-photo { width: 100%; max-height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; display: none; }
+        .modal-icon { font-size: 48px; } .modal-title { font-size: 17px; font-weight: 900; color: var(--primary-dark); margin: 6px 0; }
+        .modal-desc { font-size: 12px; color: var(--text-gray); margin-bottom: 12px; line-height: 1.5; }
+        .report-photo { width: 100%; max-height: 110px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; display: none; }
         .report-photo.show { display: block; }
-        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin: 6px 0; }
+        .proof-zone { width: 100%; aspect-ratio: 4/3; border-radius: var(--radius-sm); background: linear-gradient(145deg, #1a1a2e, #121828); border: 2px dashed rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; margin: 8px 0; }
         .proof-zone.filled { border-color: var(--primary-light); border-style: solid; }
         .proof-inner { text-align: center; color: rgba(255,255,255,0.7); pointer-events: none; }
-        .proof-emoji { font-size: 28px; display: block; margin-bottom: 2px; }
-        .proof-text { font-size: 10px; font-weight: 700; }
+        .proof-emoji { font-size: 30px; display: block; margin-bottom: 4px; }
+        .proof-text { font-size: 11px; font-weight: 700; }
         #proofPreview { width:100%;height:100%;object-fit:cover;display:none;position:absolute;top:0;left:0;z-index:2; }
-        .proof-actions { display: flex; gap: 5px; }
-        .btn-proof { flex: 1; padding: 7px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 10px; font-weight: 600; }
+        .proof-actions { display: flex; gap: 6px; margin-bottom: 10px; }
+        .btn-proof { flex: 1; padding: 8px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.08); background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 600; transition: var(--transition); }
+        .btn-proof:hover { background: #f5f5f5; }
         .btn-proof.danger { border-color: #FFCDD2; color: var(--danger); display: none; }
-        .modal-btn { width: 100%; padding: 11px; border: none; border-radius: 20px; background: var(--primary); color: white; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
-        .btn-cancel { margin-top: 6px; width: 100%; padding: 9px; border: 1.5px solid #e0e0e0; border-radius: 20px; background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-gray); }
-        .task-info-line { font-size: 11px; color: var(--text-dark); font-weight: 700; margin-bottom: 4px; }
-        .qr-modal { max-width: 340px; }
-        .qr-input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 13px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; }
-        .qr-input:focus { outline: none; border-color: var(--purple); }
-        .footer { position: relative; z-index: 1; text-align: center; padding: 6px 16px; font-size: 8px; color: rgba(255,255,255,0.4); }
+        .btn-proof.danger:hover { background: #FFF5F5; }
+        .modal-btn { width: 100%; padding: 12px; border: none; border-radius: 50px; background: var(--primary); color: white; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); }
+        .modal-btn:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(46,125,50,0.3); }
+        .btn-cancel { margin-top: 8px; width: 100%; padding: 10px; border: 1.5px solid #e0e0e0; border-radius: 50px; background: white; cursor: pointer; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-gray); transition: var(--transition); }
+        .btn-cancel:hover { background: #f5f5f5; }
+        .task-info-line { font-size: 12px; color: var(--text-dark); font-weight: 700; margin-bottom: 6px; }
+        .qr-modal { max-width: 350px; }
+        .qr-input { width: 100%; padding: 13px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 14px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; transition: var(--transition); }
+        .qr-input:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 3px rgba(123,31,162,0.08); }
+        .footer { position: relative; z-index: 1; text-align: center; padding: 8px 16px; font-size: 9px; color: rgba(255,255,255,0.4); }
         .login-screen { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; padding: 70px 16px 16px; }
-        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); border-radius: var(--radius); padding: 30px 22px; text-align: center; max-width: 350px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); }
-        .login-card input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 16px; font-family: 'Cairo', sans-serif; margin-bottom: 10px; direction: ltr; }
-        .login-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; }
-        .login-error { color: var(--danger); font-size: 10px; margin-top: 6px; display: none; }
-        @media (max-width: 360px) { .task-header { gap: 3px; } .task-type { font-size: 9px; padding: 3px 6px; } .btn-task { font-size: 10px; padding: 8px; } }
+        .login-card { background: rgba(255,255,255,0.94); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius); padding: 32px 24px; text-align: center; max-width: 360px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.15); }
+        .login-card input { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: var(--radius-sm); text-align: center; font-size: 17px; font-family: 'Cairo', sans-serif; margin-bottom: 12px; direction: ltr; transition: var(--transition); }
+        .login-card input:focus { outline: none; border-color: var(--info); box-shadow: 0 0 0 3px rgba(30,136,229,0.08); }
+        .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #1E88E5, #42A5F5); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Cairo', sans-serif; transition: var(--transition); }
+        .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(30,136,229,0.4); }
+        .login-error { color: var(--danger); font-size: 11px; margin-top: 8px; display: none; font-weight: 600; }
+        @media (max-width: 380px) { .tab-btn { font-size: 10px; gap: 4px; } .tab-btn .tab-icon { font-size: 14px; } .task-header { gap: 3px; } .btn-task { font-size: 10px; padding: 8px; } }
     </style>
 </head>
 <body>
@@ -123,14 +153,16 @@
     <header class="top-nav">
         <a href="index.html" class="btn-back">←</a>
         <span class="nav-title">🚛 واجهة السائق</span>
-        <button class="btn-refresh" onclick="loadAll()" id="refreshBtn">🔄 تحديث</button>
-        <div class="driver-status"><span class="dot"></span> متصل</div>
+        <div class="nav-actions">
+            <button class="btn-refresh" onclick="loadAll()" id="refreshBtn">🔄 تحديث</button>
+            <div class="driver-status"><span class="dot"></span> متصل</div>
+        </div>
     </header>
     <div class="login-screen" id="loginScreen">
         <div class="login-card">
-            <div style="font-size:45px;">🚛</div>
-            <h2 style="font-size:18px;font-weight:900;color:#2E7D32;margin-bottom:4px;">دخول السائق</h2>
-            <p style="font-size:12px;color:#90A4AE;margin-bottom:14px;">أدخل كلمة المرور للمتابعة</p>
+            <div style="font-size:50px;">🚛</div>
+            <h2 style="font-size:20px;font-weight:900;color:#2E7D32;margin-bottom:4px;">دخول السائق</h2>
+            <p style="font-size:13px;color:#90A4AE;margin-bottom:18px;">أدخل كلمة المرور للمتابعة</p>
             <input type="password" id="driverPass" placeholder="كلمة المرور">
             <button class="login-btn" onclick="checkPass()">🚛 دخول</button>
             <p class="login-error" id="loginError">كلمة المرور غير صحيحة</p>
@@ -139,31 +171,30 @@
     <main class="main-container" id="driverMain" style="display:none;">
         <div class="stats-row">
             <div class="stat-box sb-pending"><div class="stat-value" id="pendingCount">0</div><div class="stat-label">مهام معلقة</div></div>
-            <div class="stat-box sb-done"><div class="stat-value" id="doneCount">0</div><div class="stat-label">مهام مكتملة</div></div>
+            <div class="stat-box sb-done"><div class="stat-value" id="doneCount">0</div><div class="stat-label">مكتملة</div></div>
             <div class="stat-box sb-kg"><div class="stat-value" id="totalKg">0</div><div class="stat-label">كغ اليوم</div></div>
         </div>
 
-        <!-- ============ 🚨 قسم المفرغات ============ -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon si-reports">🚨</div>
-                <span class="section-label">بلاغات المفرغات</span>
-                <span class="section-badge reports" id="reportsBadge">0</span>
+        <!-- ============ 🆕 TABS ============ -->
+        <div class="tabs-container">
+            <div class="tabs-header" id="tabsHeader">
+                <button class="tab-btn reports-tab active" onclick="switchTab('reports')">
+                    <span class="tab-icon">🚨</span> المفرغات <span class="tab-count" id="reportsBadge">0</span>
+                </button>
+                <button class="tab-btn pickups-tab" onclick="switchTab('pickups')">
+                    <span class="tab-icon">📦</span> جمع المواد <span class="tab-count" id="pickupsBadge">0</span>
+                </button>
+                <div class="tab-indicator reports" id="tabIndicator"></div>
             </div>
-            <div class="task-list" id="reportsList">
-                <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد بلاغات معلقة</span></div>
+            <div class="tab-content active" id="tabReports">
+                <div class="task-list" id="reportsList">
+                    <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد بلاغات معلقة</span><span class="empty-sub">كل البلاغات تمت معالجتها</span></div>
+                </div>
             </div>
-        </div>
-
-        <!-- ============ 📦 قسم جمع المواد ============ -->
-        <div class="section-card">
-            <div class="section-header">
-                <div class="section-icon si-pickups">📦</div>
-                <span class="section-label">طلبات جمع المواد</span>
-                <span class="section-badge pickups" id="pickupsBadge">0</span>
-            </div>
-            <div class="task-list" id="pickupsList">
-                <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد طلبات جمع معلقة</span></div>
+            <div class="tab-content" id="tabPickups">
+                <div class="task-list" id="pickupsList">
+                    <div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد طلبات جمع معلقة</span><span class="empty-sub">كل الطلبات تمت معالجتها</span></div>
+                </div>
             </div>
         </div>
     </main>
@@ -181,7 +212,7 @@
             </div>
             <input type="file" id="proofCamera" accept="image/*" capture="environment" style="display:none" onchange="handleProofPhoto(event)">
             <input type="file" id="proofGallery" accept="image/*" style="display:none" onchange="handleProofPhoto(event)">
-            <div class="proof-actions" style="margin-bottom:8px;">
+            <div class="proof-actions">
                 <button class="btn-proof" id="btnProofGallery" onclick="openProofGallery()">🖼️ المعرض</button>
                 <button class="btn-proof danger" id="btnProofDelete" onclick="deleteProofPhoto()">🗑️ حذف</button>
             </div>
@@ -195,7 +226,7 @@
     </div>
 
     <div class="overlay" id="qrOverlay">
-        <div class="modal qr-modal"><div class="modal-icon">📱</div><div class="modal-title">مسح QR Code</div><div class="modal-desc">أدخل الكود يدوياً أو امسح QR</div><input type="text" class="qr-input" id="qrManualInput" placeholder="أدخل كود المهمة يدوياً" dir="ltr"><button class="modal-btn" onclick="scanQRWithCamera()" style="background:#7B1FA2;">📷 فتح الكاميرا للمسح</button><p style="font-size:10px;color:var(--text-gray);margin:6px 0;">— أو —</p><button class="modal-btn" onclick="applyManualQR()" style="background:var(--info);">✅ تطبيق الكود المدخل</button><button class="btn-cancel" onclick="closeQROverlay()">إلغاء</button></div>
+        <div class="modal qr-modal"><div class="modal-icon">📱</div><div class="modal-title">مسح QR Code</div><div class="modal-desc">أدخل الكود يدوياً أو امسح QR</div><input type="text" class="qr-input" id="qrManualInput" placeholder="أدخل كود المهمة يدوياً" dir="ltr"><button class="modal-btn" onclick="scanQRWithCamera()" style="background:#7B1FA2;">📷 فتح الكاميرا للمسح</button><p style="font-size:10px;color:var(--text-gray);margin:8px 0;">— أو —</p><button class="modal-btn" onclick="applyManualQR()" style="background:var(--info);">✅ تطبيق الكود المدخل</button><button class="btn-cancel" onclick="closeQROverlay()">إلغاء</button></div>
     </div>
     <video id="qrVideo" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:3000;background:black;" playsinline></video>
     <canvas id="qrCanvas" style="display:none;"></canvas>
@@ -206,7 +237,7 @@
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
 
         var currentTaskId=null,proofPhoto=null,allTasksFlat=[],completedTasks=[],qrStream=null;
-        var supabaseReports=[],supabasePickups=[];
+        var supabaseReports=[],supabasePickups=[],currentTab='reports';
 
         function formatDateDZ(iso){if(!iso)return'--/--/----';var d=new Date(iso);return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
         function formatTimeDZ(iso){if(!iso)return'--:--:--';var d=new Date(iso);return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+':'+d.getSeconds().toString().padStart(2,'0');}
@@ -240,7 +271,7 @@
             var cat=t.type==='report'?(cn[t.category]||t.category||''):(mn[t.material]||t.material||'');
             var weightHTML=t.type==='pickup'?' <span class="task-weight">'+(t.weight||0)+' كغ</span>':'';
             var dt=t.time?(formatDateDZ(t.time)+' '+formatTimeDZ(t.time)):'--';
-            return'<div class="task-item" id="task_'+t.id+'"><div class="task-top"><div class="task-qr-col"><button class="btn-qr-sm" onclick="openQRScan()" title="مسح QR">📱</button></div><div class="task-info"><div class="task-header"><span class="task-type '+t.typeClass+'">'+t.typeLabel+'</span><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+cat+'</span>'+weightHTML+'<span class="task-time">'+dt+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div></div></div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+cat+' '+(t.weight||0)+' كغ\',\''+t.num+'\')">✅ تأكيد</button></div></div>';
+            return'<div class="task-item" id="task_'+t.id+'"><div class="task-top"><div class="task-qr-col"><button class="btn-qr-sm" onclick="openQRScan()" title="مسح QR">📱</button></div><div class="task-info"><div class="task-header"><span class="task-id-num">#'+t.num+'</span><span class="task-category">'+cat+'</span>'+weightHTML+'<span class="task-time">'+dt+'</span></div><div class="task-address">📍 '+(t.lat?t.lat.toFixed(5):'--')+', '+(t.lng?t.lng.toFixed(5):'--')+'</div></div></div><div class="task-actions"><button class="btn-task btn-navigate" onclick="navigateTo('+t.lat+','+t.lng+')">🗺️ تنقل</button><button class="btn-task btn-confirm" onclick="openConfirm(\''+t.id+'\',\''+t.typeLabel+'\',\''+cat+' '+(t.weight||0)+' كغ\',\''+t.num+'\')">✅ تأكيد</button></div></div>';
         }
 
         function showAllTasks(){
@@ -254,18 +285,52 @@
             var tk=0;supabasePickups.forEach(function(r){if(completedTasks.indexOf('pickup_'+r.id)!==-1)tk+=(r.weight||0);});
             document.getElementById('totalKg').textContent=tk;
 
-            // 🚨 قسم المفرغات
+            // تحديث البادجات
             document.getElementById('reportsBadge').textContent=reportsPending.length;
+            document.getElementById('pickupsBadge').textContent=pickupsPending.length;
+
+            // ملء القوائم
             var rl=document.getElementById('reportsList');
             if(reportsPending.length===0){rl.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد بلاغات معلقة</span><span class="empty-sub">كل البلاغات تمت معالجتها</span></div>';}
             else{rl.innerHTML=reportsPending.map(function(t){return createTaskHTML(t);}).join('');}
 
-            // 📦 قسم جمع المواد
-            document.getElementById('pickupsBadge').textContent=pickupsPending.length;
             var pl=document.getElementById('pickupsList');
             if(pickupsPending.length===0){pl.innerHTML='<div class="empty-state"><span class="empty-emoji">🎉</span><span class="empty-text">لا توجد طلبات جمع معلقة</span><span class="empty-sub">كل الطلبات تمت معالجتها</span></div>';}
             else{pl.innerHTML=pickupsPending.map(function(t){return createTaskHTML(t);}).join('');}
+
+            // تلقائي: إذا لا توجد مفرغات، افتح تبويب الجمع
+            if(reportsPending.length===0&&pickupsPending.length>0){switchTab('pickups');}
+            else if(currentTab==='reports'){switchTab('reports');}
+            else{switchTab(currentTab);}
         }
+
+        // ============ 🆕 SWITCH TAB ============
+        function switchTab(tab){
+            currentTab=tab;
+            var tabsHeader=document.getElementById('tabsHeader');
+            var indicator=document.getElementById('tabIndicator');
+            var btns=tabsHeader.querySelectorAll('.tab-btn');
+            btns.forEach(function(b){b.classList.remove('active');});
+
+            if(tab==='reports'){
+                btns[0].classList.add('active');
+                indicator.className='tab-indicator reports';
+                indicator.style.left=btns[0].offsetLeft+'px';
+                indicator.style.width=btns[0].offsetWidth+'px';
+                document.getElementById('tabReports').classList.add('active');
+                document.getElementById('tabPickups').classList.remove('active');
+            }else{
+                btns[1].classList.add('active');
+                indicator.className='tab-indicator pickups';
+                indicator.style.left=btns[1].offsetLeft+'px';
+                indicator.style.width=btns[1].offsetWidth+'px';
+                document.getElementById('tabPickups').classList.add('active');
+                document.getElementById('tabReports').classList.remove('active');
+            }
+        }
+
+        // تحديث المؤشر عند تغيير حجم النافذة
+        window.addEventListener('resize',function(){switchTab(currentTab);});
 
         function navigateTo(la,ln){window.open('https://www.google.com/maps/dir/?api=1&destination='+la+','+ln,'_blank');}
         function openQRScan(){document.getElementById('qrManualInput').value='';document.getElementById('qrOverlay').classList.add('show');}
@@ -315,7 +380,7 @@
             if(!currentTaskId){alert('خطأ: لا توجد مهمة');return;}
             if(completedTasks.indexOf(currentTaskId)===-1)completedTasks.push(currentTaskId);
             var proofs=JSON.parse(localStorage.getItem('taskProofs')||'{}');proofs[currentTaskId]={photo:proofPhoto,time:new Date().toISOString()};localStorage.setItem('taskProofs',JSON.stringify(proofs));localStorage.setItem('completedTasks',JSON.stringify(completedTasks));
-            var el=document.getElementById('task_'+currentTaskId);if(el)el.style.opacity='0.4';
+            var el=document.getElementById('task_'+currentTaskId);if(el)el.classList.add('done');
             document.getElementById('confirmOverlay').classList.remove('show');document.getElementById('successOverlay').classList.add('show');
             var xhr=new XMLHttpRequest();xhr.open('POST',SUPABASE_URL+'/rest/v1/completed?apikey='+SUPABASE_KEY,true);xhr.setRequestHeader('Content-Type','application/json');xhr.setRequestHeader('Prefer','return=minimal');
             xhr.send(JSON.stringify({task_id:currentTaskId,proof_photo:proofPhoto}));
