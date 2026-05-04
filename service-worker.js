@@ -49,14 +49,11 @@ self.addEventListener('activate', function(event) {
   );
 });
 
-// Push Notifications
 self.addEventListener('push', function(event) {
   var data = event.data ? event.data.json() : {};
   var title = data.title || 'مدينتنا نظيفة';
   var options = {
     body: data.message || 'هناك تحديث جديد',
-    icon: 'https://davidrezgui.github.io/school-/icon-192.png',
-    badge: 'https://davidrezgui.github.io/school-/icon-192.png',
     vibrate: [200, 100, 200],
     tag: 'm-ville-propre',
     renotify: true
