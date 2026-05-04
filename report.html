@@ -92,7 +92,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <header class="top-nav">
-        <a href="index.html" class="btn-back" id="backBtn">←</a>
+        <a href="#" class="btn-back" id="backBtn">←</a>
         <span class="nav-title">📸 تبليغ عن مفرغة</span>
         <div class="step-dots"><span class="step-dot active" id="s1"></span><span class="step-dot" id="s2"></span><span class="step-dot" id="s3"></span></div>
     </header>
@@ -111,10 +111,18 @@
         (function(){var c=document.getElementById('particlesBg');var colors=['#4CAF50','#81C784','#FFA726','#42A5F5','#66BB6A','#FFCC02'];for(var i=0;i<30;i++){var p=document.createElement('div');p.className='particle';var s=Math.random()*5+2;p.style.cssText='width:'+s+'px;height:'+s+'px;background:'+colors[Math.floor(Math.random()*colors.length)]+';left:'+Math.random()*100+'%;animation-duration:'+(Math.random()*10+8)+'s;animation-delay:'+Math.random()*8+'s;box-shadow:0 0 '+s*2+'px currentColor;';c.appendChild(p);}})();
         var S={photo:null,type:null,lat:null,lng:null};
         
-        // البريد من localStorage (مخزن عند تسجيل الدخول)
         var userEmail=localStorage.getItem('userEmail');
-        var backBtn=document.getElementById('backBtn');
-        backBtn.href=userEmail?'home.html':'index.html';
+        
+        // ============ ✅ زر الرجوع الذكي ============
+        (function(){
+            var backBtn = document.getElementById('backBtn');
+            var ref = document.referrer;
+            if (ref.indexOf('home.html') !== -1) {
+                backBtn.href = 'home.html';
+            } else {
+                backBtn.href = 'index.html';
+            }
+        })();
 
         function takePicture(){if(!S.photo)document.getElementById('cameraInput').click();}
         function openGallery(){if(!S.photo)document.getElementById('galleryInput').click();}
@@ -147,7 +155,6 @@
                 if(xhr.status===201){
                     var result=JSON.parse(xhr.responseText);var reportId=result[0]?result[0].id:'—';
                     document.getElementById('reportIdDisplay').textContent='رقم البلاغ: #'+reportId;
-                    // نقاط للمستخدم المسجل
                     if(userEmail){
                         var pxhr=new XMLHttpRequest();
                         pxhr.open('POST',SUPABASE_URL+'/rest/v1/point_transactions?apikey='+SUPABASE_KEY,true);
