@@ -67,7 +67,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <header class="top-nav">
-        <a href="index.html" class="btn-back" id="backBtn">←</a>
+        <a href="#" class="btn-back" id="backBtn">←</a>
         <span class="nav-title">🔔 الإشعارات</span>
         <div class="nav-actions">
             <button class="btn-mark-read" onclick="markAllAsRead()">✅ قراءة الكل</button>
@@ -90,11 +90,17 @@
         var SUPABASE_URL = 'https://ctkkkpcjwebkrcbzsvpf.supabase.co';
         var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0a2trcGNqd2Via3JjYnpzdnBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc1Mzg0NzMsImV4cCI6MjA5MzExNDQ3M30.YB10D0463cSJ1Nm_Y9etMwwfEzn28s0OiN_mnQW5IMc';
         
-        // زر الرجوع الذكي
+        // ============ ✅ زر الرجوع الذكي ============
         (function(){
-            var userEmail = localStorage.getItem('userEmail');
+            var ref = document.referrer;
             var backBtn = document.getElementById('backBtn');
-            if(userEmail) backBtn.href = 'home.html';
+            if (ref.indexOf('home.html') !== -1) {
+                backBtn.href = 'home.html';
+            } else if (ref.indexOf('dashboard.html') !== -1) {
+                backBtn.href = 'dashboard.html';
+            } else {
+                backBtn.href = 'index.html';
+            }
         })();
 
         function formatDateDZ(iso){if(!iso)return'';var d=new Date(iso);return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear();}
